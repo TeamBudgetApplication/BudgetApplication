@@ -11,4 +11,7 @@ public class WelcomeController {
 	public String welcome() {
 		return "welcome";
 	}
+	
+	
+	System.out.println("HELOOOOOOO!");
 }
