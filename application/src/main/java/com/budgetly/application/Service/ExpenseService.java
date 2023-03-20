@@ -12,7 +12,9 @@ public interface ExpenseService {
 
 	public Expense getExpense(int id);
 
-	public void saveExpense(Expense expense);
+	public void onlySaveExpense(Expense expense);
+	
+	public Expense saveExpense(Expense expense);
 	
 	public void deleteExpense(int id);
 

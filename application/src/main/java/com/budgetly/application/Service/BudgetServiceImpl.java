@@ -46,8 +46,14 @@ public class BudgetServiceImpl implements BudgetService {
 	}
 	
 	@Transactional
-	public void saveBudget(Budget budget) {
+	public void onlySaveBudget(Budget budget) {
 		budgetDAO.saveBudget(budget);
+	}
+	
+	@Transactional
+	public Budget saveBudget(Budget budget) {
+		budgetDAO.saveBudget(budget);
+		return budget;
 	}
 
 	@Transactional

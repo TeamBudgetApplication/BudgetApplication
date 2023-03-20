@@ -53,9 +53,15 @@ public class ExpenseDAOimpl implements ExpenseDAO {
 		
 	}
 
-	public void saveExpense(Expense expense) {
+	public void onlySaveExpense(Expense expense) {
 		Session session = sessionFactory.getCurrentSession();
 		session.saveOrUpdate(expense);
+	}
+	
+	public Expense saveExpense(Expense expense) {
+		Session session = sessionFactory.getCurrentSession();
+		session.saveOrUpdate(expense);
+		return expense;
 	}
 	
 	@Override

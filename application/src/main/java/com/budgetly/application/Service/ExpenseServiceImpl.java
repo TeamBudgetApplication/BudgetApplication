@@ -46,8 +46,14 @@ public class ExpenseServiceImpl implements ExpenseService {
 	}
 	
 	@Transactional
-	public void saveExpense(Expense expense) {
+	public void onlySaveExpense(Expense expense) {
 		expenseDAO.saveExpense(expense);
+	}
+	
+	@Transactional
+	public Expense saveExpense(Expense expense) {
+		expenseDAO.saveExpense(expense);
+		return expense;
 	}
 	
 	
