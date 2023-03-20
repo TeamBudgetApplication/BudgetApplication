@@ -12,7 +12,9 @@ public interface BudgetService {
 
 	public Budget getBudget(int id);
 
-	public void saveBudget(Budget budget);
+	public void onlySaveBudget(Budget budget);
+
+	public Budget saveBudget(Budget budget);
 	
 	public void deleteBudget(int id);
 

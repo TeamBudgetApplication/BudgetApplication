@@ -12,8 +12,10 @@ public interface BudgetDAO {
 	public List<Budget> getBudgets(int customerId);
 
 	public Budget getBudget(int id);
+	
+	public void onlySaveBudget(Budget budget);
 
-	public void saveBudget(Budget budget);
+	public Budget saveBudget(Budget budget);
 	
 	public void deleteBudget(int id);
 

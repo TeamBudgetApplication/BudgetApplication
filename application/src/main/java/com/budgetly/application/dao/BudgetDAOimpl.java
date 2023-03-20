@@ -53,10 +53,17 @@ public class BudgetDAOimpl implements BudgetDAO {
 		return budget;
 		
 	}
-
-	public void saveBudget(Budget budget) {
+	
+	public void onlySaveBudget(Budget budget) {
 		Session session = sessionFactory.getCurrentSession();
 		session.saveOrUpdate(budget);
+	}
+	
+
+	public Budget saveBudget(Budget budget) {
+		Session session = sessionFactory.getCurrentSession();
+		session.saveOrUpdate(budget);
+		return budget;
 	}
 	
 	@Override
