@@ -20,7 +20,7 @@ public class BudgetDAOimpl implements BudgetDAO {
 	
 	@Override
 	public List<Budget> getBudgets() {
-		Session session = sessionFactory.getCurrentSession();
+		Session session = sessionFactory.openSession();
 		
 		Query<Budget> query = session.createQuery("from Budget",
 				Budget.class);		
@@ -53,16 +53,23 @@ public class BudgetDAOimpl implements BudgetDAO {
 		return budget;
 		
 	}
-
-	public void saveBudget(Budget budget) {
+	
+	public void onlySaveBudget(Budget budget) {
 		Session session = sessionFactory.getCurrentSession();
 		session.saveOrUpdate(budget);
+	}
+	
+
+	public Budget saveBudget(Budget budget) {
+		Session session = sessionFactory.getCurrentSession();
+		session.saveOrUpdate(budget);
+		return budget;
 	}
 	
 	@Override
 	public void deleteBudget(int id) {
 		
-		Session session = sessionFactory.getCurrentSession();
+		Session session = sessionFactory.openSession();
 		Budget budget = session.get(Budget.class, id);
 		session.remove(budget);
 		
