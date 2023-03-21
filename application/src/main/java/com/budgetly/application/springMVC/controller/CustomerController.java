@@ -37,5 +37,12 @@ public class CustomerController {
 		model.addAttribute("customer", customer);
 		return "add-customer";
 	}
+	
+	@GetMapping("/customer/")
+	public String getCustomerById(Model model, @RequestParam("customerId") int customerId) {
+		Customer customer = customerService.getCustomer(customerId);
+		model.addAttribute("customerId", customer.getId());
+		return "customer-dashboard";
+	}
 
 }
