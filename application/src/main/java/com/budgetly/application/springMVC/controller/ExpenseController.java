@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -58,7 +59,7 @@ public class ExpenseController {
 	}
 	
 	// Save expense to Db
-	@PostMapping(path = "/budget/{budgetId}/expenses") 
+	@PostMapping(path = "/user/{id}/budgets/{budgetId}/expenses") 
 	public String addExpense(@RequestBody Expense expense) {
 		Expense savedExpense = service.saveExpense(expense);
 		
@@ -79,5 +80,11 @@ public class ExpenseController {
 		return "createExpense.jsp";
 	}
 	
+	
+	// Delete budget
+	@DeleteMapping(path = "/users/{id}/budgets/{budgetId}/expenses/{expId}")
+	public void deleteExpense(@PathVariable int expId) {
+		service.deleteExpense(expId);
+	}
 	
 }
