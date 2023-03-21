@@ -38,7 +38,6 @@ public class BudgetController {
 		// Pass data to modal -> budgets.jsp
 		model.addAttribute("budgets", budgets);
 		
-		
 		return budgets;
 	}
 	
@@ -46,7 +45,7 @@ public class BudgetController {
 	// Retrieve budget by id
 	@GetMapping(path = "/user/{id}/budgets/get-budget/{budgetId}")
 	public Budget getBudget(@PathVariable int budgetId, ModelMap model) {
-		Budget budget = service .getBudget(budgetId);
+		Budget budget = service.getBudget(budgetId);
 		
 		// Throw error if budgets null
 		if (budget == null) {
