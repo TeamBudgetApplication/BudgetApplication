@@ -26,7 +26,7 @@ public class BudgetController {
 	
 	
 	// Retrieve all budgets
-	@GetMapping(path = "/customer/{id}/budgets/get-bugdets")
+	@GetMapping(path = "/budgets/get-bugdets")
 	public List<Budget> retrieveAll(ModelMap model) {
 		
 		List<Budget> budgets = service.getBudgets();
@@ -44,7 +44,7 @@ public class BudgetController {
 	
 	
 	// Retrieve budget by id
-	@GetMapping(path = "/customer/{id}/budgets/get-budget/{budgetId}")
+	@GetMapping(path = "/budgets/get-budget/{budgetId}")
 	public Budget getBudget(@PathVariable int budgetId, ModelMap model) {
 		Budget budget = service.getBudget(budgetId);
 		
@@ -61,7 +61,7 @@ public class BudgetController {
 	
 	
 	// Save budget to db
-	@PostMapping(path = "/customer/{id}/budgets/create-budget")
+	@PostMapping(path = "/budgets/create-budget")
 	public String addBudget(@RequestBody Budget budget) {
 		Budget savedBudget = service.saveBudget(budget);
 		
@@ -83,7 +83,7 @@ public class BudgetController {
 	}
 	
 	// Delete budget
-	@DeleteMapping(path = "/customer/{id}/budgets/delete-budget/{budgetId}")
+	@DeleteMapping(path = "/budgets/delete-budget/{budgetId}")
 	public void deleteBudget(@PathVariable int budgetId) {
 		service.deleteBudget(budgetId);
 	}

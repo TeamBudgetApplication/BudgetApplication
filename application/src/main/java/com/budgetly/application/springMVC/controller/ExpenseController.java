@@ -26,7 +26,7 @@ public class ExpenseController {
 	
 	
 	// Retrieve expenses
-	@GetMapping("/customer/{id}/budgets/get-budget/{budgetId}/expenses/get-expenses")
+	@GetMapping("/expenses/get-expenses")
 	public String retrieveAll(ModelMap model) {
 		List<Expense> expenses = service.getExpenses();
 		
@@ -43,7 +43,7 @@ public class ExpenseController {
 	
 	
 	// Retrieve expense by id
-	@GetMapping("/customer/{id}/budgets/get-budget/{budgetId}/expenses/get-expense/{expId}")
+	@GetMapping("/expenses/get-expense/{expId}")
 	public String retrieveAll(@PathVariable int expId, ModelMap model) {
 		Expense expense = (Expense) service.getExpenses(expId);
 		
@@ -59,7 +59,7 @@ public class ExpenseController {
 	}
 	
 	// Save expense to Db
-	@PostMapping(path = "/customer/{id}/budgets/get-budget/{budgetId}/add-expense") 
+	@PostMapping(path = "/expenses/add-expense") 
 	public String addExpense(@RequestBody Expense expense) {
 		Expense savedExpense = service.saveExpense(expense);
 		
@@ -82,7 +82,7 @@ public class ExpenseController {
 	
 	
 	// Delete Expense
-	@DeleteMapping(path = "/customer/{id}/budgets/get-budget/{budgetId}/expenses/delete-expense/{expId}")
+	@DeleteMapping(path = "/expenses/delete-expense/{expId}")
 	public void deleteExpense(@PathVariable int expId) {
 		service.deleteExpense(expId);
 	}
