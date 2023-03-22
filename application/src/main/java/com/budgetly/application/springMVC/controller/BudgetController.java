@@ -26,7 +26,7 @@ public class BudgetController {
 	
 	
 	// Retrieve all budgets
-	@GetMapping(path = "/user/{id}/budgets/get-bugdets")
+	@GetMapping(path = "/customer/{id}/budgets/get-bugdets")
 	public List<Budget> retrieveAll(ModelMap model) {
 		
 		List<Budget> budgets = service.getBudgets();
@@ -39,12 +39,12 @@ public class BudgetController {
 		// Pass data to modal -> budgets.jsp
 		model.addAttribute("budgets", budgets);
 		
-		return budgets;
+		return budgets; // Jsp displaying budgets
 	}
 	
 	
 	// Retrieve budget by id
-	@GetMapping(path = "/user/{id}/budgets/get-budget/{budgetId}")
+	@GetMapping(path = "/customer/{id}/budgets/get-budget/{budgetId}")
 	public Budget getBudget(@PathVariable int budgetId, ModelMap model) {
 		Budget budget = service.getBudget(budgetId);
 		
@@ -61,7 +61,7 @@ public class BudgetController {
 	
 	
 	// Save budget to db
-	@PostMapping(path = "/user/{id}/budgets/create-budget")
+	@PostMapping(path = "/customer/{id}/budgets/create-budget")
 	public String addBudget(@RequestBody Budget budget) {
 		Budget savedBudget = service.saveBudget(budget);
 		
@@ -79,11 +79,11 @@ public class BudgetController {
 				
 		ResponseEntity.created(location).build();
 		
-		return "createBudget.jsp";
+		return "createBudget.jsp"; // Budgets/Dashboard jsp
 	}
 	
 	// Delete budget
-	@DeleteMapping(path = "/user/{id}/budgets/delete-budget/{budgetId}")
+	@DeleteMapping(path = "/customer/{id}/budgets/delete-budget/{budgetId}")
 	public void deleteBudget(@PathVariable int budgetId) {
 		service.deleteBudget(budgetId);
 	}
