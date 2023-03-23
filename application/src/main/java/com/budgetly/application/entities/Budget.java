@@ -22,23 +22,23 @@ public class Budget {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id")
+	@Column(name="idbudgets")
 	private int id;
 	
 	@Column(name="name")
 	private String name;
 	
-	@Column(name="start_date")
+	@Column(name="startDate")
 	private Date startDate;
 	
-	@Column(name="end_date")
+	@Column(name="endDate")
 	private Date endDate;
 	
 	@Column(name="amount")
 	private double amount;
 	
 	@ManyToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
-	@JoinColumn(name = "customer_id")
+	@JoinColumn(name = "customerID")
 	private Customer customer;
 	
 	public Budget() {
