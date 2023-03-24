@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.budgetly.application.Service.ExpenseServiceImpl;
+import com.budgetly.application.Service.ExpenseService;
 import com.budgetly.application.entities.Expense;
 
 @RestController
@@ -22,7 +22,7 @@ public class ExpenseController {
 	
 	
 	@Autowired
-	private ExpenseServiceImpl service;
+	private ExpenseService service;
 	
 	
 	// Retrieve expenses

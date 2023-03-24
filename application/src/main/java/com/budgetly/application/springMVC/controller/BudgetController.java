@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.budgetly.application.Service.BudgetServiceImpl;
+import com.budgetly.application.Service.BudgetService;
 import com.budgetly.application.entities.Budget;
 
 
@@ -22,7 +22,7 @@ import com.budgetly.application.entities.Budget;
 public class BudgetController {
 	
 	@Autowired 
-	private BudgetServiceImpl service;
+	private BudgetService service;
 	
 	
 	// Retrieve all budgets
