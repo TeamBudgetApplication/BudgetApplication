@@ -42,6 +42,7 @@ public class Budget {
 	private Customer customer;
 	
 	public Budget() {
+		
 	}
 
 	public Budget(String name, Date startDate, Date endDate, double amount, Customer customer) {

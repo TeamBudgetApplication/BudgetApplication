@@ -3,7 +3,7 @@ package com.budgetly.application.entities;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -104,10 +104,10 @@ public class Customer {
 		this.password = password;
 	}
 	
-	public void hashPassword(String password) {
+	/*public void hashPassword(String password) {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		encoder.encode(password);
-	}
+	}*/
 	
 	//one-to-many connection with Budgets table
 	@JsonIgnore
