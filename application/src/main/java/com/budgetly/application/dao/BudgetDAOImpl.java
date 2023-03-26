@@ -23,7 +23,7 @@ public class BudgetDAOImpl implements BudgetDAO {
 	public List<Budget> retrieveAll(int customerId) {
 		
 		TypedQuery<Budget> query = entityManager
-				.createQuery("SELECT b FROM Budget b", Budget.class);
+				.createQuery("SELECT b FROM Budget b ", Budget.class);
 		return query.getResultList();
 	}
 	

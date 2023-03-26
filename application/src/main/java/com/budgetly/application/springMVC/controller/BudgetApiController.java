@@ -17,7 +17,7 @@ import com.budgetly.application.entities.Budget;
 
 
 @RestController
-public class ApiBudgetController {
+public class BudgetApiController {
 	
 	@Autowired
 	private BudgetService service;

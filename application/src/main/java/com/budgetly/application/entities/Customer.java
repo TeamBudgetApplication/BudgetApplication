@@ -1,6 +1,5 @@
 package com.budgetly.application.entities;
 
-import java.util.ArrayList;
 import java.util.List;
 
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -110,7 +109,7 @@ public class Customer {
 	}*/
 	
 	//one-to-many connection with Budgets table
-	@OneToMany(mappedBy = "customer")
+	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
 	@JsonIgnore
 	private List<Budget> budgets;
 	

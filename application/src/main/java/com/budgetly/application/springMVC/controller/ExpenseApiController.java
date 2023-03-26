@@ -16,7 +16,7 @@ import com.budgetly.application.entities.Expense;
 
 
 @RestController
-public class ApiExpenseController {
+public class ExpenseApiController {
 	
 	@Autowired
 	private ExpenseService service;

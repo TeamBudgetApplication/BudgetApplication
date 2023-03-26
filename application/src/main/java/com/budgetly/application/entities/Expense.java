@@ -1,10 +1,5 @@
 package com.budgetly.application.entities;
 
-
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -30,7 +25,7 @@ public class Expense {
 	@Column(name = "expense_name")
 	private String name;
 	
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
 	@JoinColumn( name = "budget_id")
 	private Budget budget;
 	
@@ -72,7 +67,7 @@ public class Expense {
 
 	@Override
 	public String toString() {
-		return "Expense [id=" + id + ", name=" + name + ", amount=" + amount + ", budget=" + budget.getId() + "]";
+		return "Expense [id=" + id + ", name=" + name + ", amount=" + amount +  "]";
 	}
 	
 }

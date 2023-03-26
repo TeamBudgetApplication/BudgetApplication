@@ -9,7 +9,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -39,7 +38,7 @@ public class Budget {
 	@Column(name = "end_date")
 	private Date endDate;
 	
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
 	@JoinColumn(name = "customer_id")
 	private Customer customer;
 	
@@ -62,6 +61,14 @@ public class Budget {
 	@OneToMany(mappedBy = "budget")
 	@JsonIgnore
 	private List<Expense> expenses = new ArrayList<Expense>();
+	
+//	public List<Expense> getExpenses() {
+//		return expenses;
+//	}
+//
+//	public void setExpenses(List<Expense> expenses) {
+//		this.expenses = expenses;
+//	}
 	
 
 	public int getId() {
@@ -107,18 +114,8 @@ public class Budget {
 	@Override
 	public String toString() {
 		return "Budget [id=" + id + ", amount=" + amount + ", name=" + name + ", startDate=" + startDate + ", endDate="
-				+ endDate + ", customer=" + customer.getId() + "]";
+				+ endDate + "]";
 	}
 	
-
-
-		
-//	public List<Expense> getExpenses() {
-//		return expenses;
-//	}
-//	
-//	public void setExpenses(List<Expense> expenses) {
-//		this.expenses = expenses;
-//	}
 	
 }
