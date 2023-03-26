@@ -23,7 +23,7 @@ public class Customer {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="idcustomers")
+	@Column(name="customer_id")
 	private int id;
 	
 	@Column(name="firstName")
@@ -110,14 +110,14 @@ public class Customer {
 	}*/
 	
 	//one-to-many connection with Budgets table
+	@OneToMany(mappedBy = "customer")
 	@JsonIgnore
-	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-	private List<Budget> budgets = new ArrayList<Budget>();
+	private List<Budget> budgets;
 	
-	public List<Budget> getBudgets() {
-		return budgets;
-	}
-	public void setBudgets(List<Budget> budgets) {
-		this.budgets = budgets;
-	}
+//	public List<Budget> getBudgets() {
+//		return budgets;
+//	}
+//	public void setBudgets(List<Budget> budgets) {
+//		this.budgets = budgets;
+//	}
 }

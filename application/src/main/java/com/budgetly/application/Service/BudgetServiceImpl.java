@@ -7,65 +7,37 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.budgetly.application.dao.BudgetDAO;
+import com.budgetly.application.dao.BudgetDAOImpl;
 import com.budgetly.application.entities.Budget;
 import com.budgetly.application.springMVC.controller.NotFoundException;
 
 
 @Service
+@Transactional
 public class BudgetServiceImpl implements BudgetService {
 	
 	@Autowired
 	private BudgetDAO budgetDAO;
-	
-	@Transactional
-	public List<Budget> getBudgets() {
-		return budgetDAO.getBudgets();
-	}
-	
-	@Transactional
-	public List<Budget> getBudgets(int customerId) {
-		List<Budget> budgets = budgetDAO.getBudgets(customerId);
-		
-		if (budgets.isEmpty()) {
-			throw new NotFoundException("customer Id not found. Id: " + customerId);
-		}
-		return budgets;
-	}
-	
-	
-	@Transactional
-	public Budget getBudget(int id) {
-		
-		Budget budget = budgetDAO.getBudget(id);
-		
-		if (budget == null) {
-			throw new NotFoundException("budget Id not found. Id: " + id);
-		}
-		
-		return budgetDAO.getBudget(id);
-	}
-	
-	@Transactional
-	public void onlySaveBudget(Budget budget) {
-		budgetDAO.saveBudget(budget);
-	}
-	
-	@Transactional
-	public Budget saveBudget(Budget budget) {
-		budgetDAO.saveBudget(budget);
-		return budget;
+
+	@Override
+	public  List<Budget> retrieveUserBudgets(int customerId) {
+		return budgetDAO.retrieveAll(customerId);
 	}
 
-	@Transactional
-	public void deleteBudget(int id) {
-		
-		Budget budget = budgetDAO.getBudget(id);
-		
-		if (budget == null) {
-			throw new NotFoundException("budget Id not found. Id: " + id);
-		}
-		
-		budgetDAO.deleteBudget(id);
+	@Override
+	public Budget retrieveUserBudgetById(int budgetId) {
+		return budgetDAO.retrieveById(budgetId);
 	}
+
+	@Override
+	public Budget deleteBudget(int budgetId) {
+		return budgetDAO.deleteById(budgetId);
+	}
+
+	@Override
+	public Budget saveBudget(Budget budget) {
+		return budgetDAO.saveBudget(budget);
+	}
+	
 	
 }

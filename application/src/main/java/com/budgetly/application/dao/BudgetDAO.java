@@ -7,16 +7,11 @@ import com.budgetly.application.entities.Budget;
 
 public interface BudgetDAO {
 	
-	public List<Budget> getBudgets();
+	public List<Budget> retrieveAll(int customerId);
 	
-	public List<Budget> getBudgets(int customerId);
-
-	public Budget getBudget(int id);
+	public Budget retrieveById(int budgetId);
 	
-	public void onlySaveBudget(Budget budget);
-
+	public Budget deleteById(int budgetId);
+	
 	public Budget saveBudget(Budget budget);
-	
-	public void deleteBudget(int id);
-
 }
