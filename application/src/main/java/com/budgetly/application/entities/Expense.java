@@ -1,5 +1,7 @@
 package com.budgetly.application.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -33,12 +35,22 @@ public class Expense {
 	public Expense() {
 		
 	}
-
-	public Expense(int id, double amount, String name) {
+	
+	public Expense(int id, double amount, String name, Budget budget) {
 		super();
 		this.id = id;
 		this.amount = amount;
 		this.name = name;
+		this.budget = budget;
+	}
+	
+	@JsonBackReference
+	public Budget getBudget() {
+		return budget;
+	}
+
+	public void setBudget(Budget budget) {
+		this.budget = budget;
 	}
 
 	public int getId() {
@@ -67,7 +79,7 @@ public class Expense {
 
 	@Override
 	public String toString() {
-		return "Expense [id=" + id + ", name=" + name + ", amount=" + amount +  "]";
+		return "Expense [id=" + id + ", amount=" + amount + ", name=" + name + ", budget=" + budget + "]";
 	}
 	
 }

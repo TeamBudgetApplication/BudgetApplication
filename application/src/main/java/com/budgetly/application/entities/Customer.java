@@ -5,6 +5,7 @@ import java.util.List;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -110,13 +111,14 @@ public class Customer {
 	
 	//one-to-many connection with Budgets table
 	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-	@JsonIgnore
 	private List<Budget> budgets;
 	
-//	public List<Budget> getBudgets() {
-//		return budgets;
-//	}
-//	public void setBudgets(List<Budget> budgets) {
-//		this.budgets = budgets;
-//	}
+	@JsonManagedReference
+	public List<Budget> getBudgets() {
+		return budgets;
+	}
+	
+	public void setBudgets(List<Budget> budgets) {
+		this.budgets = budgets;
+	}
 }

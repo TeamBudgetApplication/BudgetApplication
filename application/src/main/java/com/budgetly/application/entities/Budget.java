@@ -1,10 +1,10 @@
 package com.budgetly.application.entities;
 
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -47,29 +47,40 @@ public class Budget {
 	public Budget() {
 		
 	}
-
-	public Budget(int id, double amount, String name, Date startDate, Date endDate) {
+	
+	public Budget(int id, double amount, String name, Date startDate, Date endDate, Customer customer,
+			List<Expense> expenses) {
 		super();
 		this.id = id;
 		this.amount = amount;
 		this.name = name;
 		this.startDate = startDate;
 		this.endDate = endDate;
+		this.customer = customer;
+		this.expenses = expenses;
 	}
-	
+
 	//one-to-many connection with Expenses table
 	@OneToMany(mappedBy = "budget")
-	@JsonIgnore
-	private List<Expense> expenses = new ArrayList<Expense>();
+	private List<Expense> expenses;
 	
-//	public List<Expense> getExpenses() {
-//		return expenses;
-//	}
-//
-//	public void setExpenses(List<Expense> expenses) {
-//		this.expenses = expenses;
-//	}
+	@JsonManagedReference
+	public List<Expense> getExpenses() {
+		return expenses;
+	}
+
+	public void setExpenses(List<Expense> expenses) {
+		this.expenses = expenses;
+	}
 	
+	@JsonBackReference
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
 
 	public int getId() {
 		return id;
@@ -116,6 +127,5 @@ public class Budget {
 		return "Budget [id=" + id + ", amount=" + amount + ", name=" + name + ", startDate=" + startDate + ", endDate="
 				+ endDate + "]";
 	}
-	
 	
 }
