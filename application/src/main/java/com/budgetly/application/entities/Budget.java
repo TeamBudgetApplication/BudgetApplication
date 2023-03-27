@@ -38,9 +38,9 @@ public class Budget {
 	@Column(name = "end_date")
 	private Date endDate;
 	
-	@ManyToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
-	@JoinColumn(name = "customer_id")
-	private Customer customer;
+	@ManyToOne
+	@JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
+	protected Customer customer;
 	
 	
 	// Default constructor
@@ -50,7 +50,6 @@ public class Budget {
 	
 	public Budget(int id, double amount, String name, Date startDate, Date endDate, Customer customer,
 			List<Expense> expenses) {
-		super();
 		this.id = id;
 		this.amount = amount;
 		this.name = name;
@@ -61,7 +60,7 @@ public class Budget {
 	}
 
 	//one-to-many connection with Expenses table
-	@OneToMany(mappedBy = "budget")
+	@OneToMany(targetEntity= Expense.class, mappedBy = "budget")
 	private List<Expense> expenses;
 	
 	@JsonManagedReference
