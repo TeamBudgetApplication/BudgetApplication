@@ -12,61 +12,53 @@ import com.budgetly.application.springMVC.controller.NotFoundException;
 
 
 @Service
+@Transactional
 public class ExpenseServiceImpl implements ExpenseService {
 	
 	@Autowired
 	private ExpenseDAO expenseDAO;
-	
-	@Transactional
-	public List<Expense> getExpenses() {
-		return expenseDAO.getExpenses();
-	}
-	
-	@Transactional
+
+	// Get expenses
 	public List<Expense> getExpenses(int budgetId) {
-		List<Expense> expenses = expenseDAO.getExpenses(budgetId);
+		
+		List<Expense> expenses = expenseDAO.retrieveAll(budgetId);
 		
 		if (expenses.isEmpty()) {
-			throw new NotFoundException("budget Id not found. Id: " + budgetId);
+			throw new NotFoundException("Error no expenses found...");
 		}
+		
 		return expenses;
 	}
+
 	
-	
-	@Transactional
-	public Expense getExpense(int id) {
-		
-		Expense expense = expenseDAO.getExpense(id);
+	// Get single expense
+	public Expense getExpenseById(int expenseId) {
+		Expense expense = expenseDAO.retrieveById(expenseId);
 		
 		if (expense == null) {
-			throw new NotFoundException("expense Id not found. Id: " + id);
+			throw new NotFoundException("Error no expense found...");
 		}
 		
-		return expenseDAO.getExpense(id);
-	}
-	
-	@Transactional
-	public void onlySaveExpense(Expense expense) {
-		expenseDAO.saveExpense(expense);
-	}
-	
-	@Transactional
-	public Expense saveExpense(Expense expense) {
-		expenseDAO.saveExpense(expense);
 		return expense;
 	}
 	
 	
-	@Transactional
-	public void deleteExpense(int id) {
+	// Save budget expense
+	public Expense saveExpense(Expense expense) {
+		Expense savedExpense = expenseDAO.saveExpense(expense);
 		
-		Expense expense = expenseDAO.getExpense(id);
-		
-		if (expense == null) {
-			throw new NotFoundException("expense Id not found. Id: " + id);
+		if (savedExpense == null) {
+			throw new Error("Empty Expense not added please add fields....");
 		}
 		
-		expenseDAO.deleteExpense(id);
+		return savedExpense;
 	}
+	
+	
+	// Delete budget expense
+	public Expense deleteExpense(int expenseId) {
+		return expenseDAO.deleteById(expenseId);
+	}
+
 
 }

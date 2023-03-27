@@ -1,19 +1,20 @@
 package com.budgetly.application.entities;
 
-import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -21,47 +22,63 @@ import jakarta.persistence.Table;
 public class Budget {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "budget_id")
 	private int id;
 	
-	@Column(name="name")
-	private String name;
-	
-	@Column(name="start_date")
-	private Date startDate;
-	
-	@Column(name="end_date")
-	private Date endDate;
-	
-	@Column(name="amount")
+	@Column(name= "budget_amount")
 	private double amount;
 	
-	@ManyToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
-	@JoinColumn(name = "customer_id")
-	private Customer customer;
+	@Column(name= "budget_name")
+	private String name;
 	
+	@Column(name= "start_date")
+	private Date startDate;
+	
+	@Column(name = "end_date")
+	private Date endDate;
+	
+	@ManyToOne
+	@JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
+	protected Customer customer;
+	
+	
+	// Default constructor
 	public Budget() {
 		
 	}
-
-	public Budget(String name, Date startDate, Date endDate, double amount, Customer customer) {
-		super();
+	
+	public Budget(int id, double amount, String name, Date startDate, Date endDate, Customer customer,
+			List<Expense> expenses) {
+		this.id = id;
+		this.amount = amount;
 		this.name = name;
 		this.startDate = startDate;
 		this.endDate = endDate;
-		this.amount = amount;
 		this.customer = customer;
-	}
-	
-	public Budget(Customer customer) {
-		this.customer = customer;
+		this.expenses = expenses;
 	}
 
-	@Override
-	public String toString() {
-		return "Budget [id=" + id + ", name=" + name + ", startDate=" + startDate + ", endDate=" + endDate + ", amount="
-				+ amount + ", customer=" + customer.getId() + "]";
+	//one-to-many connection with Expenses table
+	@OneToMany(targetEntity= Expense.class, mappedBy = "budget")
+	private List<Expense> expenses;
+	
+	@JsonManagedReference
+	public List<Expense> getExpenses() {
+		return expenses;
+	}
+
+	public void setExpenses(List<Expense> expenses) {
+		this.expenses = expenses;
+	}
+	
+	@JsonBackReference
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 
 	public int getId() {
@@ -70,6 +87,14 @@ public class Budget {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public double getAmount() {
+		return amount;
+	}
+
+	public void setAmount(double amount) {
+		this.amount = amount;
 	}
 
 	public String getName() {
@@ -95,33 +120,11 @@ public class Budget {
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
-
-	public double getAmount() {
-		return amount;
-	}
-
-	public void setAmount(double amount) {
-		this.amount = amount;
-	}
-
-	public Customer getCustomer() {
-		return customer;
-	}
-
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
 	
-	//one-to-many connection with Expenses table
-	@JsonIgnore
-	@OneToMany(mappedBy = "budget", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-	private List<Expense> expenses = new ArrayList<Expense>();
-	
-	public List<Expense> getExpenses() {
-		return expenses;
-	}
-	public void setExpenses(List<Expense> expenses) {
-		this.expenses = expenses;
+	@Override
+	public String toString() {
+		return "Budget [id=" + id + ", amount=" + amount + ", name=" + name + ", startDate=" + startDate + ", endDate="
+				+ endDate + "]";
 	}
 	
 }
