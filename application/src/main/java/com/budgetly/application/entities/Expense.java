@@ -1,5 +1,8 @@
 package com.budgetly.application.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,45 +11,46 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.CascadeType;
 
 @Entity
-@Table(name="expenses")
+@Table(name = "expenses")
 public class Expense {
-
+	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="idexpenses")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "expense_id")
 	private int id;
 	
-	@Column(name="name")
-	private String name;
-	
-	@Column(name="amount")
+	@Column(name = "expense_amount")
 	private double amount;
 	
+	@Column(name = "expense_name")
+	private String name;
+	
 	@ManyToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
-	@JoinColumn(name = "budgetID")
+	@JoinColumn( name = "budget_id")
 	private Budget budget;
-
+	
+	// Default Constructor
 	public Expense() {
+		
 	}
 	
-	public Expense(String name, double amount, Budget budget) {
+	public Expense(int id, double amount, String name, Budget budget) {
 		super();
-		this.name = name;
+		this.id = id;
 		this.amount = amount;
+		this.name = name;
 		this.budget = budget;
 	}
 	
-	public Expense(Budget budget) {
-		super();
-		this.budget = budget;
+	@JsonBackReference
+	public Budget getBudget() {
+		return budget;
 	}
 
-	@Override
-	public String toString() {
-		return "Expense [id=" + id + ", name=" + name + ", amount=" + amount + ", budget=" + budget.getId() + "]";
+	public void setBudget(Budget budget) {
+		this.budget = budget;
 	}
 
 	public int getId() {
@@ -57,14 +61,6 @@ public class Expense {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public double getAmount() {
 		return amount;
 	}
@@ -73,12 +69,17 @@ public class Expense {
 		this.amount = amount;
 	}
 
-	public Budget getBudget() {
-		return budget;
+	public String getName() {
+		return name;
 	}
 
-	public void setBudget(Budget budget) {
-		this.budget = budget;
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@Override
+	public String toString() {
+		return "Expense [id=" + id + ", amount=" + amount + ", name=" + name + ", budget=" + budget + "]";
 	}
 	
 }

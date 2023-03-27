@@ -1,91 +1,59 @@
 package com.budgetly.application.springMVC.controller;
 
-import java.net.URI;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.budgetly.application.Service.BudgetService;
 import com.budgetly.application.entities.Budget;
 
 
-@RestController
+@Controller
 public class BudgetController {
 	
-	@Autowired 
+	@Autowired
 	private BudgetService service;
 	
-	
-	// Retrieve all budgets
-	@GetMapping(path = "/budgets/get-bugdets")
-	public List<Budget> retrieveAll(ModelMap model) {
+	// Route retrieves all of a users budgets passes to jsp
+	@GetMapping(path = "/budgets/user-budgets/{customerId}")
+	public String getUserBudgetsJsp(@PathVariable int customerId, ModelMap model) {
 		
-		List<Budget> budgets = service.getBudgets();
+		// Get User Budgets
+		List<Budget> budgets = service.retrieveUserBudgets(customerId);
 		
-		// Throw error if budgets null
-		if (budgets == null) {
-			throw new Error("Error fetching budgets...");
-		}
-				
-		// Pass data to modal -> budgets.jsp
+		// Add budgets to model for jsp interaction
 		model.addAttribute("budgets", budgets);
 		
-		return budgets; // Jsp displaying budgets
+		return "budgets";
 	}
 	
-	
-	// Retrieve budget by id
-	@GetMapping(path = "/budgets/get-budget/{budgetId}")
-	public Budget getBudget(@PathVariable int budgetId, ModelMap model) {
-		Budget budget = service.getBudget(budgetId);
+	// Route retrieves a users budget by id passes to jsp
+	@GetMapping(path = "/budgets/user-budget/{budgetId}")
+	public String getUserBudgetJsp(@PathVariable int budgetId, ModelMap model) {
+		// Get User Budget
+		Budget budget = service.retrieveUserBudgetById(budgetId);
+		System.out.println(budget);
 		
-		// Throw error if budgets null
-		if (budget == null) {
-			throw new Error("Error fetching budget...");
-		}
-		
-		// Pass data to the model
+		// Add budgets to model for jsp interaction
 		model.addAttribute("budget", budget);
 		
-		return budget; // jsp needing individual budget
+		return "single-budget";
 	}
 	
-	
-	// Save budget to db
+	// Add Expense Page
 	@PostMapping(path = "/budgets/create-budget")
-	public String addBudget(@RequestBody Budget budget) {
-		Budget savedBudget = service.saveBudget(budget);
-		
-		// Throw error if budget found
-		if (budget == null) {
-			 throw new Error("Error adding budget...");
-		}
-		
-		// Create uri returning a link for the recently added budget
-		URI location = ServletUriComponentsBuilder
-				.fromCurrentRequest()
-				.path("/{budgetId}")
-				.buildAndExpand(savedBudget.getId())
-				.toUri();
-				
-		ResponseEntity.created(location).build();
-		
-		return "createBudget.jsp"; // Budgets/Dashboard jsp
+	public String addBudgetExpenseJsp(@RequestBody Budget budget) {
+		// Save submitted budget form
+		service.saveBudget(budget);
+			
+		// redirect to budgets jsp
+		return "budgets";
 	}
-	
-	// Delete budget
-	@DeleteMapping(path = "/budgets/delete-budget/{budgetId}")
-	public void deleteBudget(@PathVariable int budgetId) {
-		service.deleteBudget(budgetId);
-	}
-	
 }

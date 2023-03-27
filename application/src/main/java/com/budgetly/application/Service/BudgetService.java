@@ -6,16 +6,13 @@ import com.budgetly.application.entities.Budget;
 
 public interface BudgetService {
 	
-	public List<Budget> getBudgets();
+	public List<Budget> retrieveUserBudgets(int customerId);
 	
-	public List<Budget> getBudgets(int customerId);
-
-	public Budget getBudget(int id);
-
-	public void onlySaveBudget(Budget budget);
-
+	public Budget retrieveUserBudgetById(int budgetId);
+	
+	public Budget deleteBudget(int budgetId);
+	
 	public Budget saveBudget(Budget budget);
 	
-	public void deleteBudget(int id);
 
 }

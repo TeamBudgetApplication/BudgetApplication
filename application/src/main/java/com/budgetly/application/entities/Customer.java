@@ -1,11 +1,11 @@
 package com.budgetly.application.entities;
 
-import java.util.ArrayList;
 import java.util.List;
 
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -23,7 +23,7 @@ public class Customer {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="idcustomers")
+	@Column(name="customer_id")
 	private int id;
 	
 	@Column(name="firstName")
@@ -110,13 +110,14 @@ public class Customer {
 	}*/
 	
 	//one-to-many connection with Budgets table
-	@JsonIgnore
-	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-	private List<Budget> budgets = new ArrayList<Budget>();
+	@OneToMany(targetEntity= Budget.class, mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+	private List<Budget> budgets;
 	
+	@JsonManagedReference
 	public List<Budget> getBudgets() {
 		return budgets;
 	}
+	
 	public void setBudgets(List<Budget> budgets) {
 		this.budgets = budgets;
 	}
