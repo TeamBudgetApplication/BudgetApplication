@@ -11,9 +11,11 @@ import com.budgetly.application.entities.Budget;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
+import jakarta.transaction.Transactional;
 
 
 @Repository
+@Transactional
 public class BudgetDAOImpl implements BudgetDAO {
 	
 	@PersistenceContext
@@ -23,8 +25,12 @@ public class BudgetDAOImpl implements BudgetDAO {
 	public List<Budget> retrieveAll(int customerId) {
 		
 		TypedQuery<Budget> query = entityManager
-				.createQuery("SELECT b FROM Budget b ", Budget.class);
-		return query.getResultList();
+				.createQuery("SELECT b FROM Budget b WHERE b.customer.id = :id ", Budget.class);
+		
+				List<Budget> budgets = query.setParameter("id", customerId).getResultList();
+				
+				return budgets;
+		
 	}
 	
 	// Retrieve User single budget by using budget id
@@ -48,6 +54,7 @@ public class BudgetDAOImpl implements BudgetDAO {
 		Budget budget = entityManager.find(Budget.class, budgetId);
 		entityManager.remove(budget);
 		return budget;
+		
 	}
 	
 	

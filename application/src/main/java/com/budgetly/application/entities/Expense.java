@@ -27,8 +27,8 @@ public class Expense {
 	@Column(name = "expense_name")
 	private String name;
 	
-	@ManyToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
-	@JoinColumn( name = "budget_id")
+	@ManyToOne
+	@JoinColumn(name = "budget_id")
 	private Budget budget;
 	
 	// Default Constructor

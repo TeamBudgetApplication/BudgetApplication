@@ -48,7 +48,7 @@
 		
 		<!-- Add todo -->
 		<a href="add-todo">
-			<button class="btn btn-success">Add Todo</button>
+			<button class="btn btn-success">Add Budget</button>
 		</a>
     </div>
   </body>

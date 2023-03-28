@@ -54,6 +54,6 @@ public class BudgetController {
 		service.saveBudget(budget);
 			
 		// redirect to budgets jsp
-		return "budgets";
+		return "";
 	}
 }
