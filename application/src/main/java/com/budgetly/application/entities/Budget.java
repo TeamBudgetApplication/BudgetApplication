@@ -40,7 +40,7 @@ public class Budget {
 	@Column(name = "end_date")
 	private Date endDate;
 	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name = "customer_id")
 	private Customer customer;
 	
