@@ -12,7 +12,6 @@ import com.budgetly.application.springMVC.controller.NotFoundException;
 
 
 @Service
-@Transactional
 public class ExpenseServiceImpl implements ExpenseService {
 	
 	@Autowired

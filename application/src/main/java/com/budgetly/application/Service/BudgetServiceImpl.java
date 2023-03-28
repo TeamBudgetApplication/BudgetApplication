@@ -13,7 +13,6 @@ import com.budgetly.application.springMVC.controller.NotFoundException;
 
 
 @Service
-@Transactional
 public class BudgetServiceImpl implements BudgetService {
 	
 	@Autowired
@@ -21,22 +20,42 @@ public class BudgetServiceImpl implements BudgetService {
 
 	@Override
 	public  List<Budget> retrieveUserBudgets(int customerId) {
-		return budgetDAO.retrieveAll(customerId);
+		List<Budget> budgets = budgetDAO.retrieveAll(customerId);
+		
+		if (budgets.isEmpty()) {
+			throw new NotFoundException("No budgets found for user with id: " + customerId);
+		}
+		
+		return budgets;
 	}
 
 	@Override
 	public Budget retrieveUserBudgetById(int budgetId) {
-		return budgetDAO.retrieveById(budgetId);
+		Budget budget = budgetDAO.retrieveById(budgetId);
+		
+		if (budget == null) {
+			throw new NotFoundException("No budget was found with id:  " + budgetId);
+		}
+		
+		return budget;
+	}
+	
+	@Override
+	public Budget saveBudget(Budget budget) {
+		Budget savedBudget = budgetDAO.saveBudget(budget);
+		
+		if (budget.getAmount() <= 0 || budget.getName() == "" || budget.getEndDate() == null || budget.getStartDate() == null) {
+			throw new NotFoundException("Error cannot add empty budget add required budget field");
+		}
+		
+		return savedBudget;
 	}
 
 	@Override
 	public Budget deleteBudget(int budgetId) {
-		return budgetDAO.deleteById(budgetId);
-	}
-
-	@Override
-	public Budget saveBudget(Budget budget) {
-		return budgetDAO.saveBudget(budget);
+		Budget deletedBudget = budgetDAO.deleteById(budgetId);
+		System.out.println("Deleted budget");
+		return deletedBudget;
 	}
 	
 	

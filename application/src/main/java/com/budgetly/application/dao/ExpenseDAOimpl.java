@@ -9,8 +9,10 @@ import com.budgetly.application.entities.Expense;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
+import jakarta.transaction.Transactional;
 
 @Repository
+@Transactional
 public class ExpenseDAOimpl implements ExpenseDAO {
 	
 	@PersistenceContext
@@ -18,8 +20,8 @@ public class ExpenseDAOimpl implements ExpenseDAO {
 	
 	// Get All budget expenses
 	public List<Expense> retrieveAll(int budgetId) {
-		TypedQuery<Expense> query = entityManager.createQuery("SELECT e FROM Expense e", Expense.class);
-		return query.getResultList();
+		TypedQuery<Expense> query = entityManager.createQuery("SELECT e FROM Expense e WHERE e.budget.id = :budgetId", Expense.class);
+		return query.setParameter("budgetId", budgetId).getResultList();
 	}
 	
 	// Get single budget expense by id
