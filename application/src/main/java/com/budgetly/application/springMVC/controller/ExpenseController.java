@@ -32,7 +32,7 @@ public class ExpenseController {
 		// Add budgets to model for jsp interaction
 		model.addAttribute("expenses", expenses);
 		
-		return "expenses";
+		return ""; // expenses.jsp
 	}
 	
 	// Route retrieves a budget expenses by id passes to jsp
@@ -44,7 +44,7 @@ public class ExpenseController {
 		// Add budgets to model for jsp interaction
 		model.addAttribute("expense", expense);
 		
-		return "single-expense";
+		return ""; // single-expense if applicable
 	}
 	
 	
@@ -54,7 +54,7 @@ public class ExpenseController {
 		// Save submitted expense form
 		service.saveExpense(expense);
 		
-		// redirect to expenses or budgets jsp
-		return "expenses";
+
+		return ""; // redirect to expenses jsp
 	}
 }
