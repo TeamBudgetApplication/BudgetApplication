@@ -13,7 +13,6 @@
 	content="Budgetly is a robust budgeting application allowing you create, update, and 
       delete budgets and expenses." />
 <title>Welcome</title>
-<script src="webjars/bootstrap/5.2.3/js/bootstrap.min.js" defer></script>
 </head>
 <body>
 	<div class="container">
@@ -23,10 +22,10 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col">
+			<div class="col-3">
 				<jsp:include page="vertical-navigation.jsp" />
 			</div>
-			<div class="col">page content</div>
+			<div class="col-9">page content</div>
 		</div>
 	</div>
 </body>
