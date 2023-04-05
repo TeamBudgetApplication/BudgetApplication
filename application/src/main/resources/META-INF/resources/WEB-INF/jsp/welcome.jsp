@@ -12,8 +12,6 @@
 <meta name="description"
 	content="Budgetly is a robust budgeting application allowing you create, update, and 
       delete budgets and expenses." />
-<link rel="stylesheet"
-	href="webjars/bootstrap/5.2.3/css/bootstrap.min.css"></link>
 <title>Welcome</title>
 <script src="webjars/bootstrap/5.2.3/js/bootstrap.min.js" defer></script>
 </head>
