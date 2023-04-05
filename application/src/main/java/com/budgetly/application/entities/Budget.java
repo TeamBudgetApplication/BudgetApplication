@@ -22,13 +22,13 @@ public class Budget {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
+	@Column(name = "budget_id")
 	private int id;
 	
-	@Column(name= "amount")
+	@Column(name= "budget_amount")
 	private double amount;
 	
-	@Column(name= "name")
+	@Column(name= "budget_name")
 	private String name;
 	
 	@Column(name= "start_date")
