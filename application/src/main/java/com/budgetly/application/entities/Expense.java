@@ -18,13 +18,13 @@ public class Expense {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "expense_id")
+	@Column(name = "id")
 	private int id;
 	
-	@Column(name = "expense_amount")
+	@Column(name = "amount")
 	private double amount;
 	
-	@Column(name = "expense_name")
+	@Column(name = "name")
 	private String name;
 	
 	@ManyToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})

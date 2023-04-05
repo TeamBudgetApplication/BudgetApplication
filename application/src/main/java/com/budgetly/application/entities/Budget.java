@@ -6,7 +6,6 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,13 +22,13 @@ public class Budget {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "budget_id")
+	@Column(name = "id")
 	private int id;
 	
-	@Column(name= "budget_amount")
+	@Column(name= "amount")
 	private double amount;
 	
-	@Column(name= "budget_name")
+	@Column(name= "name")
 	private String name;
 	
 	@Column(name= "start_date")
@@ -39,7 +38,7 @@ public class Budget {
 	private Date endDate;
 	
 	@ManyToOne
-	@JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
+	@JoinColumn(name = "customer_id", referencedColumnName = "id")
 	protected Customer customer;
 	
 	
