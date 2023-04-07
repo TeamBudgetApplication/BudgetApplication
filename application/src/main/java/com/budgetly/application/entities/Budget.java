@@ -38,7 +38,7 @@ public class Budget {
 	private Date endDate;
 	
 	@ManyToOne
-	@JoinColumn(name = "customer_id", referencedColumnName = "id")
+	@JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
 	protected Customer customer;
 	
 	
