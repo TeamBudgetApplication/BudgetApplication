@@ -23,7 +23,9 @@
 		</div>
 		<div class="row">
 			<div class="col-3">
-				<jsp:include page="vertical-navigation.jsp" />
+				<jsp:include page="vertical-navigation.jsp" /><form>
+					
+				</form>
 			</div>
 			<div class="col-9">page content</div>
 		</div>

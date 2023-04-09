@@ -1,5 +1,7 @@
 package com.budgetly.application.entities;
 
+import java.time.LocalDate;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.CascadeType;
@@ -27,6 +29,9 @@ public class Expense {
 	@Column(name = "expense_name")
 	private String name;
 	
+	@Column(name = "expense_date")
+	private LocalDate expenseDate;
+	
 	@ManyToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
 	@JoinColumn( name = "budget_id")
 	private Budget budget;
@@ -36,11 +41,12 @@ public class Expense {
 		
 	}
 	
-	public Expense(int id, double amount, String name, Budget budget) {
+	public Expense(int id, double amount, String name, LocalDate expenseDate, Budget budget) {
 		super();
 		this.id = id;
 		this.amount = amount;
 		this.name = name;
+		this.expenseDate = expenseDate;
 		this.budget = budget;
 	}
 	
@@ -75,6 +81,14 @@ public class Expense {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public LocalDate getExpenseDate() {
+		return expenseDate;
+	}
+	
+	public void setExpenseDate(LocalDate expenseDate) {
+		this.expenseDate = expenseDate;
 	}
 
 	@Override
