@@ -93,7 +93,8 @@ public class Expense {
 
 	@Override
 	public String toString() {
-		return "Expense [id=" + id + ", amount=" + amount + ", name=" + name + ", budget=" + budget + "]";
+		return "Expense [id=" + id + ", amount=" + amount + ", name=" + name + ", expenseDate=" + expenseDate
+				+ ", budget=" + budget + "]";
 	}
 	
 }
