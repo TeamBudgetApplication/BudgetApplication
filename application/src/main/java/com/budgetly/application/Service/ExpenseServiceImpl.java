@@ -12,7 +12,6 @@ import com.budgetly.application.springMVC.controller.NotFoundException;
 
 
 @Service
-@Transactional
 public class ExpenseServiceImpl implements ExpenseService {
 	
 	@Autowired
@@ -36,7 +35,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 		Expense expense = expenseDAO.retrieveById(expenseId);
 		
 		if (expense == null) {
-			throw new NotFoundException("Error no expense found...");
+			throw new NotFoundException("Error no expense found.");
 		}
 		
 		return expense;
@@ -48,7 +47,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 		Expense savedExpense = expenseDAO.saveExpense(expense);
 		
 		if (savedExpense == null) {
-			throw new Error("Empty Expense not added please add fields....");
+			throw new Error("Empty Expense not added please add fields.");
 		}
 		
 		return savedExpense;
