@@ -2,9 +2,6 @@ package com.budgetly.application.entities;
 
 import java.util.List;
 
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
@@ -103,11 +100,6 @@ public class Customer {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	/*public void hashPassword(String password) {
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		encoder.encode(password);
-	}*/
 	
 	//one-to-many connection with Budgets table
 	@OneToMany(mappedBy = "customer", fetch = FetchType.EAGER, orphanRemoval = false)
