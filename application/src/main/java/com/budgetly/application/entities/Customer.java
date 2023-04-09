@@ -102,7 +102,8 @@ public class Customer {
 	}
 	
 	//one-to-many connection with Budgets table
-	@OneToMany(targetEntity= Budget.class, mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+	@OneToMany(mappedBy = "customer", fetch = FetchType.EAGER, orphanRemoval = false)
+	@JsonIgnore
 	private List<Budget> budgets;
 	
 	@JsonManagedReference
