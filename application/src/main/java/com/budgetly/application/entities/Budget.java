@@ -1,13 +1,14 @@
 package com.budgetly.application.entities;
 
 import java.sql.Date;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -43,7 +44,6 @@ public class Budget {
 	@ManyToOne
 	@JoinColumn(name = "customer_id")
 	private Customer customer;
-	
 	
 	// Default constructor
 	public Budget() {
@@ -129,5 +129,50 @@ public class Budget {
 		return "Budget [id=" + id + ", amount=" + amount + ", name=" + name + ", startDate=" + startDate + ", endDate="
 				+ endDate + "]";
 	}
+	
+	
+	//for UI only
+	public char getLetter() {
+		char letter = this.name.charAt(0);
+		return letter;
+	}
+	
+	public String getFormattedStartDate() {
+		SimpleDateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy");
+		String formattedStartDate = outputFormat.format(this.startDate);
+		return formattedStartDate;
+	}
+
+	public String getFormattedEndDate() {
+		SimpleDateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy");
+		String formattedEndDate = outputFormat.format(this.endDate);
+		return formattedEndDate;
+	}
+	
+	private static DecimalFormat df = new DecimalFormat("0.00");
+
+	public double getSpentSum() {
+		double spentSum = 0;	
+		List<Expense> expenses = this.getExpenses();
+		for (Expense expense : expenses) {
+			spentSum += expense.getAmount();
+		} return spentSum;
+	}
+	
+	public String getSpentSumString() {
+		return df.format(this.getSpentSum());
+	}
+
+
+	public String getRemainingSum() {
+		double remainingSum = this.getAmount() - this.getSpentSum();
+		return df.format(remainingSum);
+	}
+	
+	public String getFormattedAmount() {
+		String formattedAmount = df.format(this.amount);;
+		return formattedAmount;
+	}
+	
 	
 }

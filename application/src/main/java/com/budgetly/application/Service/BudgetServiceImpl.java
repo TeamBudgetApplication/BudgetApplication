@@ -17,7 +17,8 @@ public class BudgetServiceImpl implements BudgetService {
 	
 	@Autowired
 	private BudgetDAO budgetDAO;
-
+	
+	@Transactional
 	@Override
 	public  List<Budget> retrieveUserBudgets(int customerId) {
 		List<Budget> budgets = budgetDAO.retrieveAll(customerId);
@@ -29,6 +30,7 @@ public class BudgetServiceImpl implements BudgetService {
 		return budgets;
 	}
 
+	@Transactional
 	@Override
 	public Budget retrieveUserBudgetById(int budgetId) {
 		Budget budget = budgetDAO.retrieveById(budgetId);
@@ -40,6 +42,7 @@ public class BudgetServiceImpl implements BudgetService {
 		return budget;
 	}
 	
+	@Transactional
 	@Override
 	public Budget saveBudget(Budget budget) {
 		Budget savedBudget = budgetDAO.saveBudget(budget);
@@ -51,6 +54,7 @@ public class BudgetServiceImpl implements BudgetService {
 		return savedBudget;
 	}
 
+	@Transactional
 	@Override
 	public Budget deleteBudget(int budgetId) {
 		Budget deletedBudget = budgetDAO.deleteById(budgetId);
@@ -58,5 +62,25 @@ public class BudgetServiceImpl implements BudgetService {
 		return deletedBudget;
 	}
 	
+	@Override
+	@Transactional
+	public List<Budget> queryBudgetsOverAmount(int customerId) {
+		// TODO Auto-generated method stub
+		return budgetDAO.queryBudgetsOverAmount(customerId);
+	}
+
+	@Override
+	@Transactional
+	public List<Budget> budgetsActiveThisMonth(int customerId) {
+		// TODO Auto-generated method stub
+		return budgetDAO.budgetsActiveThisMonth(customerId);
+	}
+
+	@Override
+	@Transactional
+	public List<Budget> budgetsActiveThisWeek(int customerId) {
+		// TODO Auto-generated method stub
+		return budgetDAO.budgetsActiveThisWeek(customerId);
+	}
 	
 }

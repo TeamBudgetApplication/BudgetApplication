@@ -1,5 +1,8 @@
 package com.budgetly.application.entities;
 
+import java.text.DecimalFormat;
+import java.time.LocalDate;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.CascadeType;
@@ -27,7 +30,10 @@ public class Expense {
 	@Column(name = "expense_name")
 	private String name;
 	
-	@ManyToOne
+	@Column(name = "expense_date")
+	private LocalDate expenseDate;
+	
+	@ManyToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
 	@JoinColumn(name = "budget_id")
 	private Budget budget;
 	
@@ -36,11 +42,12 @@ public class Expense {
 		
 	}
 	
-	public Expense(int id, double amount, String name, Budget budget) {
+	public Expense(int id, double amount, String name, LocalDate expenseDate, Budget budget) {
 		super();
 		this.id = id;
 		this.amount = amount;
 		this.name = name;
+		this.expenseDate = expenseDate;
 		this.budget = budget;
 	}
 	
@@ -76,10 +83,25 @@ public class Expense {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public LocalDate getExpenseDate() {
+		return expenseDate;
+	}
+	
+	public void setExpenseDate(LocalDate expenseDate) {
+		this.expenseDate = expenseDate;
+	}
 
 	@Override
 	public String toString() {
-		return "Expense [id=" + id + ", amount=" + amount + ", name=" + name + ", budget=" + budget + "]";
+		return "Expense [id=" + id + ", amount=" + amount + ", name=" + name + ", expenseDate=" + expenseDate
+				+ ", budget=" + budget + "]";
 	}
 	
+	//for UI only
+		public String getFormattedAmount() {
+			DecimalFormat df = new DecimalFormat("0.00");
+			String formattedAmount = df.format(this.amount);;
+			return formattedAmount;
+		}
 }

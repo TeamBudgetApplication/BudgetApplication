@@ -1,6 +1,7 @@
 package com.budgetly.application.springMVC.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,9 @@ public class CustomerAPIController {
 	@Autowired
 	private CustomerService customerService;
 	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
+	
 	// API REQUESTS
 
 	// Retrieve a Customer
@@ -31,6 +35,9 @@ public class CustomerAPIController {
 	@PostMapping("/api/customer")
 	@ResponseBody
 	public Customer addCustomer(@RequestBody Customer customer) {
+		String password = customer.getPassword();
+		String hashedPassword = passwordEncoder.encode(password);
+		customer.setPassword(hashedPassword);
 		customerService.saveCustomer(customer);
 		return customer;
 	}

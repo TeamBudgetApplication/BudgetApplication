@@ -11,6 +11,7 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 
+
 @Repository
 public class CustomerDAOimpl implements CustomerDAO {
 	
@@ -25,7 +26,7 @@ public class CustomerDAOimpl implements CustomerDAO {
 
 	@Override
 	public void saveCustomer(Customer customer) {
-		entityManager.merge(customer);
+		entityManager.persist(customer);
 	}
 	
 	@Override

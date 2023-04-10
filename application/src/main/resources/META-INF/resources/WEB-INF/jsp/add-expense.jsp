@@ -1,8 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,14 +7,14 @@
 <meta name="description"
 	content="Budgetly is a robust budgeting application allowing you create, update, and 
       delete budgets and expenses." />
-<title>Welcome</title>
+<title>Add a new expense</title>
 </head>
-<h1 class="text-center mt-3">Budget Application</h1>
 <body>
+<form:form action = "addExpense" modelAttribute = "newExpense">
 	<div class="container">
 		<div class="row">
 			<div class="col">
-				
+				<h1 class="text-center mt-3">Budget ${budgetName}</h1>
 			</div>
 		</div>
 		<div class="row">
@@ -28,17 +23,11 @@
 					
 				</form>
 			</div>
-			<div class="col-9">page content</div>
+			<div class="col-9">ADD EXPENSE PAGE</div>
 		</div>
 	</div>
+	</form:form>
 </body>
 </html>
-
-<!-- <script>
-  function updateProgressBar(progress) {
-    var progressBar = document.querySelector(".progress-bar");
-    progressBar.style.width = progress + "%";
-    progressBar.setAttribute("aria-valuenow", progress);
-  }
-  
-</script> -->
+</body>
+</html>

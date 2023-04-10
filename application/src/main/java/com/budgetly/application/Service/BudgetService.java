@@ -14,5 +14,11 @@ public interface BudgetService {
 	
 	public Budget saveBudget(Budget budget);
 	
+	public List<Budget> queryBudgetsOverAmount(int customerId);
+	
+	public List<Budget> budgetsActiveThisMonth(int customerId);
+	
+	public List<Budget> budgetsActiveThisWeek(int customerId);
+	
 
 }

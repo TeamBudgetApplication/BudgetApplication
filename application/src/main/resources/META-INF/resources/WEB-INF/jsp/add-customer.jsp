@@ -9,6 +9,18 @@
 <title>Insert title here</title>
 </head>
 <body>
-add a new customer form
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<h1 class="text-center mt-3">Registration</h1>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<jsp:include page="vertical-navigation.jsp" />
+			</div>
+			<div class="col">add a new customer/user form goes here</div>
+		</div>
+	</div>
 </body>
 </html>
