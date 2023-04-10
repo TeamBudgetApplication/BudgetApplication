@@ -14,11 +14,12 @@
       delete budgets and expenses." />
 <title>Welcome</title>
 </head>
+<h1 class="text-center mt-3">Budget Application</h1>
 <body>
 	<div class="container">
 		<div class="row">
 			<div class="col">
-				<h1 class="text-center mt-3">Budget Application</h1>
+				
 			</div>
 		</div>
 		<div class="row">
