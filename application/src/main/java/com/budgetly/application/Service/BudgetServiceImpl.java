@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.budgetly.application.dao.BudgetDAO;
 import com.budgetly.application.entities.Budget;
 
+import com.budgetly.application.springMVC.controller.NotFoundException;
+
 
 @Service
 public class BudgetServiceImpl implements BudgetService {
@@ -55,6 +57,26 @@ public class BudgetServiceImpl implements BudgetService {
 		System.out.println("Deleted budget");
 		return deletedBudget;
 	}
+
+	@Override
+	@Transactional
+	public List<Budget> queryBudgetsOverAmount(int customerId) {
+		// TODO Auto-generated method stub
+		return budgetDAO.queryBudgetsOverAmount(customerId);
+	}
+
+	@Override
+	public List<Budget> budgetsActiveThisMonth(int customerId) {
+		// TODO Auto-generated method stub
+		return budgetDAO.budgetsActiveThisMonth(customerId);
+	}
+
+	@Override
+	public List<Budget> budgetsActiveThisWeek(int customerId) {
+		// TODO Auto-generated method stub
+		return budgetDAO.budgetsActiveThisWeek(customerId);
+	}
+	
 	
 	
 }

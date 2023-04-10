@@ -44,13 +44,6 @@ public class CustomerController {
 		model.addAttribute("customer", customer);
 		return "add-customer";
 	}
-
-	@GetMapping("/customer/{customerId}")
-	public String getCustomerById(Model model, @PathVariable("customerId") int customerId) {
-	    Customer customer = customerService.getCustomer(customerId);
-	    model.addAttribute("customer", customer);
-	    return "customer-dashboard";
-	}
 	
 	@PostMapping("/customer/authenticate") // Use this method when building login page and when posting, route to this method to verify login credentials 
 	public String authenticate(Model model, @PathVariable("customerId") int customerId, @ModelAttribute("customer") Customer customer) {
