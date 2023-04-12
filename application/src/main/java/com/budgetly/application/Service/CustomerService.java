@@ -10,6 +10,8 @@ public interface CustomerService {
 	
 	public Customer getCustomer(int id);
 	
+	public Customer getByEmail(String email, String password);
+	
 	public void saveCustomer(Customer customer);
 
 }

@@ -16,9 +16,19 @@ public class WelcomeController {
 	@Autowired
 	private CustomerService customerService;
 	
-	@GetMapping("/welcome")
+	@GetMapping("/")
+	public String login() {
+		return "login";
+	}
+	
+	@GetMapping("/login")
 	public String welcome() {
-		return "welcome";
+		return "login";
+	}
+	
+	@GetMapping("/signup")
+	public String signup() {
+		return "signup";
 	}
 	
 	@GetMapping("/vertical-navigation")
