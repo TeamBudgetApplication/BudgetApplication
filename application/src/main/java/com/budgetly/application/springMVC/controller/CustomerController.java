@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.budgetly.application.Service.CustomerService;
 import com.budgetly.application.entities.Customer;
@@ -35,7 +37,7 @@ public class CustomerController {
 		String hashedPassword = passwordEncoder.encode(password);
 		customer.setPassword(hashedPassword);
 		customerService.saveCustomer(customer);
-		return "redirect:/customer-dashboard";
+		return "login";
 	}
 
 	@GetMapping("customer/updateCustomer/{customerId}")
@@ -56,6 +58,22 @@ public class CustomerController {
 	        model.addAttribute("error", "Invalid email or password"); // Might need to replace this with our custom error toast pop-up
 	        return "login";
 	    }
+	}
+	
+	@PostMapping("/customer/authenticate-login") // Use this method when building login page and when posting, route to this method to verify login credentials 
+	public String authenticateByEmail(Model model, @RequestParam(value = "email", required = false) String email, @RequestParam(value = "password", required = false) String password) {	    
+	    Customer existingCustomer = customerService.getByEmail(email, password);
+	    
+	    if (existingCustomer != null && passwordEncoder.matches(password, existingCustomer.getPassword())) {
+	        model.addAttribute("firstName", existingCustomer.getFirstName());
+	        return "customer-dashboard";
+	    } 
+	    else {
+	    	model.addAttribute("email", existingCustomer.getEmail());
+	        model.addAttribute("error", "Invalid email or password"); 
+	        return "login";
+	    }
+	  
 	}
 
 
