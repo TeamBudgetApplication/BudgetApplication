@@ -31,6 +31,10 @@ public class DashboardController {
 	    model.addAttribute("budgetsOverAmount", budgetService.queryBudgetsOverAmount(customerId));
 	    model.addAttribute("thisMonthsBudgets", budgetService.budgetsActiveThisMonth(customerId));
 	    model.addAttribute("thisWeeksBudgets", budgetService.budgetsActiveThisWeek(customerId));
+	    model.addAttribute("thisMonthsExpenses", expenseService.totalExpensesForTheMonth(customerId));
+	    model.addAttribute("thisWeeksExpenses", expenseService.totalExpensesForTheWeek(customerId));
+	    model.addAttribute("mostRecentExpenses", expenseService.mostRecentTransactions(customerId));
+	    model.addAttribute("calculatedExpenses", expenseService.calculateMostRecentTransactions(customerId));
 	    return "customer-dashboard";
 	}
 

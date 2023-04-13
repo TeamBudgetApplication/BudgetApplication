@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.budgetly.application.dao.ExpenseDAO;
+import com.budgetly.application.entities.Budget;
 import com.budgetly.application.entities.Expense;
 import com.budgetly.application.springMVC.controller.NotFoundException;
 
@@ -59,5 +60,32 @@ public class ExpenseServiceImpl implements ExpenseService {
 		return expenseDAO.deleteById(expenseId);
 	}
 
+
+	@Override
+	public List<Budget> totalExpensesForTheMonth(int customerId) {
+		// TODO Auto-generated method stub
+		return expenseDAO.totalExpensesForTheMonth(customerId);
+	}
+
+
+	@Override
+	public List<Budget> totalExpensesForTheWeek(int customerId) {
+		// TODO Auto-generated method stub
+		return expenseDAO.totalExpensesForTheWeek(customerId);
+	}
+
+
+	@Override
+	public List<Expense> mostRecentTransactions(int customerId) {
+		// TODO Auto-generated method stub
+		return expenseDAO.mostRecentTransactions(customerId);
+	}
+
+
+	@Override
+	public double calculateMostRecentTransactions(int customerId) {
+		// TODO Auto-generated method stub
+		return expenseDAO.calculateMostRecentTransactions(customerId);
+	}
 
 }
