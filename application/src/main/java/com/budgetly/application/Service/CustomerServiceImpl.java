@@ -23,7 +23,6 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 
-	@Override
 	@Transactional
 	public Customer getCustomer(int id) {
 		
@@ -40,6 +39,19 @@ public class CustomerServiceImpl implements CustomerService {
 	public void saveCustomer(Customer customer) {
 		// TODO Auto-generated method stub
 		customerDAO.saveCustomer(customer);
+	}
+
+
+	@Override
+	@Transactional
+	public Customer getByEmail(String email, String password) {
+		Customer result = customerDAO.getByEmail(email, password);
+		
+		if (result == null) {
+			throw new NotFoundException("Invalid email or passord: " + email);
+		}
+		
+		return result;
 	}
 
 }

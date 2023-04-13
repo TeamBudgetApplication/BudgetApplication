@@ -31,5 +31,6 @@
 			<div class="col-9">page content</div>
 		</div>
 	</div>
+	
 </body>
 </html>

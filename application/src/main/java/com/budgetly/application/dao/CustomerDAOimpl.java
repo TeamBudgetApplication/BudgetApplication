@@ -2,12 +2,15 @@ package com.budgetly.application.dao;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import com.budgetly.application.entities.Customer;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 
 @Repository
@@ -15,6 +18,9 @@ public class CustomerDAOimpl implements CustomerDAO {
 	
 	@PersistenceContext
     private EntityManager entityManager;
+	
+	@Autowired
+	private BCryptPasswordEncoder encoder;
 	
 	@Override
 	public List<Customer> getCustomers() {
@@ -31,5 +37,20 @@ public class CustomerDAOimpl implements CustomerDAO {
     public Customer getCustomer(int id) {
         return entityManager.find(Customer.class, id);
     }
+
+	public Customer getByEmail(String email, String password) {
+				// Find user
+				String select = "SELECT c FROM Customer c WHERE c.email=:email";
+				Query query = entityManager.createQuery(select);
+				query.setParameter("email", email);
+				
+				// User with user name
+				Customer customer = (Customer) query.getSingleResult();
+			
+				// Check if entered login user password matches user in the database hashed password
+//				Boolean passwordMatches = encoder.matches(password, customer.getPassword());
+			
+				return customer;
+	}
 	
 }
