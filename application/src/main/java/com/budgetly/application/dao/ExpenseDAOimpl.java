@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.budgetly.application.entities.Budget;
 import com.budgetly.application.entities.Expense;
 
 import jakarta.persistence.EntityManager;
@@ -41,4 +42,68 @@ public class ExpenseDAOimpl implements ExpenseDAO {
 		entityManager.remove(expense);
 		return expense;
 	}
+
+	@Override
+	public List<Budget> totalExpensesForTheMonth(int customerId) {
+		// TODO Auto-generated method stub
+		TypedQuery<Budget> query = entityManager.createQuery(
+		        "SELECT SUM(e.amount) " +
+		        "FROM Expense e " +
+		        "JOIN e.budget b " +
+		        "JOIN b.customer c " +
+		        "WHERE c.id = :customerId " +
+		        "AND FUNCTION('MONTH', e.expenseDate) = FUNCTION('MONTH', CURRENT_DATE()) " +
+		        "AND FUNCTION('YEAR', e.expenseDate) = FUNCTION('YEAR', CURRENT_DATE()) ", Budget.class);
+		List<Budget> expenses = query.setParameter("customerId", customerId).getResultList();
+		return expenses;
+	}
+
+	@Override
+	public List<Budget> totalExpensesForTheWeek(int customerId) {
+		// TODO Auto-generated method stub
+		TypedQuery<Budget> query = entityManager.createQuery(
+		        "SELECT SUM(e.amount) " +
+		        "FROM Expense e " +
+		        "JOIN e.budget b " +
+		        "JOIN b.customer c " +
+		        "WHERE c.id = :customerId " +
+		        "AND FUNCTION('WEEK', e.expenseDate) = FUNCTION('WEEK', CURRENT_DATE()) " +
+		        "AND FUNCTION('YEAR', e.expenseDate) = FUNCTION('YEAR', CURRENT_DATE()) ", Budget.class);
+		List<Budget> expenses = query.setParameter("customerId", customerId).getResultList();
+		return expenses;
+	}
+
+	@Override
+	public List<Expense> mostRecentTransactions(int customerId) {
+	    TypedQuery<Expense> query = entityManager.createQuery(
+	        "SELECT e " +
+	        "FROM Expense e " +
+	        "JOIN e.budget b " +
+	        "JOIN b.customer c " +
+	        "WHERE c.id = :customerId " +
+	        "AND FUNCTION('MONTH', e.expenseDate) = FUNCTION('MONTH', CURRENT_DATE()) " +
+	        "AND FUNCTION('YEAR', e.expenseDate) = FUNCTION('YEAR', CURRENT_DATE()) " +
+	        "ORDER BY e.expenseDate DESC",
+	        Expense.class
+	    );
+	    List<Expense> expenses = query.setParameter("customerId", customerId).setMaxResults(15).getResultList();
+	    return expenses;
+	}
+
+	@Override
+	public double calculateMostRecentTransactions(int customerId) {
+	    TypedQuery<Double> query = entityManager.createQuery(
+	        "SELECT SUM(e.amount) " +
+	        "FROM Expense e " +
+	        "JOIN e.budget b " +
+	        "JOIN b.customer c " +
+	        "WHERE c.id = :customerId " +
+	        "AND FUNCTION('MONTH', e.expenseDate) = FUNCTION('MONTH', CURRENT_DATE()) " +
+	        "AND FUNCTION('YEAR', e.expenseDate) = FUNCTION('YEAR', CURRENT_DATE())",
+	        Double.class
+	    );
+	    double expenses = query.setParameter("customerId", customerId).getSingleResult();
+	    return expenses;
+	}
+
 }

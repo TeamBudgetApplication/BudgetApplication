@@ -3,15 +3,12 @@ package com.budgetly.application.dao;
 
 import java.util.List;
 
-import org.hibernate.query.NativeQuery;
 import org.springframework.stereotype.Repository;
 
 import com.budgetly.application.entities.Budget;
-import com.budgetly.application.entities.Customer;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 
