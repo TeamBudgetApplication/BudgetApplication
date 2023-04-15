@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,9 +10,9 @@
 </head>
 <body>
 	<h1 class="text-center mt-3">Welcome Home, ${firstName}</h1>
-	<div class="container">
+	<div class="container col-10">
 		<div class="row">
-			<div class="col-md-3">
+			<div class="col-md-2">
 				<jsp:include page="vertical-navigation.jsp" />
 			</div>
 			<div class="col-md-3">
@@ -113,9 +112,10 @@
 		</div>
 		<br>
 		<div class="row">
-			<div class="col-md-12">
+			<div class="col-md-11">
 				<div class="card">
-					<h5 class="card-header">Most Recent Expenses - $${calculatedExpenses }</h5>
+					<h5 class="card-header">Most Recent Expenses -
+						$${calculatedExpenses }</h5>
 					<div class="card-body">
 						<table class="table table-responsive">
 							<c:forEach var="expense" items="${mostRecentExpenses}"
@@ -123,7 +123,7 @@
 								<c:if test="${status.index % 3 == 0}">
 									<tr>
 								</c:if>
-								<td>${expense.name} ${expense.amount }</td>
+								<td>${expense.name} $${expense.amount }</td>
 								<c:if test="${status.index % 3 == 2 or status.last}">
 									</tr>
 								</c:if>
