@@ -17,7 +17,8 @@ public class BudgetServiceImpl implements BudgetService {
 	
 	@Autowired
 	private BudgetDAO budgetDAO;
-
+	
+	@Transactional
 	@Override
 	public  List<Budget> retrieveUserBudgets(int customerId) {
 		List<Budget> budgets = budgetDAO.retrieveAll(customerId);
@@ -28,7 +29,30 @@ public class BudgetServiceImpl implements BudgetService {
 		
 		return budgets;
 	}
-
+	
+	@Transactional
+	public List<Budget> retrieveAllByName(int customerId) {
+		List<Budget> budgets = budgetDAO.retrieveAll(customerId);
+		
+		if (budgets.isEmpty()) {
+			throw new NotFoundException("No budgets found for user with id: " + customerId);
+		}
+		
+		return budgets;
+	}
+	
+	@Transactional
+	public List<Budget> retrieveAllByDate(int customerId) {
+		List<Budget> budgets = budgetDAO.retrieveAll(customerId);
+		
+		if (budgets.isEmpty()) {
+			throw new NotFoundException("No budgets found for user with id: " + customerId);
+		}
+		
+		return budgets;
+	}
+	
+	@Transactional
 	@Override
 	public Budget retrieveUserBudgetById(int budgetId) {
 		Budget budget = budgetDAO.retrieveById(budgetId);
@@ -39,7 +63,7 @@ public class BudgetServiceImpl implements BudgetService {
 		
 		return budget;
 	}
-	
+	@Transactional
 	@Override
 	public Budget saveBudget(Budget budget) {
 		Budget savedBudget = budgetDAO.saveBudget(budget);
@@ -50,7 +74,7 @@ public class BudgetServiceImpl implements BudgetService {
 		
 		return savedBudget;
 	}
-
+	@Transactional
 	@Override
 	public Budget deleteBudget(int budgetId) {
 		Budget deletedBudget = budgetDAO.deleteById(budgetId);
@@ -64,19 +88,27 @@ public class BudgetServiceImpl implements BudgetService {
 		// TODO Auto-generated method stub
 		return budgetDAO.queryBudgetsOverAmount(customerId);
 	}
-
+	@Transactional
 	@Override
 	public List<Budget> budgetsActiveThisMonth(int customerId) {
 		// TODO Auto-generated method stub
 		return budgetDAO.budgetsActiveThisMonth(customerId);
 	}
-
+	@Transactional
 	@Override
 	public List<Budget> budgetsActiveThisWeek(int customerId) {
 		// TODO Auto-generated method stub
 		return budgetDAO.budgetsActiveThisWeek(customerId);
 	}
 	
+	@Override
+	@Transactional
+	public List<Budget> getBudgetsByKeyword(String keyword) {
+		
+		List<Budget> budgets = budgetDAO.getBudgetsByKeyword(keyword);
+		
+		return budgets;
+	}
 	
 	
 }
