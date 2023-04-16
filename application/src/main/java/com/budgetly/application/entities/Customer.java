@@ -1,5 +1,6 @@
 package com.budgetly.application.entities;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -114,5 +115,26 @@ public class Customer {
 	
 	public void setBudgets(List<Budget> budgets) {
 		this.budgets = budgets;
+	}
+	
+	//for UI only
+	private static DecimalFormat df = new DecimalFormat("0.00");
+	
+	public String getTotalSpentSum() {
+		double totalSpentSum = 0;	
+		List<Budget> budgets = this.getBudgets();
+		for (Budget budget : budgets) {
+			totalSpentSum += budget.getSpentSum();
+		} return df.format(totalSpentSum);
+	}
+
+	public String getTotalRemainingSum() {
+		//double totalBudgetsAmount = 0;
+		double totalRemainingSum = 0;	
+		List<Budget> budgets = this.getBudgets();
+		for (Budget budget : budgets) {
+			totalRemainingSum += (budget.getAmount()-budget.getSpentSum());
+		}
+		return df.format(totalRemainingSum);
 	}
 }

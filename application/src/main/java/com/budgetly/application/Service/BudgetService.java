@@ -8,6 +8,10 @@ public interface BudgetService {
 	
 	public List<Budget> retrieveUserBudgets(int customerId);
 	
+	public List<Budget> retrieveAllByName(int customerId);
+	
+	public List<Budget> retrieveAllByDate(int customerId);
+	
 	public Budget retrieveUserBudgetById(int budgetId);
 	
 	public Budget deleteBudget(int budgetId);
@@ -20,6 +24,6 @@ public interface BudgetService {
 	
 	public List<Budget> budgetsActiveThisWeek(int customerId);
 
-	
+	public List<Budget> getBudgetsByKeyword(String keyword);
 
 }
