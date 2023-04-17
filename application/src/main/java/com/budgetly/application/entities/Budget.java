@@ -1,11 +1,16 @@
 package com.budgetly.application.entities;
 
-import java.sql.Date;
+
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import java.text.DecimalFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -34,10 +39,10 @@ public class Budget {
 	private String name;
 	
 	@Column(name= "start_date")
-	private Date startDate;
+	private LocalDate startDate;
 	
 	@Column(name = "end_date")
-	private Date endDate;
+	private LocalDate endDate;
 	
 	@ManyToOne
 	@JoinColumn(name = "customer_id")
@@ -49,7 +54,7 @@ public class Budget {
 		
 	}
 	
-	public Budget(int id, double amount, String name, Date startDate, Date endDate, Customer customer,
+	public Budget(int id, double amount, String name, LocalDate startDate, LocalDate endDate, Customer customer,
 			List<Expense> expenses) {
 		this.id = id;
 		this.amount = amount;
@@ -107,19 +112,19 @@ public class Budget {
 		this.name = name;
 	}
 
-	public Date getStartDate() {
+	public LocalDate getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Date startDate) {
+	public void setStartDate(LocalDate startDate) {
 		this.startDate = startDate;
 	}
 
-	public Date getEndDate() {
+	public LocalDate getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(Date endDate) {
+	public void setEndDate(LocalDate endDate) {
 		this.endDate = endDate;
 	}
 	
@@ -127,6 +132,58 @@ public class Budget {
 	public String toString() {
 		return "Budget [id=" + id + ", amount=" + amount + ", name=" + name + ", startDate=" + startDate + ", endDate="
 				+ endDate + "]";
+	}
+	
+	//for UI only
+	public char getLetter() {
+		char letter = this.name.charAt(0);
+		return letter;
+	}
+	
+	public String getFormattedStartDate() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM");
+        String formattedStartDate = this.startDate.format(formatter);
+		return formattedStartDate;
+	}
+
+	public String getFormattedEndDate() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM");
+        String formattedEndDate = this.endDate.format(formatter);
+		return formattedEndDate;
+	}
+	
+	private static DecimalFormat df = new DecimalFormat("0.00");
+
+	public double getSpentSum() {
+		double spentSum = 0;	
+		List<Expense> expenses = this.getExpenses();
+		for (Expense expense : expenses) {
+			spentSum += expense.getAmount();
+		} return spentSum;
+	}
+	
+	public String getSpentSumString() {
+		return df.format(this.getSpentSum());
+	}
+
+
+	public double getRemainingSum() {
+		double remainingSum = this.getAmount() - this.getSpentSum();
+		return remainingSum;
+	}
+	
+	public String getRemainingSumString() {
+		return df.format(this.getRemainingSum());
+	}
+	
+	public String getFormattedAmount() {
+		String formattedAmount = df.format(this.amount);;
+		return formattedAmount;
+	}
+	
+	public long getNumberOfDays() {
+		long NumberOfDays = ChronoUnit.DAYS.between(startDate, endDate);
+		return NumberOfDays;
 	}
 	
 }

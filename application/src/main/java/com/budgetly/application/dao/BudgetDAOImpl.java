@@ -24,13 +24,37 @@ public class BudgetDAOImpl implements BudgetDAO {
 	public List<Budget> retrieveAll(int customerId) {
 		
 		TypedQuery<Budget> query = entityManager
-				.createQuery("SELECT b FROM Budget b WHERE b.customer.id = :id ", Budget.class);
+				.createQuery("SELECT b FROM Budget b WHERE b.customer.id = :id ORDER BY id", Budget.class);
 		
 				List<Budget> budgets = query.setParameter("id", customerId).getResultList();
 				
 				return budgets;
 		
 	}
+	
+	// Sort budgets by name ASC
+		public List<Budget> retrieveAllByName(int customerId) {
+			
+			TypedQuery<Budget> query = entityManager
+					.createQuery("SELECT b FROM Budget b WHERE b.customer.id = :id ORDER BY name", Budget.class);
+			
+			List<Budget> budgets = query.setParameter("id", customerId).getResultList();
+			
+			return budgets;
+			
+		}
+			
+		// Sort budgets by startDate ASC
+		public List<Budget> retrieveAllByDate(int customerId) {
+			
+			TypedQuery<Budget> query = entityManager
+					.createQuery("SELECT b FROM Budget b WHERE b.customer.id = :id ORDER BY startDate", Budget.class);
+			
+			List<Budget> budgets = query.setParameter("id", customerId).getResultList();
+			
+			return budgets;
+			
+		}
 	
 	// Retrieve User single budget by using budget id
 	public Budget retrieveById(int budgetId) {
@@ -92,5 +116,15 @@ public class BudgetDAOImpl implements BudgetDAO {
 	    List<Budget> budgets = query.setParameter("customerId", customerId).getResultList();
 	    return budgets;
 	}
+	
+	public List<Budget> getBudgetsByKeyword(String keyword) {
+		
+		TypedQuery<Budget> query = entityManager.createQuery("SELECT b FROM Budget b WHERE b.name like :keyword", Budget.class);
+		
+		List<Budget> budgets = query.setParameter("keyword", "%"+keyword.toUpperCase()+"%").getResultList();
+			
+		return budgets;
+		
+		}
 
 }

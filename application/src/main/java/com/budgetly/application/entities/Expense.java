@@ -1,6 +1,8 @@
 package com.budgetly.application.entities;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -33,7 +35,7 @@ public class Expense {
 	private LocalDate expenseDate;
 	
 	@ManyToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
-	@JoinColumn( name = "budget_id")
+	@JoinColumn(name = "budget_id")
 	private Budget budget;
 	
 	// Default Constructor
@@ -95,6 +97,19 @@ public class Expense {
 	public String toString() {
 		return "Expense [id=" + id + ", amount=" + amount + ", name=" + name + ", expenseDate=" + expenseDate
 				+ ", budget=" + budget + "]";
+	}
+	
+	//for UI only
+	public String getFormattedAmount() {
+		DecimalFormat df = new DecimalFormat("0.00");
+		String formattedAmount = df.format(this.amount);;
+		return formattedAmount;
+	}
+	
+	public String getFormattedDate() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
+        String formattedDate = this.expenseDate.format(formatter);
+		return formattedDate;
 	}
 	
 }

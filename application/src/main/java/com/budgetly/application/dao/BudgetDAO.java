@@ -9,6 +9,10 @@ public interface BudgetDAO {
 	
 	public List<Budget> retrieveAll(int customerId);
 	
+	public List<Budget> retrieveAllByName(int customerId);
+	
+	public List<Budget> retrieveAllByDate(int customerId);
+	
 	public Budget retrieveById(int budgetId);
 	
 	public Budget deleteById(int budgetId);
@@ -20,4 +24,6 @@ public interface BudgetDAO {
 	public List<Budget> budgetsActiveThisMonth(int customerId);
 	
 	public List<Budget> budgetsActiveThisWeek(int customerId);
+	
+	public List<Budget> getBudgetsByKeyword(String keyword);
 }
