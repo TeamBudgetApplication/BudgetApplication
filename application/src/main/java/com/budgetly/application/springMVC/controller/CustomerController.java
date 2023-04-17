@@ -71,37 +71,31 @@ public class CustomerController {
 
 	
 	@PostMapping("/customer/authenticate-login") // Use this method when building login page and when posting, route to this method to verify login credentials 
-	public String authenticateByEmail(Model model, HttpServletRequest request,
+	public String authenticateByEmail(Model model, HttpServletRequest request, HttpServletResponse response,
 	                                   @RequestParam(value = "email", required = false) String email,
 	                                   @RequestParam(value = "password", required = false) String password) {
 	    Customer existingCustomer = customerService.getByEmail(email, password);
 	    if (existingCustomer != null && passwordEncoder.matches(password, existingCustomer.getPassword())) {
-	        HttpSession session = request.getSession();
-	        Integer customerId = (Integer) session.getAttribute("customerId");
-	        if (customerId == null) {
-	            Cookie[] cookies = request.getCookies();
-	            if (cookies != null) {
-	                for (Cookie cookie : cookies) {
-	                    if (cookie.getName().equals("customerId")) {
-	                        customerId = Integer.parseInt(cookie.getValue());
-	                        break;
-	                    }
-	                }
-	            }
-	        }
-	        if (customerId != null && customerId == existingCustomer.getId()) {
-	            model.addAttribute("firstName", existingCustomer.getFirstName());
-	            return "customer-dashboard";
-	        } else {
-	            model.addAttribute("error", "Invalid session or cookie");
-	            return "login";
-	        }
-	    } else {
+	        HttpSession session = request.getSession(true);
+	        session.setAttribute("customerId", existingCustomer.getId());
+	        
+	        // Create and add customerId cookie to response
+	        Cookie customerIdCookie = new Cookie("customerId", String.valueOf(existingCustomer.getId()));
+	        customerIdCookie.setPath("/");
+	        customerIdCookie.setMaxAge(24 * 60 * 60); // set the cookie to expire in 1 day
+	        response.addCookie(customerIdCookie);
+
+	        model.addAttribute("firstName", existingCustomer.getFirstName());
+	        return "customer-dashboard";
+	    } 
+	    else {
 	        model.addAttribute("email", existingCustomer.getEmail());
 	        model.addAttribute("error", "Invalid email or password");
 	        return "login";
 	    }
 	}
+
+
 
 
 
