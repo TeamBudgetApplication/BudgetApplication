@@ -19,6 +19,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 	private ExpenseDAO expenseDAO;
 
 	// Get expenses
+	@Transactional
 	public List<Expense> getExpenses(int budgetId) {
 		
 		List<Expense> expenses = expenseDAO.retrieveAll(budgetId);
@@ -32,6 +33,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 
 	
 	// Get single expense
+	@Transactional
 	public Expense getExpenseById(int expenseId) {
 		Expense expense = expenseDAO.retrieveById(expenseId);
 		
@@ -44,6 +46,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 	
 	
 	// Save budget expense
+	@Transactional
 	public Expense saveExpense(Expense expense) {
 		Expense savedExpense = expenseDAO.saveExpense(expense);
 		
@@ -56,32 +59,33 @@ public class ExpenseServiceImpl implements ExpenseService {
 	
 	
 	// Delete budget expense
+	@Transactional
 	public Expense deleteExpense(int expenseId) {
 		return expenseDAO.deleteById(expenseId);
 	}
 
-
+	@Transactional
 	@Override
 	public List<Budget> totalExpensesForTheMonth(int customerId) {
 		// TODO Auto-generated method stub
 		return expenseDAO.totalExpensesForTheMonth(customerId);
 	}
 
-
+	@Transactional
 	@Override
 	public List<Budget> totalExpensesForTheWeek(int customerId) {
 		// TODO Auto-generated method stub
 		return expenseDAO.totalExpensesForTheWeek(customerId);
 	}
 
-
+	@Transactional
 	@Override
 	public List<Expense> mostRecentTransactions(int customerId) {
 		// TODO Auto-generated method stub
 		return expenseDAO.mostRecentTransactions(customerId);
 	}
 
-
+	@Transactional
 	@Override
 	public double calculateMostRecentTransactions(int customerId) {
 		// TODO Auto-generated method stub
