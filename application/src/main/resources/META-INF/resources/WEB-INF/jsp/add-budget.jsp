@@ -22,6 +22,20 @@
     />
 <title>Add Budget</title>
 </head>
+	<!-- Header -->
+    <header class="d-flex justify-content-between align-items-center p-4" style="border-bottom: 2px solid #222222;max-width: 1500px; margin: 0 auto;">
+    	<!-- Logo -->
+    	<div class="d-flex align-items-center">
+    		<span class="d-flex flex-column" style="font-weight: 600;font-size: 1.1rem; color: #222222">Budget 
+    		<span style="line-height: 1;">Application</span></span>
+    	</div>
+    	<!-- Navigation Btn -->
+    	<div>
+    		<a href="http://localhost:8080/add-budget">
+    			<button class="btn" type="button" style="border: 2px solid #222222">Login</button>
+    		</a>
+    	</div>
+    </header>
 <body>
 
 </body>
