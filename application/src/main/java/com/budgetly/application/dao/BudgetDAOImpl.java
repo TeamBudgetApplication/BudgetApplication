@@ -1,6 +1,7 @@
 package com.budgetly.application.dao;
 
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -102,6 +103,9 @@ public class BudgetDAOImpl implements BudgetDAO {
 	            "AND FUNCTION('MONTH', b.startDate) = FUNCTION('MONTH', CURRENT_DATE()) " +
 	            "AND FUNCTION('YEAR', b.startDate) = FUNCTION('YEAR', CURRENT_DATE()) ", Budget.class);
 	    List<Budget> budgets = query.setParameter("customerId", customerId).getResultList();
+	    if (budgets == null) {
+	    	return Collections.emptyList();
+	    }
 	    return budgets;
 	}
 	
@@ -114,6 +118,9 @@ public class BudgetDAOImpl implements BudgetDAO {
 	            "AND FUNCTION('WEEK', b.startDate) = FUNCTION('WEEK', CURRENT_DATE()) " +
 	            "AND FUNCTION('YEAR', b.startDate) = FUNCTION('YEAR', CURRENT_DATE()) ", Budget.class);
 	    List<Budget> budgets = query.setParameter("customerId", customerId).getResultList();
+	    if (budgets == null) {
+	    	return Collections.emptyList();
+	    }
 	    return budgets;
 	}
 	
