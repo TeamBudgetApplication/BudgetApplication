@@ -95,6 +95,14 @@ public class CustomerController {
 	    }
 	}
 
+	@GetMapping("/logout")
+	public String logout(HttpSession session, HttpServletResponse response) {
+	    session.invalidate();
+	    Cookie customerIdCookie = new Cookie("customerId", "");
+	    customerIdCookie.setMaxAge(0);
+	    response.addCookie(customerIdCookie);
+	    return "redirect:/login";
+	}
 
 
 
