@@ -12,45 +12,122 @@
       delete budgets and expenses." />
 <title>Add a new expense</title>
 </head>
+<body style="font-family: 'Montserrat', sans-serif;">
+<body>
+<header class="d-flex justify-content-between align-items-center p-2" style="border-bottom: 3px solid #3496f9;max-width: 1500px; margin: 0 auto;">
+   	<!-- Logo -->
+   	<div class="d-flex align-items-center">
+   		<img src="http://localhost:8080/static/img/logoblue.png" 
+   		alt="budget application logo" width="55px" height="55px" />
+   		<span class="d-flex flex-column" style="color: #3496f9;font-weight: 600;font-size: 1.1rem">Budgetly 
+   		<span style="font-weight: 400;font-size: 0.8rem;line-height: 1.1;">Budget Tracker</span></span>
+   	</div>
+   	<div>
+		<form action = "returnToBudgetButton" method="get">
+			<input type="hidden" name="budgetId" value="${budgetId}" />
+			<button class="btn" type = "submit" style="background: #3496f9; color: #ffffff">Go to ${budgetName} Budget</button>
+		</form>
+   	</div>
+</header>
 <body>
 	<div class="container">
 		<div class="row">
-			<div class="col">
-				<h1 class="text-center mt-3">Budget ${budgetName}</h1>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-3">
+			<div class="col-4">
 				<jsp:include page="vertical-navigation.jsp" />
 			</div>
 			
-			<div class="col-9">
-			<form:form action ="processExpense" modelAttribute = "expense">
-			<b>Please enter expense info:</b>
-				<table>
-					<tr>
-						<td>Name:</td>
-						<td><form:input path="name"/></td>
-					</tr>
-					<tr>
-						<td>Amount:</td>
-						<td><form:input path="amount"/></td>
-					</tr>
-					<tr>
-						<td>Date:</td>
-						<td><form:input path="expenseDate" type="date" /></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td><input type="hidden" name="budgetId" value="${budgetId}" />
-						<input type = "submit" value = "Save Expense"/></td>
-					</tr>	
-				</table>
-				</form:form>	
+			<div class="col-7"><br>
+				<%-- <div class="row">
+					<h1 class="text-center mt-3">Budget ${budgetName}</h1>
+				</div> --%>
+				<div class="row">
+					<div class="col-md-7 col-lg-8">
+					<h4 class="mb-3">Expense Information</h4>
+					<form:form action ="processExpense" modelAttribute = "expense">
+			          <div class="row g-3">
+			          
+						  <div class="col-12">
+						    <label for="name" class="form-label">Name</label>
+						    <div class="input-group">
+						      <form:input type="text" class="form-control" id="name" placeholder="Name" required="" path="name" />
+						      <div class="invalid-feedback">
+						        Valid name is required.
+						      </div>
+						    </div>
+						  </div>
+			            
+			            <div class="col-12">
+			              <label for="amount" class="form-label">Amount</label>
+			              <div class="input-group">
+			              	<form:input type="number" class="form-control" id="amount" placeholder="123.00" required="" path="amount" value="${null}"/>
+			              <div class="invalid-feedback">
+			                Amount must be grater than zero.
+			              </div>
+			              </div>
+			            </div>
+			            
+			            <div class="col-12">
+			              <label for="expenseDate" class="form-label">Date</label>
+			              <div class="input-group">
+			              	<form:input type="date" class="form-control" id="expenseDate" required="" path="expenseDate" />
+			              <div class="invalid-feedback">
+			              Date is required.
+			            </div>
+			              </div>
+			            </div>
+					<hr class="my-4">
+					
+					<form action = "addExpense" method="get">
+						<input type="hidden" name="budgetId" value="${budgetId}" />
+						<button type = "submit" class="btn btn-success rounded-pill px-3">Save Expense</button>
+					</form>
+				</div>
+				</form:form>
+				<!-- <script>
+				  $('form').on('submit', function(event) {
+				    event.preventDefault();
+				    event.stopPropagation();
+				    $(this).addClass('was-validated');
+				    if (this.checkValidity() === false) {
+				      // Form is invalid
+				    } else {
+				      // Form is valid, submit it
+				      this.submit();
+				    }
+				  });
+				</script> -->
+				</div>
+				</div>
 			</div>
-			
 		</div>
-		<div class="row">
+	</div>
+					<%-- <form:form action ="processExpense" modelAttribute = "expense">
+					<b>Please enter expense info:</b>
+						<table>
+							<tr>
+								<td>Name:</td>
+								<td><form:input path="name"/></td>
+							</tr>
+							<tr>
+								<td>Amount:</td>
+								<td><form:input path="amount"/></td>
+							</tr>
+							<tr>
+								<td>Date:</td>
+								<td><form:input path="expenseDate" type="date" /></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td><input type="hidden" name="budgetId" value="${budgetId}" />
+								<input type = "submit" value = "Save Expense"/></td>
+							</tr>	
+						</table>
+					</form:form>	
+				</div>
+			</div>
+		</div> --%>
+		
+		<%-- <div class="row">
 			<div class="col-3"></div>
 			<div class="col-9">
 			<form action = "returnToBudgetButton" method="get">
@@ -59,6 +136,8 @@
 			</form>
 			</div>
 		</div>
-	</div>
+	</div> --%>
+	
+	
 </body>
 </html>
