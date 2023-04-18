@@ -36,7 +36,7 @@
 												pattern="M/d" /></td>
 										<td><fmt:formatDate value="${budget.endDate}"
 												pattern="M/d" /></td>
-										<td>${budget.amount}</td>
+										<td>${budget.getFormattedAmount()}</td>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -69,7 +69,7 @@
 												pattern="M/d" /></td>
 										<td><fmt:formatDate value="${budget.endDate}"
 												pattern="M/d" /></td>
-										<td>${budget.amount}</td>
+										<td>${budget.getFormattedAmount()}</td>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -101,7 +101,7 @@
 												pattern="M/d" /></td>
 										<td><fmt:formatDate value="${budget.endDate}"
 												pattern="M/d" /></td>
-										<td>${budget.amount}</td>
+										<td>${budget.getFormattedAmount()}</td>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -123,7 +123,7 @@
 								<c:if test="${status.index % 3 == 0}">
 									<tr>
 								</c:if>
-								<td>${expense.name} $${expense.amount }</td>
+								<td>${expense.name} $${expense.getFormattedAmount() }</td>
 								<c:if test="${status.index % 3 == 2 or status.last}">
 									</tr>
 								</c:if>
