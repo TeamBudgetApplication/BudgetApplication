@@ -51,6 +51,13 @@ public class CustomerController {
 		return "add-customer";
 	}
 	
+//	@GetMapping("customer/{customerId}")
+//	public String displayHomePage(Model model, @PathVariable("customerId") int customerId) {
+//		Customer customer = customerService.getCustomer(customerId);
+//		model.addAttribute("customer", customer);
+//		return "customer-dashboard";
+//	}
+	
 	@PostMapping("/customer/authenticate")
 	public String authenticate(Model model, HttpServletRequest request, HttpServletResponse response,
 	                           @PathVariable("customerId") int customerId, @ModelAttribute("customer") Customer customer) {

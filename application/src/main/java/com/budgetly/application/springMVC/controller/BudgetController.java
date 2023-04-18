@@ -109,7 +109,7 @@ public class BudgetController {
 		budgetService.saveBudget(budget);
 			
 		// redirect to budgets jsp
-		return "";
+		return "add-budget";
 	}
 	
 	@RequestMapping("/budgets/user-budgets/searchByKeyword/{customerId}")
