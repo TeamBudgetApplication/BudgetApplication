@@ -11,11 +11,30 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="<c:url value='/style.css'/>">
 </head>
+<!-- <body style="font-family: 'Montserrat', sans-serif;background-image: url('http://localhost:8080/static/img/BackgroundHeader.jpg');background-size: cover;height: 100vh;overflow-x: hidden; background-attachment: scroll;">		
+ -->
 <body>
+<header class="d-flex justify-content-between align-items-center p-2" style="border-bottom: 3px solid #3496f9;max-width: 1500px; margin: 0 auto;">
+   	<!-- Logo -->
+   	<div class="d-flex align-items-center">
+   		<img src="http://localhost:8080/static/img/logoblue.png" 
+   		alt="budget application logo" width="55px" height="55px" />
+   		<span class="d-flex flex-column" style="color: #3496f9;font-weight: 600;font-size: 1.1rem">Budgetly 
+   		<span style="font-weight: 400;font-size: 0.8rem;line-height: 1.1;">Budget Tracker</span></span>
+   	</div>
+   	<!-- Navigation Btn -->
+   	<div>
+		<form action = "addBudget" method="get">
+			<!-- <a href="http://localhost:8080/addBudget"> -->
+ 			<input type="hidden" name="customerId" value="${customerId}" />
+			<button class="btn" type="submit" style="background: #3496f9; color: #ffffff">Add New Budget</button>
+		</form>
+   	</div>
+</header>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css" integrity="sha256-3sPp8BkKUE7QyPSl6VfBByBroQbKxKG7tsusY2mhbVY=" crossorigin="anonymous" />
 <div class="container">
 	<div class="row">
-		<div class="col-2"><br><br>
+		<div class="col-2">
 			<jsp:include page="vertical-navigation.jsp" />
 		</div>
 		<div class="col-9">
@@ -61,7 +80,7 @@
 						
 						<div class="filter-result">
 						<p class="ff-montserrat">Total Budgets : ${numb}</p>
-						<div class="row">
+						<%-- <div class="row">
 							<form action = "addBudget" method="get">
 								<input type="hidden" name="customerId" value="${customerId}" />
 								<button type = "submit" class="form-control btn btn-lg btn-block btn-light special-button">Add New Budget</button>
@@ -73,7 +92,7 @@
 							margin: 0 auto;
 						  }
 						</style>
-						</div>
+						</div> --%>
 							<p class="mb-20"></p>
 							
 							<c:forEach items="${budgets}" var="budget">
@@ -85,7 +104,7 @@
 								  a:hover {
 								  color: black; 
 								  text-decoration: none;
-								</style>
+								</style> 
 								<a href="${pageContext.request.contextPath}/expenses/budget-expenses/${budget.id}">
 								<div class="job-box d-md-flex align-items-center justify-content-between mb-3">
 									<div class="job-left my-4 d-md-flex align-items-center flex-wrap">
