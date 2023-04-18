@@ -19,12 +19,30 @@
  <link rel="stylesheet" type="text/css" href="<c:url value='/style.css'/>"> --%>
 <script src="webjars/bootstrap/5.2.3/js/bootstrap.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-</head>			
+</head>
+<!-- <body style="font-family: 'Montserrat', sans-serif;background-size: cover;height: 100vh;overflow-x: hidden; background-attachment: scroll;">
+ --><body>
+<header class="d-flex justify-content-between align-items-center p-2" style="border-bottom: 3px solid #3496f9;max-width: 1500px; margin: 0 auto;">
+   	<!-- Logo -->
+   	<div class="d-flex align-items-center">
+   		<img src="http://localhost:8080/static/img/logoblue.png" 
+   		alt="budget application logo" width="55px" height="55px" />
+   		<span class="d-flex flex-column" style="color: #3496f9;font-weight: 600;font-size: 1.1rem">Budgetly 
+   		<span style="font-weight: 400;font-size: 0.8rem;line-height: 1.1;">Budget Tracker</span></span>
+   	</div>
+   	<!-- Navigation Btn -->
+   	<div>
+		<form action = "addExpense" method="get">
+			<input type="hidden" name="budgetId" value="${budgetId}" />
+			<button class="btn" type="submit" style="background: #3496f9; color: #ffffff">Add a New Expense </button>
+		</form>
+   	</div>
+</header>		
 <body>
 <form:hidden path="budgetId"/>
 	<div class="container">
 		<div class="row">
-			<div class="col-2"><br><br>
+			<div class="col-2">
 				<jsp:include page="vertical-navigation.jsp" />
 			</div>
 			<div class="col-9">
@@ -66,14 +84,15 @@
 						 </div>
 					 </c:forEach>
 						 <div class="d-grid gap-2">
-							<form action = "addExpense" method="get">
+							<%-- <form action = "addExpense" method="get">
 								<input type="hidden" name="budgetId" value="${budgetId}" />
 								<button type = "submit" class="btn btn-success rounded-pill px-3">Add a New Expense </button>
-							</form>
-							<form action = "returnBackButton" method="get">
+							</form> --%>
+							
+							<%-- <form action = "returnBackButton" method="get">
 								<input type="hidden" name="customerId" value="${customerId}" />
 								<button type = "submit" class="btn btn-dark rounded-pill px-3">Back to Budgets List</button>
-							</form>
+							</form> --%>
 			
 						</div>
 					</div>			
@@ -84,7 +103,7 @@
 						    In total, <b>${budget.customer.firstName} ${budget.customer.lastName}</b> allocated <b>$${budget.formattedAmount}</b> 
 						    toward the ${budget.name} Budget, a total of <b>$${budget.getSpentSumString()}</b> was spent. 
 						    The customer is <b style="color: ${budget.spentSum > budget.amount ? 'red' : 'green'};">${budget.spentSum > budget.amount ? 'over' : 'under'}</b>
-						     the budget amount by <b style="color: ${budget.spentSum > budget.amount ? 'red' : 'green'};">$${budget.remainingSum}.</b>
+						     the budget amount by <b style="color: ${budget.spentSum > budget.amount ? 'red' : 'green'};">$${budget.getRemainingSumString()}.</b>
 						  </p>
 						</div>	
 					</div>
@@ -123,7 +142,13 @@
           "#66c2a5"
 		];
 		
+		/* if (${budget.remainingSum > 0}) {
+		  barColors = barColors.slice(0, -1).concat("#1e7145");
+		} */
+
+		if (${budget.remainingSum > 0}) {
 		barColors[xValues.length - 1] = "#1e7145";
+		}
 
 		new Chart("myChart", {
 		  type: "doughnut",

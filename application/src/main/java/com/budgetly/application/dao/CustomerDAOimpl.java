@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
+import com.budgetly.application.entities.Budget;
 import com.budgetly.application.entities.Customer;
 
 import jakarta.persistence.EntityManager;
@@ -40,7 +41,7 @@ public class CustomerDAOimpl implements CustomerDAO {
 
 	public Customer getByEmail(String email, String password) {
 				// Find user
-				String select = "SELECT c FROM Customer c WHERE c.email=:email";
+				String select = "SELECT c FROM Customer c WHERE c.email = :email";
 				Query query = entityManager.createQuery(select);
 				query.setParameter("email", email);
 				

@@ -15,18 +15,29 @@
 <title>Expenses-report</title>
 <script src="webjars/bootstrap/5.2.3/js/bootstrap.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-</head>			
+</head>	
+<!-- <body style="font-family: 'Montserrat', sans-serif;background-image: url('http://localhost:8080/static/img/BackgroundHeader.jpg');background-size: cover;height: 100vh;overflow-x: hidden; background-attachment: scroll;">		
+ -->
 <body>
+<header class="d-flex justify-content-between align-items-center p-2" style="border-bottom: 3px solid #3496f9;max-width: 1500px; margin: 0 auto;">
+   	<!-- Logo -->
+   	<div class="d-flex align-items-center">
+   		<img src="http://localhost:8080/static/img/logoblue.png" 
+   		alt="budget application logo" width="55px" height="55px" />
+   		<span class="d-flex flex-column" style="color: #3496f9;font-weight: 600;font-size: 1.1rem">Budgetly 
+   		<span style="font-weight: 400;font-size: 0.8rem;line-height: 1.1;">Budget Tracker</span></span>
+   	</div>
+</header>
 	<div class="container">
 		<div class="row">
-			<div class="col-2"><br><br>
+			<div class="col-2">
 				<jsp:include page="vertical-navigation.jsp" />
 			</div>
 			<div class="col-9">
 			<c:forEach items="${budgets}" var="budget">
 				<div class="row">
 					<div class="col">
-						<h2 class="text-center mt-3">Budget ${budget.name}</h2>
+						<h2 class="text-center mt-3">Budget ${budget.name}</h2> <!-- style="color: #153c64 -->
 						<h5 class="text-center">${budget.formattedStartDate} 2023 - ${budget.formattedEndDate} 2023</h5><br>
 					</div>
 				</div>
@@ -63,7 +74,7 @@
 						    In total, <b>${budget.customer.firstName} ${budget.customer.lastName}</b> allocated <b>$${budget.formattedAmount}</b> 
 						    toward the ${budget.name} Budget, a total of <b>$${budget.getSpentSumString()}</b> was spent. 
 						    The customer is <b style="color: ${budget.spentSum > budget.amount ? 'red' : 'green'};">${budget.spentSum > budget.amount ? 'over' : 'under'}</b>
-						     the budget amount by <b style="color: ${budget.spentSum > budget.amount ? 'red' : 'green'};">$${budget.remainingSum}.</b><br><br>
+						     the budget amount by <b style="color: ${budget.spentSum > budget.amount ? 'red' : 'green'};">$${budget.getRemainingSumString()}.</b><br><br>
 						  </p>
 						</div>	
 					</div>
