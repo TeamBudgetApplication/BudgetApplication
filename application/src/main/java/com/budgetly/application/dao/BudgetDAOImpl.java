@@ -1,12 +1,14 @@
 package com.budgetly.application.dao;
 
 
+import java.util.Collections;
 import java.util.List;
 
+import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import com.budgetly.application.entities.Budget;
-
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
@@ -24,42 +26,43 @@ public class BudgetDAOImpl implements BudgetDAO {
 	public List<Budget> retrieveAll(int customerId) {
 		
 		TypedQuery<Budget> query = entityManager
-				.createQuery("SELECT b FROM Budget b WHERE b.customer.id = :id ORDER BY id", Budget.class);
+				.createQuery("SELECT b FROM Budget b WHERE b.customer.id = :id ORDER BY b.id", Budget.class);
 		
-				List<Budget> budgets = query.setParameter("id", customerId).getResultList();
-				
-				return budgets;
+		List<Budget> budgets = query.setParameter("id", customerId).getResultList();
+		
+		return budgets;
 		
 	}
 	
 	// Sort budgets by name ASC
-		public List<Budget> retrieveAllByName(int customerId) {
-			
-			TypedQuery<Budget> query = entityManager
-					.createQuery("SELECT b FROM Budget b WHERE b.customer.id = :id ORDER BY name", Budget.class);
-			
-			List<Budget> budgets = query.setParameter("id", customerId).getResultList();
-			
-			return budgets;
-			
-		}
-			
-		// Sort budgets by startDate ASC
-		public List<Budget> retrieveAllByDate(int customerId) {
-			
-			TypedQuery<Budget> query = entityManager
-					.createQuery("SELECT b FROM Budget b WHERE b.customer.id = :id ORDER BY startDate", Budget.class);
-			
-			List<Budget> budgets = query.setParameter("id", customerId).getResultList();
-			
-			return budgets;
-			
-		}
+	public List<Budget> retrieveAllByName(int customerId) {
+		
+		TypedQuery<Budget> query = entityManager
+				.createQuery("SELECT b FROM Budget b WHERE b.customer.id = :id ORDER BY b.name", Budget.class);
+		
+		List<Budget> budgets = query.setParameter("id", customerId).getResultList();
+		
+		return budgets;
+		
+	}
+		
+	// Sort budgets by startDate ASC
+	public List<Budget> retrieveAllByDate(int customerId) {
+		
+		TypedQuery<Budget> query = entityManager
+				.createQuery("SELECT b FROM Budget b WHERE b.customer.id = :id ORDER BY startDate", Budget.class);
+		
+		List<Budget> budgets = query.setParameter("id", customerId).getResultList();
+		
+		return budgets;
+		
+	}
 	
 	// Retrieve User single budget by using budget id
 	public Budget retrieveById(int budgetId) {
 		// Find budget
 		Budget budget = entityManager.find(Budget.class, budgetId);
+		
 		return budget;
 	}
 	
@@ -102,6 +105,9 @@ public class BudgetDAOImpl implements BudgetDAO {
 	            "AND FUNCTION('MONTH', b.startDate) = FUNCTION('MONTH', CURRENT_DATE()) " +
 	            "AND FUNCTION('YEAR', b.startDate) = FUNCTION('YEAR', CURRENT_DATE()) ", Budget.class);
 	    List<Budget> budgets = query.setParameter("customerId", customerId).getResultList();
+	    if (budgets == null) {
+	    	return Collections.emptyList();
+	    }
 	    return budgets;
 	}
 	
@@ -114,6 +120,9 @@ public class BudgetDAOImpl implements BudgetDAO {
 	            "AND FUNCTION('WEEK', b.startDate) = FUNCTION('WEEK', CURRENT_DATE()) " +
 	            "AND FUNCTION('YEAR', b.startDate) = FUNCTION('YEAR', CURRENT_DATE()) ", Budget.class);
 	    List<Budget> budgets = query.setParameter("customerId", customerId).getResultList();
+	    if (budgets == null) {
+	    	return Collections.emptyList();
+	    }
 	    return budgets;
 	}
 	
@@ -126,5 +135,5 @@ public class BudgetDAOImpl implements BudgetDAO {
 		return budgets;
 		
 		}
-
+	
 }
