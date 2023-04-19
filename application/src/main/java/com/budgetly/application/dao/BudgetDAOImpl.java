@@ -126,11 +126,15 @@ public class BudgetDAOImpl implements BudgetDAO {
 	    return budgets;
 	}
 	
-	public List<Budget> getBudgetsByKeyword(String keyword) {
+	public List<Budget> getBudgetsByKeyword(int customerId, String keyword) {
 		
-		TypedQuery<Budget> query = entityManager.createQuery("SELECT b FROM Budget b WHERE b.name like :keyword", Budget.class);
+		TypedQuery<Budget> query = entityManager.createQuery("SELECT b FROM Budget b JOIN b.customer c WHERE c.id = :customerId AND b.name like :keyword", Budget.class);
 		
-		List<Budget> budgets = query.setParameter("keyword", "%"+keyword.toUpperCase()+"%").getResultList();
+		query.setParameter("customerId", customerId);
+		query.setParameter("keyword", "%" + keyword.toUpperCase() + "%");
+		List<Budget> budgets = query.getResultList();
+		
+		//List<Budget> budgets = query.setParameter("keyword", "%"+keyword.toUpperCase()+"%").getResultList();
 			
 		return budgets;
 		
