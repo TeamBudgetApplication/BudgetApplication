@@ -1,5 +1,6 @@
  package com.budgetly.application.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +25,9 @@ public class ExpenseServiceImpl implements ExpenseService {
 		
 		List<Expense> expenses = expenseDAO.retrieveAll(budgetId);
 		
-		if (expenses.isEmpty()) {
-			throw new NotFoundException("Error no expenses found...");
-		}
+		if (expenses == null) {
+            return Collections.emptyList();
+        }
 		
 		return expenses;
 	}

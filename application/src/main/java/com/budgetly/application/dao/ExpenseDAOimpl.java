@@ -22,7 +22,7 @@ public class ExpenseDAOimpl implements ExpenseDAO {
 	// Get All budget expenses
 	public List<Expense> retrieveAll(int budgetId) {
 		Budget budget = entityManager.find(Budget.class, budgetId);
-		TypedQuery<Expense> query = entityManager.createQuery("SELECT e FROM Expense e WHERE e.budget = :budget ORDER BY id DESC", Expense.class);
+		TypedQuery<Expense> query = entityManager.createQuery("SELECT e FROM Expense e WHERE e.budget = :budget ORDER BY id", Expense.class);
 		return query.setParameter("budget", budget).getResultList();
 	}
 	
