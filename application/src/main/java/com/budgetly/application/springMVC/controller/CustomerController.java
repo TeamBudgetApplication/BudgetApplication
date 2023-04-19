@@ -93,7 +93,7 @@ public class CustomerController {
 //	        response.addCookie(customerIdCookie);
 
 	        model.addAttribute("firstName", existingCustomer.getFirstName());
-	        return "customer-dashboard";
+	        return "redirect:/customer/" + existingCustomer.getId();
 	    } 
 	    else {
 	        model.addAttribute("email", existingCustomer.getEmail());

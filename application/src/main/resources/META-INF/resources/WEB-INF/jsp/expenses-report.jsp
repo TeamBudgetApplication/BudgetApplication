@@ -34,6 +34,7 @@
 				<jsp:include page="vertical-navigation.jsp" />
 			</div>
 			<div class="col-9">
+			<c:if test="${not empty budgets}">
 			<c:forEach items="${budgets}" var="budget">
 				<div class="row">
 					<div class="col">
@@ -43,6 +44,7 @@
 				</div>
 				<div class="row">
 					<div class="col-6">
+					<c:if test="${not empty budget.expenses}">
 					<c:forEach items="${budget.expenses}" var="expense">
 		 				<div class="align-items-center justify-content-center">
 			 				<div class="list-group list-group-checkable">
@@ -65,7 +67,12 @@
 							    </label>
 							 </div><br>
 						 </div>
-					 </c:forEach>
+					 </c:forEach></c:if>
+					 <c:if test="${empty budget.expenses}">
+					   <div style="text-align: center;">
+						    <br><h4>You don't have expenses yet</h4>
+						</div>
+					</c:if>
 					</div>		
 					<div class="col-6">
 						<canvas id="myChart_${budget.id}"></canvas><br>	
@@ -126,7 +133,11 @@
 				];
 	        
 	     	// Set the same color for budget.remainingSum
-	    	barColors_${budget.id}[xValues_${budget.id}.length - 1] = "#1e7145";
+	     	if (${budget.remainingSum > 0}) {
+	     		barColors_${budget.id}[xValues_${budget.id}.length - 1] = "#1e7145";
+			}
+	     	
+	    	/* barColors_${budget.id}[xValues_${budget.id}.length - 1] = "#1e7145"; */
 		
 				new Chart("myChart_${budget.id}", {
 				  type: "doughnut",
@@ -145,7 +156,12 @@
 				  } */
 				});
 			</script>
-			</c:forEach>
+			</c:forEach></c:if>
+			<c:if test="${empty budgets}">
+			   <div style="text-align: center;">
+				    <br><h1>You don't have any budgets yet</h1>
+				</div>
+			</c:if>
 			</div>
 		</div>
 	</div>
