@@ -49,22 +49,17 @@
 			<div class="row">
 				<div class="col-lg-11 mx-auto">
 					<div class="career-search mb-60">					
-						<%-- <form action = "searchByKeyword" method="get" class="career-form mb-60"> --%>
- 						<form action = "searchByKeyword" modelAttribute = "searchRequest" class="career-form mb-60">						
+						<form action = "${pageContext.request.contextPath}/budgets/user-budgets/searchByKeyword/${customerId}" method="get" class="career-form mb-60">				
 							<div class="row">
 								<div class="col-md-6 col-lg-3 my-3">
 									<div class="input-group position-relative">
 										<input type="text" class="form-control" placeholder="Enter Your Keyword" name="keyword" value="${keyword}" >
 									</div>
 								</div>
-								<div class="col-md-6 col-lg-3 my-3">
-									<input type="hidden" name="customerId" value="${customerId}" />
-									<button type = "submit" class="btn btn-lg btn-block btn-light btn-custom">Search</button>																	 
-								</div>	
 								
-									<%-- <a href="${pageContext.request.contextPath}/budgets/user-budgets/searchByKeyword/${customerId}/${keyword}"
-							    	class="btn btn-lg btn-block btn-light btn-custom">Search</a> --%>
-														
+								<div class="col-md-6 col-lg-3 my-3">
+									<button type = "submit" class="btn btn-lg btn-block btn-light btn-custom">Search</button>
+								</div>						
 								<div class="col-md-6 col-lg-3 my-3">
 							    	<a href="${pageContext.request.contextPath}/budgets/user-budgets/sortBudgetsByName/${customerId}"
 							    	class="btn btn-lg btn-block btn-light btn-custom">Sort by Name</a>	        
@@ -75,7 +70,6 @@
 								</div>
 							</div>			
 						</form>
-						<!-- <div class="filter-result"> -->
 						<p class="ff-montserrat">Total Budgets : ${numb}</p>
 						
 						<%-- <div class="row">
@@ -145,10 +139,13 @@
 									</div></a>					
 								</c:forEach>
 							</c:if>
-							<c:if test="${empty budgets}">
+							<c:if test="${empty budgets and empty keyword}">
 							   <div style="text-align: center;">
 								    <h1>You don't have any budgets yet</h1>
 								</div>
+							</c:if>
+							<c:if test="${empty budgets and not empty keyword}">
+							  <h1>No budgets found for the specified keyword: "${keyword}".</h1>
 							</c:if>
 						</div>
 					</div>
