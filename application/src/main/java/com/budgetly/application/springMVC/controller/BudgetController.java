@@ -107,6 +107,14 @@ public class BudgetController {
 	public String addBudgetExpenseJsp(@RequestBody Budget budget) {
 		// Save submitted budget form
 		budgetService.saveBudget(budget);
+		
+		// redirect to budgets jsp
+		return "add-budget";
+	}
+	
+	// Add New Budget
+	@RequestMapping(path = "/budgets/create-budget/{customerId}")
+	public String addBudget(Model model, @PathVariable("customerId") int customerId) {
 			
 		// redirect to budgets jsp
 		return "add-budget";

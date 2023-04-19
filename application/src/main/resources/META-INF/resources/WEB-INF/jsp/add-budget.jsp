@@ -31,12 +31,73 @@
     	</div>
     	<!-- Navigation Btn -->
     	<div>
-    		<a href="http://localhost:8080/add-budget">
-    			<button class="btn" type="button" style="border: 2px solid #222222">Login</button>
+    		<a href="${pageContext.request.contextPath}/customer/${customerId}">
+    			<button class="btn" type="button" style="border: 2px solid #222222">Back to Dash</button>
     		</a>
     	</div>
     </header>
 <body>
-
+	    <main style="height: 100vh;">
+    	<!-- Main Page Content -->
+    	<div class="col-md-6 m-auto d-flex justify-content-end">
+    		<!-- Hero Section -->
+				<section class="w-100 grid gap-2 my-5 px-4">
+    			<!-- Row -->
+    			<div class="p-2 row align-items-center">
+    				<form method="post" action="http://localhost:8080/budgets/user-budgets/${customerId}" class="justify-self-end" style="background-color: #153c64;padding: 1.5em 2em 3em;border-radius: 20px;">
+    				<p class="text-center" style="color: #ffffff; font-weight: 600;">Create a new budget</p>
+    				<!-- Form Error -->
+    				<p class="text-danger text-center m-0 p-0">${error}</p>
+			        <div class="mb-2">
+			          <label for="name" class="form-label" style="color: #ffffff"
+			            >Budget name:</label
+			          >
+			          <input
+			            class="form-control"
+			            id="name"
+			            aria-describedby="budgetName"
+			            name="name"
+			            value="${name}"
+			            required
+			          />
+			        </div>
+			        <div class="mb-2">
+			          <label for="amount" class="form-label" style="color: #ffffff">Budget amount:</label>
+			          <input
+			            class="form-control"
+			            id="amount"
+			            aria-describedby="budgetAmount"
+			            name="amount"
+			            value="${amount}"
+			            required
+			          />
+			        </div>
+			        <div class="mb-2">
+			          <label for="startDate" class="form-label" style="color: #ffffff">Budget start date:</label>
+			          <input
+			            class="form-control"
+			            id="startDate"
+			            aria-describedby="budgetStartDate"
+			            name="startDate"
+			            value="${startDate}"
+			            required
+			          />
+			        </div>
+			        <div class="mb-2">
+			          <label for="endDate" class="form-label" style="color: #ffffff">Budget end date:</label>
+			          <input
+			            class="form-control"
+			            id="endDate"
+			            aria-describedby="budgetEndDate"
+			            name="endDate"
+			            value="${endDate}"
+			            required
+			          />
+			        </div>
+					<button class="btn py-2 mt-4" type="submit" style="width: 100%; background: #3496f9; color: #ffffff">Submit</button>			      </form>
+    			</div>
+    			</section>
+    		</div>
+    	</main>	
 </body>
 </html>

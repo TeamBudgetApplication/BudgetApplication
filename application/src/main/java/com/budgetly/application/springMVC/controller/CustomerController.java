@@ -87,10 +87,10 @@ public class CustomerController {
 	        session.setAttribute("customerId", existingCustomer.getId());
 	        
 	        // Create and add customerId cookie to response
-	        Cookie customerIdCookie = new Cookie("customerId", String.valueOf(existingCustomer.getId()));
-	        customerIdCookie.setPath("/");
-	        customerIdCookie.setMaxAge(24 * 60 * 60); // set the cookie to expire in 1 day
-	        response.addCookie(customerIdCookie);
+//	        Cookie customerIdCookie = new Cookie("customerId", String.valueOf(existingCustomer.getId()));
+//	        customerIdCookie.setPath("/");
+//	        customerIdCookie.setMaxAge(24 * 60 * 60); // set the cookie to expire in 1 day
+//	        response.addCookie(customerIdCookie);
 
 	        model.addAttribute("firstName", existingCustomer.getFirstName());
 	        return "customer-dashboard";
