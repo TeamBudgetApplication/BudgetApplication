@@ -22,6 +22,6 @@ public interface ExpenseDAO {
 	
 	public List<Expense> mostRecentTransactions(int customerId);
 	
-	public double calculateMostRecentTransactions(int cutomerId);
+	public Double calculateMostRecentTransactions(int cutomerId);
 	
 }

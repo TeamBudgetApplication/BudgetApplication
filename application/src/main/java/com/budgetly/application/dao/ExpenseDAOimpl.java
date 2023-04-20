@@ -57,9 +57,6 @@ public class ExpenseDAOimpl implements ExpenseDAO {
 		        "AND FUNCTION('MONTH', e.expenseDate) = FUNCTION('MONTH', CURRENT_DATE()) " +
 		        "AND FUNCTION('YEAR', e.expenseDate) = FUNCTION('YEAR', CURRENT_DATE()) ", Budget.class);
 		List<Budget> expenses = query.setParameter("customerId", customerId).getResultList();
-		if (expenses == null) {
-			return Collections.emptyList();
-		}
 		return expenses;
 	}
 
@@ -75,9 +72,6 @@ public class ExpenseDAOimpl implements ExpenseDAO {
 		        "AND FUNCTION('WEEK', e.expenseDate) = FUNCTION('WEEK', CURRENT_DATE()) " +
 		        "AND FUNCTION('YEAR', e.expenseDate) = FUNCTION('YEAR', CURRENT_DATE()) ", Budget.class);
 		List<Budget> expenses = query.setParameter("customerId", customerId).getResultList();
-		if (expenses == null) {
-			return Collections.emptyList();
-		}
 		return expenses;
 	}
 
@@ -95,14 +89,11 @@ public class ExpenseDAOimpl implements ExpenseDAO {
 	        Expense.class
 	    );
 	    List<Expense> expenses = query.setParameter("customerId", customerId).setMaxResults(15).getResultList();
-	    if (expenses == null) {
-	    	return Collections.emptyList();
-	    }
 	    return expenses;
 	}
 
 	@Override
-	public double calculateMostRecentTransactions(int customerId) {
+	public Double calculateMostRecentTransactions(int customerId) {
 	    TypedQuery<Double> query = entityManager.createQuery(
 	        "SELECT SUM(e.amount) " +
 	        "FROM Expense e " +
@@ -114,9 +105,6 @@ public class ExpenseDAOimpl implements ExpenseDAO {
 	        Double.class
 	    );
 	    Double expenses = query.setParameter("customerId", customerId).getSingleResult();
-	    if (expenses == null) {
-	    	return 0.00;
-	    }
 	    return expenses;
 	}
 
