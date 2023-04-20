@@ -104,11 +104,12 @@ public class BudgetServiceImpl implements BudgetService {
 	
 	@Override
 	@Transactional
-	public List<Budget> getBudgetsByKeyword(String keyword) {
+	public List<Budget> getBudgetsByKeyword(int customerId, String keyword) {
 		
-		List<Budget> budgets = budgetDAO.getBudgetsByKeyword(keyword);
+		List<Budget> budgets = budgetDAO.getBudgetsByKeyword(customerId, keyword);
 		
-		if (budgets == null) {
+		if (budgets.isEmpty()) {
+			//budgets = budgetDAO.retrieveAll(customerId);
 			return Collections.emptyList();
 		}
 		

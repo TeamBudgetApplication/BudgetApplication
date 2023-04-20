@@ -25,10 +25,6 @@ import com.budgetly.application.Service.CustomerService;
 import com.budgetly.application.Service.ExpenseService;
 import com.budgetly.application.entities.Budget;
 import com.budgetly.application.entities.Customer;
-import com.budgetly.application.entities.SearchRequest;
-
-
-
 
 @Controller
 public class BudgetController {
@@ -93,8 +89,6 @@ public class BudgetController {
 		return "budgets";
 	}
 		
-	
-			
 		
 	// Route retrieves all of a users budgets WITH EXPENSES passes to jsp
 	@GetMapping(path = "/budgets/expenses/{customerId}")
@@ -119,58 +113,27 @@ public class BudgetController {
 		return "add-budget";
 	}
 	
-//	@RequestMapping("/budgets/user-budgets/{customerId}/searchByKeyword/{keyword}")
-//	public String searchByKeyword(Model model, @RequestParam("customerId") int customerId) {
-//	
-//		SearchRequest searchRequest = new SearchRequest();
-//		
-//		String keyword = searchRequest.getKeyword();
-//		
-//		List<Budget> budgets = new ArrayList<>();
-//		
-//		if (keyword == null) {
-//			budgets = budgetService.retrieveUserBudgets(customerId);
-//		} else {
-//			budgets = budgetService.getBudgetsByKeyword(keyword);
-//		}
-//		
-//		model.addAttribute("budgets", budgets);
-//		model.addAttribute("customerId", customerId);
-//		//redirectAttributes.addAttribute("keyword", keyword);
-//		
-//		return "budgets";
-//		
-//	}
+	@GetMapping(path = "/budgets/user-budgets/searchByKeyword/{customerId}")
+	public String searchByKeyword(@PathVariable int customerId, @RequestParam(required = false) String keyword, ModelMap model){
 
-	
-	@RequestMapping("/budgets/user-budgets/{customerId}/searchForm")
-	public String searchForm(Model model, @RequestParam("customerId") int customerId) {
-
-		model.addAttribute("customerId", customerId);
-		
-		return "redirect:/searchOutput";
-		
-	}
-
-	@GetMapping("/budgets/user-budgets/searchByKeyword/{customerId}/{keyword}")
-	public String searchByKeyword(Model model, @ModelAttribute("searchRequest") SearchRequest searchRequest, @RequestParam("customerId") int customerId) {
-		
-		String keyword = searchRequest.getKeyword();
-		
+		Customer customer = customerService.getCustomer(customerId);
 		List<Budget> budgets = new ArrayList<>();
 		
-		if (keyword == null) {
+		if (keyword == null || keyword.trim().isEmpty()) {
 			budgets = budgetService.retrieveUserBudgets(customerId);
 		} else {
-			budgets = budgetService.getBudgetsByKeyword(keyword);
+			budgets = budgetService.getBudgetsByKeyword(customerId, keyword);
 		}
 		
-		model.addAttribute("budgets", budgets);
+		customer.setBudgets(budgets);		
+		model.addAttribute("customer", customer);
 		model.addAttribute("customerId", customerId);
+		model.addAttribute("budgets", budgets);		
+		model.addAttribute("numb", budgets.size());
+		model.addAttribute("keyword", keyword);
 		
 		return "budgets";
 	}
-
 	
 	//delete budget
 	@PostMapping(path = "/budgets/user-budgets/deleteBudget")
