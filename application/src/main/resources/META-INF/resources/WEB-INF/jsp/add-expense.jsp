@@ -32,70 +32,52 @@
 <body>
 	<div class="container">
 		<div class="row">
-			<div class="col-4">
+			<div class="col-2">
 				<jsp:include page="vertical-navigation.jsp" />
 			</div>
 			
+			<div class="col-2"></div>
 			<div class="col-7"><br>
-				<%-- <div class="row">
-					<h1 class="text-center mt-3">Budget ${budgetName}</h1>
-				</div> --%>
 				<div class="row">
 					<div class="col-md-7 col-lg-8">
 					<h4 class="mb-3">Expense Information</h4>
-					<form:form action ="processExpense" modelAttribute = "expense">
-			          <div class="row g-3">
-			          
+					<form:form action ="processExpense" modelAttribute = "expense" class="needs-validation">
+					<div class="row g-3">			          
 						  <div class="col-12">
 						    <label for="name" class="form-label">Name</label>
-						    <div class="input-group">
-						      <form:input type="text" class="form-control" id="name" placeholder="Name" required="" path="name" />
+						    <div>
+						      <form:input type="text" class="form-control" id="name" placeholder="Name with no special characters" required="required" path="name" />
 						      <div class="invalid-feedback">
-						        Valid name is required.
+						        Name is required.
 						      </div>
 						    </div>
 						  </div>
-			            
 			            <div class="col-12">
 			              <label for="amount" class="form-label">Amount</label>
-			              <div class="input-group">
-			              	<form:input type="number" class="form-control" id="amount" placeholder="123.00" required="" path="amount" value="${null}"/>
+			              <div>
+			              	<form:input type="number" class="form-control" id="amount" placeholder="123.00" required="required" path="amount" />			              
 			              <div class="invalid-feedback">
-			                Amount must be grater than zero.
+			                Amount is required.
 			              </div>
 			              </div>
 			            </div>
 			            
 			            <div class="col-12">
 			              <label for="expenseDate" class="form-label">Date</label>
-			              <div class="input-group">
-			              	<form:input type="date" class="form-control" id="expenseDate" required="" path="expenseDate" />
+			              <div>
+			              	<form:input type="date" class="form-control" id="expenseDate" value="" required="required" path="expenseDate" />
 			              <div class="invalid-feedback">
 			              Date is required.
 			            </div>
 			              </div>
 			            </div>
-					<hr class="my-4">
-					
-					<form action = "addExpense" method="get">
+					<hr class="my-4">					
+					<form action = "addExpense" method="post" >
 						<input type="hidden" name="budgetId" value="${budgetId}" />
-						<button type = "submit" class="btn btn-success rounded-pill px-3">Save Expense</button>
+						<button type = "submit" class="btn btn-success rounded-pill px-3" >Save Expense</button>
 					</form>
 				</div>
 				</form:form>
-				<!-- <script>
-				  $('form').on('submit', function(event) {
-				    event.preventDefault();
-				    event.stopPropagation();
-				    $(this).addClass('was-validated');
-				    if (this.checkValidity() === false) {
-				      // Form is invalid
-				    } else {
-				      // Form is valid, submit it
-				      this.submit();
-				    }
-				  });
-				</script> -->
 				</div>
 				</div>
 			</div>

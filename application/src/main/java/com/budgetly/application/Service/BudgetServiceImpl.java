@@ -1,5 +1,6 @@
  package com.budgetly.application.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,8 @@ public class BudgetServiceImpl implements BudgetService {
 	public  List<Budget> retrieveUserBudgets(int customerId) {
 		List<Budget> budgets = budgetDAO.retrieveAll(customerId);
 		
-		if (budgets.isEmpty()) {
-			throw new NotFoundException("No budgets found for user with id: " + customerId);
+		if (budgets == null) {
+			return Collections.emptyList();
 		}
 		
 		return budgets;
@@ -32,10 +33,10 @@ public class BudgetServiceImpl implements BudgetService {
 	
 	@Transactional
 	public List<Budget> retrieveAllByName(int customerId) {
-		List<Budget> budgets = budgetDAO.retrieveAll(customerId);
+		List<Budget> budgets = budgetDAO.retrieveAllByName(customerId);
 		
-		if (budgets.isEmpty()) {
-			throw new NotFoundException("No budgets found for user with id: " + customerId);
+		if (budgets == null) {
+			return Collections.emptyList();
 		}
 		
 		return budgets;
@@ -43,10 +44,10 @@ public class BudgetServiceImpl implements BudgetService {
 	
 	@Transactional
 	public List<Budget> retrieveAllByDate(int customerId) {
-		List<Budget> budgets = budgetDAO.retrieveAll(customerId);
+		List<Budget> budgets = budgetDAO.retrieveAllByDate(customerId);
 		
-		if (budgets.isEmpty()) {
-			throw new NotFoundException("No budgets found for user with id: " + customerId);
+		if (budgets == null) {
+			return Collections.emptyList();
 		}
 		
 		return budgets;
@@ -103,9 +104,14 @@ public class BudgetServiceImpl implements BudgetService {
 	
 	@Override
 	@Transactional
-	public List<Budget> getBudgetsByKeyword(String keyword) {
+	public List<Budget> getBudgetsByKeyword(int customerId, String keyword) {
 		
-		List<Budget> budgets = budgetDAO.getBudgetsByKeyword(keyword);
+		List<Budget> budgets = budgetDAO.getBudgetsByKeyword(customerId, keyword);
+		
+		if (budgets.isEmpty()) {
+			//budgets = budgetDAO.retrieveAll(customerId);
+			return Collections.emptyList();
+		}
 		
 		return budgets;
 	}

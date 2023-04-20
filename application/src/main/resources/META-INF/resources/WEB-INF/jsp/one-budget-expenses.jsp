@@ -52,6 +52,7 @@
 				</div><br>
 				<div class="row">
 					<div class="col-6">
+					<c:if test="${not empty expenses}">
 					<c:forEach items="${expenses}" var="expense">		
 						<div class="align-items-center justify-content-center">
 			 				<div class="list-group list-group-checkable">
@@ -83,8 +84,8 @@
 							 </div><br>
 						 </div>
 					 </c:forEach>
-						 <div class="d-grid gap-2">
-							<%-- <form action = "addExpense" method="get">
+						<%--  <div class="d-grid gap-2">
+							<form action = "addExpense" method="get">
 								<input type="hidden" name="budgetId" value="${budgetId}" />
 								<button type = "submit" class="btn btn-success rounded-pill px-3">Add a New Expense </button>
 							</form> --%>
@@ -92,9 +93,14 @@
 							<%-- <form action = "returnBackButton" method="get">
 								<input type="hidden" name="customerId" value="${customerId}" />
 								<button type = "submit" class="btn btn-dark rounded-pill px-3">Back to Budgets List</button>
-							</form> --%>
-			
+							</form>
+						</div> --%>
+					</c:if>
+					<c:if test="${empty budget.expenses}">
+					   <div style="text-align: center;">
+						    <br><h4>You don't have expenses yet</h4>
 						</div>
+					</c:if>
 					</div>			
 					<div class="col-6">
 						<canvas id="myChart"></canvas><br>	

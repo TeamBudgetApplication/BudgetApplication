@@ -74,7 +74,7 @@ background-image: linear-gradient(to right, rgba(78, 99, 215, 0.9) 0%, #3496f9 1
   position: absolute;
   right: 15px;
   top: calc(50% - 14px);
-  font-size: 18px;
+  font-size: 14px;
   color: #ffffff;
   content: '\F2F9';
   font-family: "Material-Design-Iconic-Font";

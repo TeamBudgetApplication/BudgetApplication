@@ -57,11 +57,14 @@ public class ExpenseController {
 	
 	@GetMapping(path = "/expenses/budget-expenses/addExpense")
 	public String addExpense(Model model, @RequestParam("budgetId") int budgetId) {
-		String budgetName = budgetService.retrieveUserBudgetById(budgetId).getName();
+		Budget budget = budgetService.retrieveUserBudgetById(budgetId);
+		String budgetName = budget.getName();
+		int customerId = budget.getCustomer().getId();
 		Expense expense = new Expense();
 		model.addAttribute("expense", expense);
 		model.addAttribute("budgetId", budgetId);
 		model.addAttribute("budgetName", budgetName);
+		model.addAttribute("customerId", customerId);
 		
 		return "add-expense";
 		
@@ -78,6 +81,7 @@ public class ExpenseController {
 		
 		return "redirect:/expenses/budget-expenses/{budgetId}";
 	}
+	
 	
 	@GetMapping(path = "/expenses/budget-expenses/returnToBudgetButton")
 	public String returnToBudgetButton(@RequestParam("budgetId") int budgetId, RedirectAttributes redirectAttributes) {
