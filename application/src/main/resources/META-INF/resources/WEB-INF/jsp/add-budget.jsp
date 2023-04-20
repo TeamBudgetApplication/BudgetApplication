@@ -23,16 +23,18 @@
 <title>Add Budget</title>
 </head>
 	<!-- Header -->
-    <header class="d-flex justify-content-between align-items-center p-4" style="border-bottom: 2px solid #222222;max-width: 1500px; margin: 0 auto;">
-    	<!-- Logo -->
-    	<div class="d-flex align-items-center">
-    		<span class="d-flex flex-column" style="font-weight: 600;font-size: 1.1rem; color: #222222">Budget 
-    		<span style="line-height: 1;">Application</span></span>
-    	</div>
+    <header class="d-flex justify-content-between align-items-center p-2" style="border-bottom: 3px solid #3496f9;max-width: 1500px; margin: 0 auto;">
+    <!-- Logo -->
+    <div class="d-flex align-items-center">
+     <img src="http://localhost:8080/static/img/logoblue.png" 
+     alt="budget application logo" width="55px" height="55px" />
+     <span class="d-flex flex-column" style="color: #3496f9;font-weight: 600;font-size: 1.1rem">Budgetly 
+     <span style="font-weight: 400;font-size: 0.8rem;line-height: 1.1;">Budget Tracker</span></span>
+    </div>
     	<!-- Navigation Btn -->
     	<div>
     		<a href="${pageContext.request.contextPath}/customer/${customerId}">
-    			<button class="btn" type="button" style="border: 2px solid #222222">Back to Dash</button>
+    			<button class="btn" type="button" style="color: #3496f9;font-weight: 600;font-size: 1.1rem; border: 2px solid #3496f9">Back to Dash</button>
     		</a>
     	</div>
     </header>
@@ -44,15 +46,17 @@
 				<section class="w-100 grid gap-2 my-5 px-4">
     			<!-- Row -->
     			<div class="p-2 row align-items-center">
-    				<form method="post" action="http://localhost:8080/budgets/user-budgets/${customerId}" class="justify-self-end" style="background-color: #153c64;padding: 1.5em 2em 3em;border-radius: 20px;">
+    				<form method="post" action="processBudget" class="justify-self-end" style="background-color: #153c64;padding: 1.5em 2em 3em;border-radius: 20px;">
     				<p class="text-center" style="color: #ffffff; font-weight: 600;">Create a new budget</p>
     				<!-- Form Error -->
     				<p class="text-danger text-center m-0 p-0">${error}</p>
+    				
 			        <div class="mb-2">
 			          <label for="name" class="form-label" style="color: #ffffff"
 			            >Budget name:</label
 			          >
 			          <input
+			          	type="text"
 			            class="form-control"
 			            id="name"
 			            aria-describedby="budgetName"
@@ -64,6 +68,7 @@
 			        <div class="mb-2">
 			          <label for="amount" class="form-label" style="color: #ffffff">Budget amount:</label>
 			          <input
+			          	type="number"
 			            class="form-control"
 			            id="amount"
 			            aria-describedby="budgetAmount"
@@ -74,26 +79,31 @@
 			        </div>
 			        <div class="mb-2">
 			          <label for="startDate" class="form-label" style="color: #ffffff">Budget start date:</label>
-			          <input
-			            class="form-control"
-			            id="startDate"
+			            <input
+			            type="date" 
+			            class="form-control" 
+			            id="startDate" 
 			            aria-describedby="budgetStartDate"
-			            name="startDate"
 			            value="${startDate}"
-			            required
+			            name="startDate"
+			            required="required" 
+			            path="startDate"
 			          />
 			        </div>
 			        <div class="mb-2">
 			          <label for="endDate" class="form-label" style="color: #ffffff">Budget end date:</label>
 			          <input
+			          	type="date"
 			            class="form-control"
 			            id="endDate"
 			            aria-describedby="budgetEndDate"
 			            name="endDate"
 			            value="${endDate}"
-			            required
+			            required="required" 
+			            path="endDate"
 			          />
 			        </div>
+			        <input type="hidden" name="customerId" value="${customerId}" />
 					<button class="btn py-2 mt-4" type="submit" style="width: 100%; background: #3496f9; color: #ffffff">Submit</button>			      </form>
     			</div>
     			</section>
