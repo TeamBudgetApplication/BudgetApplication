@@ -10,7 +10,7 @@
 <meta name="description"
 	content="Budgetly is a robust budgeting application allowing you create, update, and 
       delete budgets and expenses." />
-<title>Add a New Expense</title>
+<title>Add a New Budget</title>
 </head>
 <body style="font-family: 'Montserrat', sans-serif;">
 <body>
@@ -22,12 +22,6 @@
    		<span class="d-flex flex-column" style="color: #3496f9;font-weight: 600;font-size: 1.1rem">Budgetly 
    		<span style="font-weight: 400;font-size: 0.8rem;line-height: 1.1;">Budget Tracker</span></span>
    	</div>
-   	<div>
-		<form action = "returnToBudgetButton" method="get">
-			<input type="hidden" name="budgetId" value="${budgetId}" />
-			<button class="btn" type = "submit" style="background: #3496f9; color: #ffffff">Go to ${budgetName} Budget</button>
-		</form>
-   	</div>
 </header>
 <body>
 	<div class="container">
@@ -35,50 +29,76 @@
 			<div class="col-2">
 				<jsp:include page="vertical-navigation.jsp" />
 			</div>
-			
 			<div class="col-2"></div>
 			<div class="col-7"><br>
 				<div class="row">
 					<div class="col-md-7 col-lg-8">
-					<h4 class="mb-3">Expense Information</h4>
-					<form:form action ="processExpense" modelAttribute = "expense" class="needs-validation">
+					<h4 class="mb-3">Budget Information</h4>
+					<form method="post" action="processBudget" class="needs-validation">
 					<div class="row g-3">			          
 						  <div class="col-12">
 						    <label for="name" class="form-label">Name</label>
 						    <div>
-						      <form:input type="text" class="form-control" id="name" placeholder="Name with no special characters" required="required" path="name" />
-						      <div class="invalid-feedback">
-						        Name is required.
-						      </div>
+						      <input
+					          	type="text"
+					            class="form-control"
+					            id="name"
+					            aria-describedby="budgetName"
+					            name="name"
+					            value="${name}"
+					            required
+					          	/>
 						    </div>
 						  </div>
-			            <div class="col-12">
+						  <div class="col-12">
 			              <label for="amount" class="form-label">Amount</label>
 			              <div>
-			              	<form:input type="number" class="form-control" id="amount" placeholder="123.00" required="required" path="amount" />			              
-			              <div class="invalid-feedback">
-			                Amount is required.
-			              </div>
+			              	<input
+				          	type="number"
+				            class="form-control"
+				            id="amount"
+				            placeholder="1234.00"
+				            aria-describedby="budgetAmount"
+				            name="amount"
+				            value="${amount}"
+				            required>
 			              </div>
 			            </div>
 			            
 			            <div class="col-12">
-			              <label for="expenseDate" class="form-label">Date</label>
+			              <label for="expenseDate" class="form-label">Start Date</label>
 			              <div>
-			              	<form:input type="date" class="form-control" id="expenseDate" value="" required="required" path="expenseDate" />
-			              <div class="invalid-feedback">
-			              Date is required.
-			            </div>
+			              	 <input
+					            type="date" 
+					            class="form-control" 
+					            id="startDate" 
+					            aria-describedby="budgetStartDate"
+					            value="${startDate}"
+					            name="startDate"
+					            required="required" 
+					            path="startDate"
+					          />
 			              </div>
 			            </div>
-					<hr class="my-4">					
-					<form action = "addExpense" method="post" >
-						<input type="hidden" name="budgetId" value="${budgetId}" />
-						<button type = "submit" class="btn btn-success rounded-pill px-3" >Save Expense</button>
-					</form>
-				</div>
-				</form:form>
-				</div>
+			            <div class="col-12">
+			              <label for="expenseDate" class="form-label">End Date</label>
+			              <div>
+			              	 <input
+					          	type="date"
+					            class="form-control"
+					            id="endDate"
+					            aria-describedby="budgetEndDate"
+					            name="endDate"
+					            value="${endDate}"
+					            required="required" 
+					            path="endDate"
+					          />
+			              </div>
+			            </div>
+					<hr class="my-4">
+					<input type="hidden" name="customerId" value="${customerId}" />
+					<button type = "submit" class="btn btn-success rounded-pill px-3" >Submit</button></form>
+    				</div>
 				</div>
 			</div>
 		</div>

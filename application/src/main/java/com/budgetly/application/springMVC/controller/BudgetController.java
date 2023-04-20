@@ -5,7 +5,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import com.budgetly.application.Service.BudgetService;
 import com.budgetly.application.Service.CustomerService;
 import com.budgetly.application.Service.ExpenseService;
@@ -29,10 +27,6 @@ import com.budgetly.application.entities.Budget;
 import com.budgetly.application.entities.Customer;
 
 import com.budgetly.application.entities.Expense;
-
-
-
-
 
 @Controller
 public class BudgetController {
@@ -111,22 +105,12 @@ public class BudgetController {
 		return "expenses-report";
 	}
 	
-	// Add Expense Page
-	@PostMapping(path = "/budgets/create-budget")
-	public String addBudgetExpenseJsp(@RequestBody Budget budget) {
-		// Save submitted budget form
-		budgetService.saveBudget(budget);
-		
-		// redirect to budgets jsp
-		return "add-budget";
-	}
-	
 	// Add New Budget
 	@RequestMapping(path = "/budgets/create-budget/{customerId}")
 	public String addBudget(Model model, @PathVariable("customerId") int customerId) {
 			
 		// redirect to budgets jsp
-		return "add-budget";
+		return "create-budget";
 	}
 	
 
@@ -152,29 +136,6 @@ public class BudgetController {
 		return "redirect:/budgets/user-budgets/{customerId}";
 	}
 	
-//	@RequestMapping("/budgets/user-budgets/{customerId}/searchByKeyword/{keyword}")
-//	public String searchByKeyword(Model model, @RequestParam("customerId") int customerId) {
-//	
-//		SearchRequest searchRequest = new SearchRequest();
-//		
-//		String keyword = searchRequest.getKeyword();
-//		
-//		List<Budget> budgets = new ArrayList<>();
-//		
-//		if (keyword == null) {
-//			budgets = budgetService.retrieveUserBudgets(customerId);
-//		} else {
-//			budgets = budgetService.getBudgetsByKeyword(keyword);
-//		}
-//		
-//		model.addAttribute("budgets", budgets);
-//		model.addAttribute("customerId", customerId);
-//		//redirectAttributes.addAttribute("keyword", keyword);
-//		
-//		return "budgets";
-//		
-//	}
-
 	@GetMapping(path = "/budgets/user-budgets/searchByKeyword/{customerId}")
 	public String searchByKeyword(@PathVariable int customerId, @RequestParam(required = false) String keyword, ModelMap model){
 
