@@ -28,9 +28,9 @@ public class DashboardController {
 	    Customer customer = customerService.getCustomer(customerId);
 	    model.addAttribute("customer", customer);
 	    model.addAttribute("firstName", customer.getFirstName());
-	    model.addAttribute("budgetsOverAmount", budgetService.queryBudgetsOverAmount(customerId));
+	    model.addAttribute("budgetsOverAmount", budgetService.queryBudgetsOverAmount(customerId));	    
 	    model.addAttribute("thisMonthsBudgets", budgetService.budgetsActiveThisMonth(customerId));
-	    model.addAttribute("thisWeeksBudgets", budgetService.budgetsActiveThisWeek(customerId));
+	    model.addAttribute("thisWeeksBudgets", budgetService.budgetsActiveThisWeek(customerId));    
 	    model.addAttribute("thisMonthsExpenses", expenseService.totalExpensesForTheMonth(customerId));
 	    model.addAttribute("thisWeeksExpenses", expenseService.totalExpensesForTheWeek(customerId));
 	    model.addAttribute("mostRecentExpenses", expenseService.mostRecentTransactions(customerId));
