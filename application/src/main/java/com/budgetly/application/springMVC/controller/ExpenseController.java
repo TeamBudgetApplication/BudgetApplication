@@ -1,6 +1,7 @@
 package com.budgetly.application.springMVC.controller;
 
 
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,7 +82,6 @@ public class ExpenseController {
 		
 		return "redirect:/expenses/budget-expenses/{budgetId}";
 	}
-	
 	
 	@GetMapping(path = "/expenses/budget-expenses/returnToBudgetButton")
 	public String returnToBudgetButton(@RequestParam("budgetId") int budgetId, RedirectAttributes redirectAttributes) {
