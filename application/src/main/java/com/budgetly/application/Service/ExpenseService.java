@@ -21,6 +21,6 @@ public interface ExpenseService {
 	
 	public List<Expense> mostRecentTransactions(int customerId);
 	
-	public double calculateMostRecentTransactions(int customerId);
+	public Double calculateMostRecentTransactions(int customerId);
 
 }

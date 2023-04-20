@@ -69,6 +69,10 @@ public class ExpenseServiceImpl implements ExpenseService {
 	@Override
 	public List<Budget> totalExpensesForTheMonth(int customerId) {
 		// TODO Auto-generated method stub
+		List<Budget> expenses = expenseDAO.totalExpensesForTheMonth(customerId);
+		if(expenses == null) {
+			return Collections.emptyList();
+		}
 		return expenseDAO.totalExpensesForTheMonth(customerId);
 	}
 
@@ -76,6 +80,10 @@ public class ExpenseServiceImpl implements ExpenseService {
 	@Override
 	public List<Budget> totalExpensesForTheWeek(int customerId) {
 		// TODO Auto-generated method stub
+		List<Budget> expenses = expenseDAO.totalExpensesForTheWeek(customerId);
+		if (expenses == null) {
+			return Collections.emptyList();
+		}
 		return expenseDAO.totalExpensesForTheWeek(customerId);
 	}
 
@@ -83,13 +91,21 @@ public class ExpenseServiceImpl implements ExpenseService {
 	@Override
 	public List<Expense> mostRecentTransactions(int customerId) {
 		// TODO Auto-generated method stub
+		List<Expense> expenses = expenseDAO.mostRecentTransactions(customerId);
+		if(expenses == null) {
+			return Collections.emptyList();
+		}
 		return expenseDAO.mostRecentTransactions(customerId);
 	}
 
 	@Transactional
 	@Override
-	public double calculateMostRecentTransactions(int customerId) {
+	public Double calculateMostRecentTransactions(int customerId) {
 		// TODO Auto-generated method stub
+		Double expenses = expenseDAO.calculateMostRecentTransactions(customerId);
+		if (expenses == null) {
+			return 0.00;
+		}
 		return expenseDAO.calculateMostRecentTransactions(customerId);
 	}
 
