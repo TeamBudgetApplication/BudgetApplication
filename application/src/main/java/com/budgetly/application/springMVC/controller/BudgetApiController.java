@@ -43,7 +43,7 @@ public class BudgetApiController {
 	}
 	
 	// Save Budget
-	@PostMapping(path = "/api/budgets/add-budget")
+	@PostMapping(path = "/api/budgets/create-budget")
 	public Budget saveUserBudget(@RequestBody Budget budget) {
 		return service.saveBudget(budget);
 	}
