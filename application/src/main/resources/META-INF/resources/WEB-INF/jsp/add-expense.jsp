@@ -32,14 +32,12 @@
 <body>
 	<div class="container">
 		<div class="row">
-			<div class="col-4">
+			<div class="col-2">
 				<jsp:include page="vertical-navigation.jsp" />
 			</div>
 			
+			<div class="col-2"></div>
 			<div class="col-7"><br>
-				<%-- <div class="row">
-					<h1 class="text-center mt-3">Budget ${budgetName}</h1>
-				</div> --%>
 				<div class="row">
 					<div class="col-md-7 col-lg-8">
 					<h4 class="mb-3">Expense Information</h4>
@@ -47,8 +45,8 @@
 					<div class="row g-3">			          
 						  <div class="col-12">
 						    <label for="name" class="form-label">Name</label>
-						    <div class="input-group has-validation">
-						      <form:input type="text" class="form-control" id="name" placeholder="" required="required" path="name" />
+						    <div>
+						      <form:input type="text" class="form-control" id="name" placeholder="Name with no special characters" required="required" path="name" />
 						      <div class="invalid-feedback">
 						        Name is required.
 						      </div>
@@ -80,19 +78,6 @@
 					</form>
 				</div>
 				</form:form>
-				<!-- <script>
-				  $('form').on('submit', function(event) {
-				    event.preventDefault();
-				    event.stopPropagation();
-				    $(this).addClass('was-validated');
-				    if (this.checkValidity() === false) {
-				      // Form is invalid
-				    } else {
-				      // Form is valid, submit it
-				      this.submit();
-				    }
-				  });
-				</script> -->
 				</div>
 				</div>
 			</div>

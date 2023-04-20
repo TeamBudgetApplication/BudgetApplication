@@ -66,7 +66,7 @@
 							    </div>
 								<div class="col-md-6 col-lg-3 my-3">
 									<a href="${pageContext.request.contextPath}/budgets/user-budgets/sortBudgetsByDate/${customerId}"
-							    	class="btn btn-lg btn-block btn-light btn-custom">Sort by Start Date</a>
+							    	class="btn btn-lg btn-block btn-light btn-custom">Sort by Date</a>
 								</div>
 							</div>			
 						</form>
@@ -145,7 +145,9 @@
 								</div>
 							</c:if>
 							<c:if test="${empty budgets and not empty keyword}">
-							  <h1>No budgets found for the specified keyword: "${keyword}".</h1>
+								<div style="text-align: center;">
+							  		<h2>No budgets found for the specified keyword: "${keyword}".</h2>
+							  	</div>
 							</c:if>
 						</div>
 					</div>
