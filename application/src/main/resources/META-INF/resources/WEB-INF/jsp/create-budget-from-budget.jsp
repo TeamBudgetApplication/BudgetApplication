@@ -35,7 +35,7 @@
 					<div class="col-md-7 col-lg-8">
 					<h4 class="mb-3">Budget Information</h4>
 					<form method="post" action="processBudget" class="needs-validation">
-					<div class="row g-3">			          
+						<div class="row g-3">			          
 						  <div class="col-12">
 						    <label for="name" class="form-label">Name</label>
 						    <div>
@@ -80,7 +80,7 @@
 					          />
 			              </div>
 			            </div>
-			            <div class="col-12">
+			           <div class="col-12">
 			              <label for="expenseDate" class="form-label">End Date</label>
 			              <div>
 			              	 <input
@@ -95,13 +95,20 @@
 					          />
 			              </div>
 			            </div>
-					<hr class="my-4">
-					<input type="hidden" name="customerId" value="${customerId}" />
-					<button type = "submit" class="btn btn-success rounded-pill px-3" >Submit</button></form>
+					<hr class="my-3">
+						<input type="hidden" name="customerId" value="${customerId}" />
+						<button type = "submit" class="btn btn-success rounded-pill px-3" >Submit</button></form>
+						<a href="${pageContext.request.contextPath}/budgets/user-budgets/${customerId}"
+						class="btn btn-dark rounded-pill px-3">Cancel</a>
+						<%-- <form action = "returnBackButton" method="get">
+							<input type="hidden" name="customerId" value="${customerId}" />
+							<button type = "submit" class="btn btn-dark rounded-pill px-3">Cancel</button>
+						</form> --%><br>
+						</div>
     				</div>
 				</div>
 			</div>
 		</div>
-	</div>
+	
 </body>
 </html>
