@@ -1,16 +1,15 @@
 package com.budgetly.application.dao;
 
 
-import java.util.Collections;
 import java.util.List;
 
-import org.hibernate.Session;
-import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import com.budgetly.application.entities.Budget;
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Tuple;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 
@@ -95,6 +94,7 @@ public class BudgetDAOImpl implements BudgetDAO {
 	    List<Budget> budgets = query.setParameter("customerId", customerId).getResultList();
 	    return budgets;
 	}
+
 
 	@Override
 	public List<Budget> budgetsActiveThisMonth(int customerId) {
