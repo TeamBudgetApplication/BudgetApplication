@@ -1,5 +1,9 @@
 package com.budgetly.application.springMVC.controller;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,37 +58,69 @@ public class ExpenseController {
 	
 	@GetMapping(path = "/expenses/budget-expenses/addExpense")
 	public String addExpense(Model model, @RequestParam("budgetId") int budgetId, @RequestParam(required = false) Integer expenseId) {
-		
+		//DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+				
 		Budget budget = budgetService.retrieveUserBudgetById(budgetId);
 		String budgetName = budget.getName();
 		int customerId = budget.getCustomer().getId();
 		Expense expense = null;
+		//String expenseDate = null;
+		
 	    if (expenseId != null) {
 	        expense = expenseService.getExpenseById(expenseId);
+	        //expenseDate = (expense.getExpenseDate()).format(formatter);	
 	    } else {
 	        expense = new Expense();
 	    }
-		
+        
 		model.addAttribute("expense", expense);
 		model.addAttribute("budgetId", budgetId);
 		model.addAttribute("budgetName", budgetName);
 		model.addAttribute("customerId", customerId);
+		//model.addAttribute("expenseId", expenseId);
 		
-		return "add-expense";
-		
+		return "add-expense";		
 	}
 	
 	@RequestMapping("/expenses/budget-expenses/processExpense")
-	public String processExpense(Model model, @ModelAttribute("expense") Expense expense, @RequestParam("budgetId") int budgetId, RedirectAttributes redirectAttributes) {
-		
-		Budget budget = budgetService.retrieveUserBudgetById(budgetId);
-		expense.setBudget(budget);
-		expenseService.saveExpense(expense);
-		
-		redirectAttributes.addAttribute("budgetId", budgetId);
-		
-		return "redirect:/expenses/budget-expenses/{budgetId}";
+	public String processExpense(Model model, @ModelAttribute("expense") Expense expense,
+	        @RequestParam("budgetId") int budgetId, RedirectAttributes redirectAttributes,
+	        @RequestParam(required = false) Integer expenseId) {
+	    Budget budget = budgetService.retrieveUserBudgetById(budgetId);
+	    expense.setBudget(budget);
+	    
+	    if (expenseId != null) {
+	    	expense.setId(expenseId);
+	    }
+	    
+	    expenseService.saveExpense(expense);
+
+	    redirectAttributes.addAttribute("budgetId", budgetId);
+	    return "redirect:/expenses/budget-expenses/{budgetId}";
 	}
+	
+	//it's what chatGPT says me
+	
+//@RequestMapping("/expenses/budget-expenses/processExpense")
+//public String processExpense(Model model, @ModelAttribute("expense") Expense expense,
+//        @RequestParam("budgetId") int budgetId, RedirectAttributes redirectAttributes,
+//        @RequestParam(required = false) Integer expenseId) {
+//    Budget budget = budgetService.retrieveUserBudgetById(budgetId);
+//    expense.setBudget(budget);
+//
+//    if (expenseId != null) {
+//        Expense existingExpense = expenseService.getExpenseById(expenseId);
+//        existingExpense.setName(expense.getName());
+//        existingExpense.setAmount(expense.getAmount());
+//        existingExpense.setExpenseDate(expense.getExpenseDate());
+//        expenseService.saveExpense(existingExpense);
+//    } else {
+//        expenseService.saveExpense(expense);
+//    }
+//
+//    redirectAttributes.addAttribute("budgetId", budgetId);
+//    return "redirect:/expenses/budget-expenses/{budgetId}";
+//}
 	
 	@GetMapping(path = "/expenses/budget-expenses/returnToBudgetButton")
 	public String returnToBudgetButton(@RequestParam("budgetId") int budgetId, RedirectAttributes redirectAttributes) {

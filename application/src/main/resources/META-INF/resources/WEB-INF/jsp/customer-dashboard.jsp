@@ -66,33 +66,30 @@ tr {
 										<c:if test="${empty thisMonthsBudgets}">
 											<div style="text-align: center;">
 												<br>
-												<h2>You don't have any budgets yet</h2>
+												<h3>You don't have any budgets yet</h3>
 												<br>
-												<form action="addBudget" method="get">
-													<input type="hidden" name="customerId"
-														value="${customerId}" />
-													<button class="btn" type="submit"
-														style="background: #3496f9; color: #ffffff">Add
-														New Budget</button>
-												</form>
+												<a href="${pageContext.request.contextPath}/budgets/create-budget/${customerId}"
+												class="btn" type="submit" style="background: #3496f9; color: #ffffff">Add New Budget</a>
 											</div>
 										</c:if>
 										<c:forEach items="${thisMonthsBudgets}" var="budget"
 											varStatus="budgetStatus">
 											<c:if test="${budgetStatus.index == 0}">
 												<div class="carousel-item active">
+												<a href="${pageContext.request.contextPath}/expenses/budget-expenses/${budget.id}">
 													<div>
 														<canvas id="myChart1_${budget.id}"
 															style="width: 300px; height: 300px;"></canvas>
-													</div>
+													</div></a>
 												</div>
 											</c:if>
 											<c:if test="${budgetStatus.index != 0}">
 												<div class="carousel-item">
+												<a href="${pageContext.request.contextPath}/expenses/budget-expenses/${budget.id}">
 													<div>
 														<canvas id="myChart1_${budget.id}"
 															style="width: 300px; height: 300px;"></canvas>
-													</div>
+													</div></a>
 												</div>
 											</c:if>
 
@@ -206,15 +203,10 @@ tr {
 										<c:if test="${empty thisWeeksBudgets}">
 											<div style="text-align: center;">
 												<br>
-												<h2>You don't have any budgets yet</h2>
+												<h3>You don't have any budgets yet</h3>
 												<br>
-												<form action="addBudget" method="get">
-													<input type="hidden" name="customerId"
-														value="${customerId}" />
-													<button class="btn" type="submit"
-														style="background: #3496f9; color: #ffffff">Add
-														New Budget</button>
-												</form>
+												<a href="${pageContext.request.contextPath}/budgets/create-budget/${customerId}"
+												class="btn" type="submit" style="background: #3496f9; color: #ffffff">Add New Budget</a>
 											</div>
 										</c:if>
 										<c:forEach items="${thisWeeksBudgets}" var="budget"
@@ -345,7 +337,7 @@ tr {
 										<c:if test="${empty budgetsOverAmount}">
 											<div style="text-align: center;">
 												<br>
-												<h2>No budgets currently over amount</h2>
+												<h3>No budgets currently over amount</h3>
 											</div>
 										</c:if>
 										<c:forEach items="${budgetsOverAmount}" var="budget"
@@ -468,29 +460,6 @@ tr {
 							</div>
 							</c:if>
 							</c:forEach>
-
-							<%-- <table class="table">
-							<thead>
-								<tr>
-									<th>Name</th>
-									<th>Start Date</th>
-									<th>End Date</th>
-									<th>Amount</th>
-								</tr>
-							</thead>
-							<tbody>
-								<c:forEach var="budget" items="${budgetsOverAmount}">
-									<tr>
-										<td>${budget.name}</td>
-										<td><fmt:formatDate value="${budget.startDate}"
-												pattern="M/d" /></td>
-										<td><fmt:formatDate value="${budget.endDate}"
-												pattern="M/d" /></td>
-										<td>${budget.getFormattedAmount()}</td>
-									</tr>
-								</c:forEach>
-							</tbody>
-						</table> --%>
 						</div>
 					</div>
 				</div>
@@ -534,27 +503,3 @@ tr {
 	</div>
 </body>
 </html>
-
-
-<%-- <table class="table">
-							<thead>
-								<tr>
-									<th>Name</th>
-									<th>Start Date</th>
-									<th>End Date</th>
-									<th>Amount</th>
-								</tr>
-							</thead>
-							<tbody>
-								<c:forEach var="budget" items="${thisMonthsBudgets}">
-									<tr>
-										<td>${budget.name}</td>
-										<td><fmt:formatDate value="${budget.startDate}"
-												pattern="M/d" /></td>
-										<td><fmt:formatDate value="${budget.endDate}"
-												pattern="M/d" /></td>
-										<td>${budget.getFormattedAmount()}</td>
-									</tr>
-								</c:forEach>
-							</tbody>
-						</table> --%>

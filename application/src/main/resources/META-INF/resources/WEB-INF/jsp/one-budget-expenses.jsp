@@ -48,7 +48,7 @@
 			<div class="col-9">
 				<div class="row">
 					<h1 class="text-center mt-3">${budget.name} Budget</h1>
-					<h5 class="text-center">${budget.formattedStartDate} 2023 - ${budget.formattedEndDate} 2023</h5><br>		
+					<h5 class="text-center">${budget.getFormattedDate(budget.startDate)} 2023 - ${budget.getFormattedDate(budget.endDate)} 2023</h5><br>		
 				</div><br>
 				<div class="row">
 					<div class="col-6">
@@ -62,18 +62,18 @@
 										<td width=150><strong class="fw-semibold">${expense.name}</strong></td>
 										<td width=100><span class="d-block small opacity-75">$${expense.formattedAmount}</span></td>
 			                               <td width=140><span class="d-block small opacity-75">${expense.formattedDate}</span></td>
-										<%-- <td>
+										<td>
 										<div class="job-right">
 										 	<a href="${pageContext.request.contextPath}/expenses/budget-expenses/addExpense?budgetId=${budget.id}&expenseId=${expense.id}"
 										    class="btn d-block w-100 d-sm-inline-block btn-light">Update</a>
 										    
 										</div>
-										<form action = "updateExpense" method = "get">
+						<%-- 				<form action = "updateExpense" method = "get">
 												<input type="hidden" name="budgetId" value="${expense.budget.id}" />
 												<input type="hidden" name="expenseId" value="${expense.id}" />
 												<button type="submit" class="btn d-block w-20 d-sm-inline-block btn-light">Update</button>
-											</form>
-										</td> --%>
+											</form> --%>
+										</td>
 										<td>
 										<div class="job-right">
 											<form action="deleteExpense" method="post">
