@@ -35,7 +35,6 @@
 			<div class="col-2">
 				<jsp:include page="vertical-navigation.jsp" />
 			</div>
-			
 			<div class="col-2"></div>
 			<div class="col-7"><br>
 				<div class="row">
@@ -55,7 +54,7 @@
 			            <div class="col-12">
 			              <label for="amount" class="form-label">Amount</label>
 			              <div>
-			              	<form:input type="number" class="form-control" aria-describedby="amount" id="amount" placeholder="123.00" required="required" path="amount" value="${null }" />		              
+			              	<form:input type="number" class="form-control" aria-describedby="amount" id="amount" placeholder="123.00" required="required" path="amount" />		              
 			              <div class="invalid-feedback">
 			                Amount is required.
 			              </div>
@@ -65,7 +64,7 @@
 			            <div class="col-12">
 			              <label for="expenseDate" class="form-label">Date</label>
 			              <div>
-			              	<form:input type="date" class="form-control" id="expenseDate" value="" required="required" path="expenseDate" />
+			              	<form:input type="date" class="form-control" id="expenseDate" value="expenseDate" required="required" path="expenseDate" />
 			              <div class="invalid-feedback">
 			              Date is required.
 			            </div>
@@ -76,14 +75,8 @@
 						<input type="hidden" name="budgetId" value="${budgetId}" />
 						<button type = "submit" class="btn btn-success rounded-pill px-3" >Save Expense</button>
 					</form>
-					<%-- <form action = "returnBackButton" method="get">
-						<input type="hidden" name="customerId" value="${customerId}" />
-						<button type = "submit" class="btn btn-dark rounded-pill px-3">Cancel</button>
-					</form> --%>
 					<a href="${pageContext.request.contextPath}/budgets/user-budgets/${customerId}"
-						class="btn btn-dark rounded-pill px-3">Cancel</a>
-					
-					<br>
+						class="btn btn-dark rounded-pill px-3">Cancel</a><br>
 				</div>
 				</form:form>
 				</div>

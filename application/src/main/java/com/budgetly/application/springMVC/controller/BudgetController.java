@@ -100,24 +100,80 @@ public class BudgetController {
 		List<Budget> budgets = budgetService.retrieveUserBudgets(customerId);
 		
 		// Add budgets to model for jsp interaction
-		model.addAttribute("budgets", budgets);		
+		model.addAttribute("budgets", budgets);	
 			
 		return "expenses-report";
 	}
 	
+	//it's what chatGPT says
 	
-	//Add New Budget from Budgets View Page
-	@RequestMapping(path = "/budgets/user-budgets/create-budget/{customerId}")
-	public String addBudget(Model model, @PathVariable("customerId") int customerId) {
+//	@RequestMapping("/budgets/user-budgets/updateBudget/{customerId}")
+//	public String updateBudget(Model model, @PathVariable("customerId") int customerId, @RequestParam("budgetId") int budgetId) {
+//	    Budget budget = budgetService.retrieveUserBudgetById(budgetId);
+//	    model.addAttribute("budgetId", budgetId);
+//	    model.addAttribute("budget", budget);
+//	    model.addAttribute("customerId", customerId);
+//	    return "update-budget-form";
+//	}
+//	
+//	@RequestMapping("/budgets/user-budgets/updateBudget/processUpdateBudget")
+//	public String processUpdateBudget(Model model, @ModelAttribute("budget") Budget budget, @RequestParam("customerId") int customerId, RedirectAttributes redirectAttributes) {
+//	    budgetService.saveBudget(budget);
+//	    redirectAttributes.addAttribute("customerId", customerId);
+//	    return "redirect:/budgets/user-budgets/{customerId}";
+//	}
+	
+	
+	//Add New Budget from BUDGETS VIEW PAGE
+		@RequestMapping(path = "/budgets/user-budgets/create-budget/{customerId}")
+		public String addBudget(Model model, @PathVariable("customerId") int customerId, @RequestParam(required = false) Integer budgetId) {
+			//SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			Budget budget = null;
+//			String name;
+//			String endDate;
+//			String startDate;
+//			double amount;
 			
-		// redirect to budgets jsp
-		return "create-budget-from-budget";
-	}
+			if (budgetId != null) {
+		        budget = budgetService.retrieveUserBudgetById(budgetId);
+//		        name = budget.getName();
+//	        	endDate = dateFormat.format(budget.getEndDate());
+//	        	startDate = dateFormat.format(budget.getStartDate());
+//	        	amount = budget.getAmount();
+		    }
+			model.addAttribute("budget", budget);
+			model.addAttribute("budgetId", budgetId);
+//			model.addAttribute("name", name);
+//			model.addAttribute("endDate", endDate);
+//			model.addAttribute("startDate", startDate);
+//			model.addAttribute("amount", amount);
+			
+			// redirect to budgets jsp
+			return "create-budget-from-budget";			
+		}
 	
 	@RequestMapping("/budgets/user-budgets/create-budget/processBudget")
-	public String processBudget(Model model,String name, String endDate, String startDate, double amount, @RequestParam("customerId") int customerId, RedirectAttributes redirectAttributes) throws ParseException {
+	public String processBudget(Model model, @ModelAttribute("budget") Budget budget, 
+			String name, String endDate, String startDate, double amount, 
+			@RequestParam("customerId") int customerId, @RequestParam(required = false) int budgetId, RedirectAttributes redirectAttributes) throws ParseException {
+		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		Budget budget = new Budget();
+		//Budget budget = new Budget();
+		
+//		if (budget != null) {
+//			//id = budget.getId();
+//			name = budget.getName();
+//	        endDate = dateFormat.format(budget.getEndDate());
+//	        startDate = dateFormat.format(budget.getStartDate());
+//	        amount = budget.getAmount();
+//		} else {
+//			budget = new Budget();
+//		}
+		
+		if (budget == null) {
+			budget = new Budget();
+		}
+		
 		Customer customer = customerService.getCustomer(customerId);
 		budget.setCustomer(customer);
 		System.out.println(customer.getId());
@@ -137,23 +193,8 @@ public class BudgetController {
 	}
 	
 	
-//	@RequestMapping("/budgets/user-budgets/updateBudget/{customerId}")
-//	public String updateBudget(Model model, @PathVariable("customerId") int customerId, @RequestParam("budgetId") int budgetId) {
-//	    Budget budget = budgetService.retrieveUserBudgetById(budgetId);
-//	    model.addAttribute("budgetId", budgetId);
-//	    model.addAttribute("budget", budget);
-//	    model.addAttribute("customerId", customerId);
-//	    return "update-budget-form";
-//	}
-//	
-//	@RequestMapping("/budgets/user-budgets/updateBudget/processUpdateBudget")
-//	public String processUpdateBudget(Model model, @ModelAttribute("budget") Budget budget, @RequestParam("customerId") int customerId, RedirectAttributes redirectAttributes) {
-//	    budgetService.saveBudget(budget);
-//	    redirectAttributes.addAttribute("customerId", customerId);
-//	    return "redirect:/budgets/user-budgets/{customerId}";
-//	}
-
-	//Add New Budget from Dashboard
+	
+	//Add New Budget from DASHBOARD
 	@RequestMapping(path = "/budgets/create-budget/{customerId}")
 	public String createBudget(Model model, @PathVariable("customerId") int customerId) {
 			
