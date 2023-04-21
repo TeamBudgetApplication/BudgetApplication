@@ -71,7 +71,7 @@
     				<form method="post" action="http://localhost:8080/customer/processNewCustomer" class="justify-self-end" style="background-color: #153c64;padding: 1.5em 2em 3em;border-radius: 20px;width: 80%;" >
     				<p class="text-center" style="color: #ffffff; font-weight: 600;">See Budgetly in action</p>
     				<!-- Form Error -->
-    				<p class="text-danger text-center m-0 p-0">${error}</p>
+    				
 			        <div class="mb-3 grid">
 			          <div class="row">
 			          	<div class="col">

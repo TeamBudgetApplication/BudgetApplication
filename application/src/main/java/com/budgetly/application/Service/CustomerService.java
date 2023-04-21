@@ -12,6 +12,8 @@ public interface CustomerService {
 	
 	public Customer getByEmail(String email, String password);
 	
+	public Customer getByEmail(String email);
+	
 	public void saveCustomer(Customer customer);
 
 }

@@ -27,21 +27,32 @@ public class CustomerController {
 	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
+	
+	public boolean emailExists(String email) {
+		Customer existingCustomer = customerService.getByEmail(email);
+		return existingCustomer != null;
+	}
 
 	@RequestMapping("/customer/register")
 	public String signup(Model model) {
 		Customer customer = new Customer();
 		model.addAttribute("customer", customer);
-		return "add-customer";
+		return "signup";
 	}
-
+	
 	@PostMapping("/customer/processNewCustomer")
-	public String processNewCustomer(@ModelAttribute("customer") Customer customer) {
-		String password = customer.getPassword();
-		String hashedPassword = passwordEncoder.encode(password);
-		customer.setPassword(hashedPassword);
-		customerService.saveCustomer(customer);
-		return "login";
+	public String processNewCustomer(@ModelAttribute("customer") Customer customer, Model model) {
+	    String email = customer.getEmail();
+	    if (emailExists(email)) {
+	        return "signup";
+	    } 
+	    else {
+	        String password = customer.getPassword();
+	        String hashedPassword = passwordEncoder.encode(password);
+	        customer.setPassword(hashedPassword);
+	        customerService.saveCustomer(customer);
+	        return "redirect:/customer/" + customer.getId();
+	    }
 	}
 
 	@GetMapping("customer/updateCustomer/{customerId}")
@@ -83,9 +94,9 @@ public class CustomerController {
 	        @RequestParam(value = "password", required = false) String password) {
 	    Customer existingCustomer = customerService.getByEmail(email, password);
 	    if (existingCustomer == null || !passwordEncoder.matches(password, existingCustomer.getPassword())) {
-	        model.addAttribute("authError", true); // add authError attribute to model
 	        return "login";
-	    } else {
+	    } 
+	    else {
 	        HttpSession session = request.getSession(true);
 	        session.setAttribute("customerId", existingCustomer.getId());
 	        model.addAttribute("firstName", existingCustomer.getFirstName());

@@ -54,5 +54,9 @@ public class CustomerServiceImpl implements CustomerService {
 		
 		return result;
 	}
+	
+	public Customer getByEmail(String email) {
+		return customerDAO.getByEmail(email);
+	}
 
 }
