@@ -1,7 +1,5 @@
 package com.budgetly.application.springMVC.controller;
 
-
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +18,6 @@ import com.budgetly.application.Service.BudgetService;
 import com.budgetly.application.Service.ExpenseService;
 import com.budgetly.application.entities.Budget;
 import com.budgetly.application.entities.Expense;
-
-
 
 @Controller
 public class ExpenseController {
@@ -57,11 +53,18 @@ public class ExpenseController {
 	
 	
 	@GetMapping(path = "/expenses/budget-expenses/addExpense")
-	public String addExpense(Model model, @RequestParam("budgetId") int budgetId) {
+	public String addExpense(Model model, @RequestParam("budgetId") int budgetId, @RequestParam(required = false) Integer expenseId) {
+		
 		Budget budget = budgetService.retrieveUserBudgetById(budgetId);
 		String budgetName = budget.getName();
 		int customerId = budget.getCustomer().getId();
-		Expense expense = new Expense();
+		Expense expense = null;
+	    if (expenseId != null) {
+	        expense = expenseService.getExpenseById(expenseId);
+	    } else {
+	        expense = new Expense();
+	    }
+		
 		model.addAttribute("expense", expense);
 		model.addAttribute("budgetId", budgetId);
 		model.addAttribute("budgetName", budgetName);

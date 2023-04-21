@@ -76,6 +76,14 @@
 						<input type="hidden" name="budgetId" value="${budgetId}" />
 						<button type = "submit" class="btn btn-success rounded-pill px-3" >Save Expense</button>
 					</form>
+					<%-- <form action = "returnBackButton" method="get">
+						<input type="hidden" name="customerId" value="${customerId}" />
+						<button type = "submit" class="btn btn-dark rounded-pill px-3">Cancel</button>
+					</form> --%>
+					<a href="${pageContext.request.contextPath}/budgets/user-budgets/${customerId}"
+						class="btn btn-dark rounded-pill px-3">Cancel</a>
+					
+					<br>
 				</div>
 				</form:form>
 				</div>

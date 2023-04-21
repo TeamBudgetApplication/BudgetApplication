@@ -62,6 +62,18 @@
 										<td width=150><strong class="fw-semibold">${expense.name}</strong></td>
 										<td width=100><span class="d-block small opacity-75">$${expense.formattedAmount}</span></td>
 			                               <td width=140><span class="d-block small opacity-75">${expense.formattedDate}</span></td>
+										<%-- <td>
+										<div class="job-right">
+										 	<a href="${pageContext.request.contextPath}/expenses/budget-expenses/addExpense?budgetId=${budget.id}&expenseId=${expense.id}"
+										    class="btn d-block w-100 d-sm-inline-block btn-light">Update</a>
+										    
+										</div>
+										<form action = "updateExpense" method = "get">
+												<input type="hidden" name="budgetId" value="${expense.budget.id}" />
+												<input type="hidden" name="expenseId" value="${expense.id}" />
+												<button type="submit" class="btn d-block w-20 d-sm-inline-block btn-light">Update</button>
+											</form>
+										</td> --%>
 										<td>
 										<div class="job-right">
 											<form action="deleteExpense" method="post">
@@ -90,11 +102,11 @@
 								<button type = "submit" class="btn btn-success rounded-pill px-3">Add a New Expense </button>
 							</form> --%>
 							
-							<%-- <form action = "returnBackButton" method="get">
+							<form action = "returnBackButton" method="get">
 								<input type="hidden" name="customerId" value="${customerId}" />
 								<button type = "submit" class="btn btn-dark rounded-pill px-3">Back to Budgets List</button>
-							</form>
-						</div> --%>
+							</form><br>
+						
 					</c:if>
 					<c:if test="${empty budget.expenses}">
 					   <div style="text-align: center;">

@@ -92,7 +92,7 @@ public class BudgetController {
 	}
 		
 		
-	// Route retrieves all of a users budgets WITH EXPENSES passes to jsp
+	//Route retrieves all of a users budgets WITH EXPENSES passes to jsp
 	@GetMapping(path = "/budgets/expenses/{customerId}")
 	public String getAllUserExpensesJsp(@PathVariable int customerId, ModelMap model) {
 		
@@ -105,16 +105,16 @@ public class BudgetController {
 		return "expenses-report";
 	}
 	
-	// Add New Budget
-	@RequestMapping(path = "/budgets/create-budget/{customerId}")
+	
+	//Add New Budget from Budgets View Page
+	@RequestMapping(path = "/budgets/user-budgets/create-budget/{customerId}")
 	public String addBudget(Model model, @PathVariable("customerId") int customerId) {
 			
 		// redirect to budgets jsp
-		return "create-budget";
+		return "create-budget-from-budget";
 	}
 	
-
-	@RequestMapping("/budgets/create-budget/processBudget")
+	@RequestMapping("/budgets/user-budgets/create-budget/processBudget")
 	public String processBudget(Model model,String name, String endDate, String startDate, double amount, @RequestParam("customerId") int customerId, RedirectAttributes redirectAttributes) throws ParseException {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Budget budget = new Budget();
@@ -129,6 +129,48 @@ public class BudgetController {
 		System.out.println(budget.getEndDate());
 		budget.setStartDate(dateFormat.parse(startDate));
 		System.out.println(budget.getStartDate());
+		budgetService.saveBudget(budget);
+		
+		redirectAttributes.addAttribute("customerId", customerId);
+		
+		return "redirect:/budgets/user-budgets/{customerId}";
+	}
+	
+	
+//	@RequestMapping("/budgets/user-budgets/updateBudget/{customerId}")
+//	public String updateBudget(Model model, @PathVariable("customerId") int customerId, @RequestParam("budgetId") int budgetId) {
+//	    Budget budget = budgetService.retrieveUserBudgetById(budgetId);
+//	    model.addAttribute("budgetId", budgetId);
+//	    model.addAttribute("budget", budget);
+//	    model.addAttribute("customerId", customerId);
+//	    return "update-budget-form";
+//	}
+//	
+//	@RequestMapping("/budgets/user-budgets/updateBudget/processUpdateBudget")
+//	public String processUpdateBudget(Model model, @ModelAttribute("budget") Budget budget, @RequestParam("customerId") int customerId, RedirectAttributes redirectAttributes) {
+//	    budgetService.saveBudget(budget);
+//	    redirectAttributes.addAttribute("customerId", customerId);
+//	    return "redirect:/budgets/user-budgets/{customerId}";
+//	}
+
+	//Add New Budget from Dashboard
+	@RequestMapping(path = "/budgets/create-budget/{customerId}")
+	public String createBudget(Model model, @PathVariable("customerId") int customerId) {
+			
+		// redirect to budgets jsp
+		return "create-budget-from-dashboard";
+	}
+	
+	@RequestMapping("/budgets/create-budget/saveBudget")
+	public String saveBudget(Model model,String name, String endDate, String startDate, double amount, @RequestParam("customerId") int customerId, RedirectAttributes redirectAttributes) throws ParseException {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Budget budget = new Budget();
+		Customer customer = customerService.getCustomer(customerId);
+		budget.setCustomer(customer);
+		budget.setName(name);
+		budget.setAmount(amount);
+		budget.setEndDate(dateFormat.parse(endDate));
+		budget.setStartDate(dateFormat.parse(startDate));
 		budgetService.saveBudget(budget);
 		
 		redirectAttributes.addAttribute("customerId", customerId);

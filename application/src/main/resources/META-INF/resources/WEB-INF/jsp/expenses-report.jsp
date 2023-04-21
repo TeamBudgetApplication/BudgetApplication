@@ -170,7 +170,11 @@
 			</c:forEach></c:if>
 			<c:if test="${empty budgets}">
 			   <div style="text-align: center;">
-				    <br><h1>You don't have any budgets yet</h1>
+				    <br><h1>You don't have any budgets yet</h1><br>
+				    <div>	
+						<a href="${pageContext.request.contextPath}/budgets/create-budget/${customerId}"
+						class="btn" type="submit" style="background: #3496f9; color: #ffffff">Add New Budget</a>
+				   	</div>
 				</div>
 			</c:if>
 			</div>
