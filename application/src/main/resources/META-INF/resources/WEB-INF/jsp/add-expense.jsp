@@ -55,7 +55,7 @@
 			            <div class="col-12">
 			              <label for="amount" class="form-label">Amount</label>
 			              <div>
-			              	<form:input type="number" class="form-control" id="amount" placeholder="123.00" required="required" path="amount" />			              
+			              	<form:input type="number" class="form-control" aria-describedby="amount" id="amount" placeholder="123.00" required="required" path="amount" value="${null }" />		              
 			              <div class="invalid-feedback">
 			                Amount is required.
 			              </div>
