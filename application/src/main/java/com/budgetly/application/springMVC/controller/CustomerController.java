@@ -44,6 +44,7 @@ public class CustomerController {
 	public String processNewCustomer(@ModelAttribute("customer") Customer customer, Model model) {
 	    String email = customer.getEmail();
 	    if (emailExists(email)) {
+	    	model.addAttribute("error", true);
 	        return "signup";
 	    } 
 	    else {
@@ -68,24 +69,7 @@ public class CustomerController {
 //		model.addAttribute("customer", customer);
 //		return "customer-dashboard";
 //	}
-	
-	@PostMapping("/customer/authenticate")
-	public String authenticate(Model model, HttpServletRequest request, HttpServletResponse response,
-	                           @PathVariable("customerId") int customerId, @ModelAttribute("customer") Customer customer) {
-	    Customer existingCustomer = customerService.getCustomer(customerId);
-	    if (existingCustomer != null && passwordEncoder.matches(customer.getPassword(), existingCustomer.getPassword())) {
-	        HttpSession session = request.getSession();
-	        session.setAttribute("customerId", existingCustomer.getId());
-	        Cookie cookie = new Cookie("customerId", Integer.toString(existingCustomer.getId()));
-	        cookie.setMaxAge(60 * 60 * 24); // cookie expires after 24 hours
-	        response.addCookie(cookie);
-	        model.addAttribute("customer", existingCustomer);
-	        return "customer-dashboard";
-	    } else {
-	        model.addAttribute("error", "Invalid email or password");
-	        return "login";
-	    }
-	}
+
 
 	
 	@PostMapping("/customer/authenticate-login")
@@ -94,6 +78,7 @@ public class CustomerController {
 	        @RequestParam(value = "password", required = false) String password) {
 	    Customer existingCustomer = customerService.getByEmail(email, password);
 	    if (existingCustomer == null || !passwordEncoder.matches(password, existingCustomer.getPassword())) {
+	        model.addAttribute("authError", true); // Set authError attribute to true
 	        return "login";
 	    } 
 	    else {
@@ -103,6 +88,7 @@ public class CustomerController {
 	        return "redirect:/customer/" + existingCustomer.getId();
 	    }
 	}
+
 
 
 	@GetMapping("/logout")
