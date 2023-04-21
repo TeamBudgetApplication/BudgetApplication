@@ -1,8 +1,10 @@
 package com.budgetly.application.entities;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -41,6 +43,11 @@ public class Expense {
 	// Default Constructor
 	public Expense() {
 		
+	}
+	
+	public Expense(Budget budget) {
+		super();
+		this.budget = budget;
 	}
 	
 	public Expense(int id, double amount, String name, LocalDate expenseDate, Budget budget) {
@@ -108,7 +115,7 @@ public class Expense {
 	
 	public String getFormattedDate() {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
-        String formattedDate = this.expenseDate.format(formatter);
+        String formattedDate = this.expenseDate.format(formatter);	    
 		return formattedDate;
 	}
 	

@@ -38,9 +38,9 @@ public class ExpenseServiceImpl implements ExpenseService {
 	public Expense getExpenseById(int expenseId) {
 		Expense expense = expenseDAO.retrieveById(expenseId);
 		
-		if (expense == null) {
-			throw new NotFoundException("Error no expense found.");
-		}
+//		if (expense == null) {
+//			throw new NotFoundException("Error no expense found.");
+//		}
 		
 		return expense;
 	}
@@ -51,9 +51,9 @@ public class ExpenseServiceImpl implements ExpenseService {
 	public Expense saveExpense(Expense expense) {
 		Expense savedExpense = expenseDAO.saveExpense(expense);
 		
-		if (savedExpense == null) {
-			throw new Error("Empty Expense not added please add fields.");
-		}
+//		if (savedExpense == null) {
+//			throw new Error("Empty Expense not added please add fields.");
+//		}
 		
 		return savedExpense;
 	}

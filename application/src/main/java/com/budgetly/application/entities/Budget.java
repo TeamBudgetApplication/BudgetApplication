@@ -143,21 +143,12 @@ public class Budget {
 		return letter;
 	}
 	
-	public String getFormattedStartDate() {
-	SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM");
-    String formattedStartDate = dateFormat.format(startDate);
-//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM");
-//        String formattedStartDate = this.startDate.format(formatter);
-		return formattedStartDate;
-	}
-
-	public String getFormattedEndDate() {
+	public String getFormattedDate(Date date) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM");
-	    String formattedEndDate = dateFormat.format(endDate);
-//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM");
-//        String formattedEndDate = this.endDate.format(formatter);
-		return formattedEndDate;
-	}
+	    String formattedDate = dateFormat.format(date);
+
+			return formattedDate;
+		}
 	
 	private static DecimalFormat df = new DecimalFormat("0.00");
 

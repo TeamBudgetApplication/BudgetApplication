@@ -1,6 +1,5 @@
 package com.budgetly.application.dao;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;

@@ -39,7 +39,7 @@
 				<div class="row">
 					<div class="col">
 						<h2 class="text-center mt-3">${budget.name} Budget</h2> <!-- style="color: #153c64 -->
-						<h5 class="text-center">${budget.formattedStartDate} 2023 - ${budget.formattedEndDate} 2023</h5><br>
+						<h5 class="text-center">${budget.getFormattedDate(budget.startDate)} 2023 - ${budget.getFormattedDate(budget.endDate)} 2023</h5><br>
 					</div>
 				</div>
 				<div class="row">
