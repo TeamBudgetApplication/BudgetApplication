@@ -38,7 +38,7 @@
 			<c:forEach items="${budgets}" var="budget">
 				<div class="row">
 					<div class="col">
-						<h2 class="text-center mt-3">Budget ${budget.name}</h2> <!-- style="color: #153c64 -->
+						<h2 class="text-center mt-3">${budget.name} Budget</h2> <!-- style="color: #153c64 -->
 						<h5 class="text-center">${budget.formattedStartDate} 2023 - ${budget.formattedEndDate} 2023</h5><br>
 					</div>
 				</div>
@@ -65,9 +65,13 @@
 									</tr>
 								</table>
 							    </label>
-							 </div><br>
+							 </div><p></p>
 						 </div>
 					 </c:forEach></c:if>
+					 <div >
+					 	<a href="${pageContext.request.contextPath}/expenses/budget-expenses/addExpense?budgetId=${budget.id}"
+						class="btn btn-success rounded-pill px-3">Add Expense</a>
+					</div>
 					 <c:if test="${empty budget.expenses}">
 					   <div style="text-align: center;">
 						    <br><h4>You don't have expenses yet</h4>
@@ -75,7 +79,7 @@
 					</c:if>
 					</div>		
 					<div class="col-6">
-						<canvas id="myChart_${budget.id}"></canvas><br>	
+						<canvas id="myChart_${budget.id}" style="width: 100%; height: 300px;"></canvas><br>	
 						<div style="text-align: center;">
 						  <p style="font-size: 22px; text-align: left;"><b>Summary:</b><br>
 						    In total, <b>${budget.customer.firstName} ${budget.customer.lastName}</b> allocated <b>$${budget.formattedAmount}</b> 
@@ -85,23 +89,27 @@
 						  </p>
 						</div>	
 					</div>
-					</div>
+				</div>
 			<c:set var="xValues" value=""/>
 			<c:set var="yValues" value=""/>		
 			<c:forEach items="${budget.expenses}" var="expense">
 				<c:set var="xValues" value="${xValues}${expense.amount}, "/>
 				<c:set var="yValues" value="${yValues}'${expense.name}', "/>			
 			</c:forEach>
-			<c:if test="${budget.remainingSum > 0}">
-			    <c:set var="xValues" value="${xValues}${budget.remainingSum}"/>
+			
+			<c:set var="xValues" value="${xValues}${budget.remainingSum}"/>
+			<c:if test="${budget.remainingSum > 0}">   
 			    <c:set var="yValues" value="${yValues}'Remaining Sum', "/>
+			</c:if>
+			<c:if test="${budget.remainingSum < 0}">
+				<c:set var="yValues" value="${yValues}'Overspend', "/>
 			</c:if>
 
 			<script>
 			var xValues_${budget.id} = [${xValues}];
 	        var yValues_${budget.id} = [${yValues}];
-	        var barColors_${budget.id} = [ 
-	        	"#00aba9",
+	        var barColors_${budget.id} = [             	            
+	            "#00aba9",
 	        	"#aec7e8",
 	            "#2b5797",
 	            "#e8c3b9",
@@ -135,6 +143,9 @@
 	     	// Set the same color for budget.remainingSum
 	     	if (${budget.remainingSum > 0}) {
 	     		barColors_${budget.id}[xValues_${budget.id}.length - 1] = "#1e7145";
+			}
+	     	if (${budget.remainingSum < 0}) {
+	     		barColors_${budget.id}[xValues_${budget.id}.length - 1] = "#ff0000";
 			}
 	     	
 	    	/* barColors_${budget.id}[xValues_${budget.id}.length - 1] = "#1e7145"; */

@@ -47,7 +47,7 @@
 			</div>
 			<div class="col-9">
 				<div class="row">
-					<h1 class="text-center mt-3">Budget ${budget.name}</h1>
+					<h1 class="text-center mt-3">${budget.name} Budget</h1>
 					<h5 class="text-center">${budget.formattedStartDate} 2023 - ${budget.formattedEndDate} 2023</h5><br>		
 				</div><br>
 				<div class="row">
@@ -81,7 +81,7 @@
 								</div> --%>
 								  
 							    </label>
-							 </div><br>
+							 </div><p></p>
 						 </div>
 					 </c:forEach>
 						<%--  <div class="d-grid gap-2">
@@ -103,7 +103,7 @@
 					</c:if>
 					</div>			
 					<div class="col-6">
-						<canvas id="myChart"></canvas><br>	
+						<canvas id="myChart" style="width: 100%; height: 300px;"></canvas><br>	
 						<div style="text-align: center;">
 						  <p style="font-size: 22px; text-align: left;"><b>Summary:</b><br>
 						    In total, <b>${budget.customer.firstName} ${budget.customer.lastName}</b> allocated <b>$${budget.formattedAmount}</b> 
@@ -119,9 +119,13 @@
 		<c:set var="xValues" value="${xValues}${expense.amount}, "/>
 		<c:set var="yValues" value="${yValues}'${expense.name}', "/>
  	</c:forEach>
- 	<c:if test="${budget.remainingSum > 0}">
-	    <c:set var="xValues" value="${xValues}${budget.remainingSum}"/>
+ 	
+ 	<c:set var="xValues" value="${xValues}${budget.remainingSum}"/>
+	<c:if test="${budget.remainingSum > 0}">   
 	    <c:set var="yValues" value="${yValues}'Remaining Sum', "/>
+	</c:if>
+	<c:if test="${budget.remainingSum < 0}">
+		<c:set var="yValues" value="${yValues}'Overspend', "/>
 	</c:if>
 
 	<script>
@@ -153,9 +157,12 @@
 		} */
 
 		if (${budget.remainingSum > 0}) {
-		barColors[xValues.length - 1] = "#1e7145";
+			barColors[xValues.length - 1] = "#1e7145";
 		}
-
+		if (${budget.remainingSum < 0}) {
+			barColors[xValues.length - 1] = "#ff0000";
+		}
+		
 		new Chart("myChart", {
 		  type: "doughnut",
 		  data: {
