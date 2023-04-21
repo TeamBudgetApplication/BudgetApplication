@@ -46,34 +46,34 @@ public class ExpenseDAOimpl implements ExpenseDAO {
 	}
 
 	@Override
-	public List<Budget> totalExpensesForTheMonth(int customerId) {
-		// TODO Auto-generated method stub
-		TypedQuery<Budget> query = entityManager.createQuery(
-		        "SELECT SUM(e.amount) " +
-		        "FROM Expense e " +
-		        "JOIN e.budget b " +
-		        "JOIN b.customer c " +
-		        "WHERE c.id = :customerId " +
-		        "AND FUNCTION('MONTH', e.expenseDate) = FUNCTION('MONTH', CURRENT_DATE()) " +
-		        "AND FUNCTION('YEAR', e.expenseDate) = FUNCTION('YEAR', CURRENT_DATE()) ", Budget.class);
-		List<Budget> expenses = query.setParameter("customerId", customerId).getResultList();
-		return expenses;
+	public Double totalExpensesForTheMonth(int customerId) {
+	    TypedQuery<Double> query = entityManager.createQuery(
+	        "SELECT SUM(e.amount) " +
+	        "FROM Expense e " +
+	        "JOIN e.budget b " +
+	        "JOIN b.customer c " +
+	        "WHERE c.id = :customerId " +
+	        "AND FUNCTION('MONTH', e.expenseDate) = FUNCTION('MONTH', CURRENT_DATE()) " +
+	        "AND FUNCTION('YEAR', e.expenseDate) = FUNCTION('YEAR', CURRENT_DATE()) ", Double.class);
+	    Double totalExpenses = query.setParameter("customerId", customerId).getSingleResult();
+	    return totalExpenses;
 	}
 
+
 	@Override
-	public List<Budget> totalExpensesForTheWeek(int customerId) {
-		// TODO Auto-generated method stub
-		TypedQuery<Budget> query = entityManager.createQuery(
-		        "SELECT SUM(e.amount) " +
-		        "FROM Expense e " +
-		        "JOIN e.budget b " +
-		        "JOIN b.customer c " +
-		        "WHERE c.id = :customerId " +
-		        "AND FUNCTION('WEEK', e.expenseDate) = FUNCTION('WEEK', CURRENT_DATE()) " +
-		        "AND FUNCTION('YEAR', e.expenseDate) = FUNCTION('YEAR', CURRENT_DATE()) ", Budget.class);
-		List<Budget> expenses = query.setParameter("customerId", customerId).getResultList();
-		return expenses;
+	public Double totalExpensesForTheWeek(int customerId) {
+	    TypedQuery<Double> query = entityManager.createQuery(
+	        "SELECT SUM(e.amount) " +
+	        "FROM Expense e " +
+	        "JOIN e.budget b " +
+	        "JOIN b.customer c " +
+	        "WHERE c.id = :customerId " +
+	        "AND FUNCTION('WEEK', e.expenseDate) = FUNCTION('WEEK', CURRENT_DATE()) " +
+	        "AND FUNCTION('YEAR', e.expenseDate) = FUNCTION('YEAR', CURRENT_DATE()) ", Double.class);
+	    Double totalExpenses = query.setParameter("customerId", customerId).getSingleResult();
+	    return totalExpenses;
 	}
+
 
 	@Override
 	public List<Expense> mostRecentTransactions(int customerId) {

@@ -67,23 +67,15 @@ public class ExpenseServiceImpl implements ExpenseService {
 
 	@Transactional
 	@Override
-	public List<Budget> totalExpensesForTheMonth(int customerId) {
+	public Double totalExpensesForTheMonth(int customerId) {
 		// TODO Auto-generated method stub
-		List<Budget> expenses = expenseDAO.totalExpensesForTheMonth(customerId);
-		if(expenses == null) {
-			return Collections.emptyList();
-		}
 		return expenseDAO.totalExpensesForTheMonth(customerId);
 	}
 
 	@Transactional
 	@Override
-	public List<Budget> totalExpensesForTheWeek(int customerId) {
+	public Double totalExpensesForTheWeek(int customerId) {
 		// TODO Auto-generated method stub
-		List<Budget> expenses = expenseDAO.totalExpensesForTheWeek(customerId);
-		if (expenses == null) {
-			return Collections.emptyList();
-		}
 		return expenseDAO.totalExpensesForTheWeek(customerId);
 	}
 

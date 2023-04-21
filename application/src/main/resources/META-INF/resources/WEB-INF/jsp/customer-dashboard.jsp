@@ -184,7 +184,12 @@ tr {
 								</div>
 							</div>
 							<div class="card-footer">
-								<p>Total Expenses: $ ${thisMonthsExpenses }</p>
+								
+									Total Expenses:
+									<fmt:setLocale value="en-US" />
+									<fmt:formatNumber value="${thisMonthsExpenses }"
+										type="currency" />
+								
 							</div>
 						</div>
 					</div>
@@ -316,7 +321,11 @@ tr {
 								</div>
 							</div>
 							<div class="card-footer">
-								<p>Total Expenses: $ ${thisWeeksExpenses }</p>
+								
+									Total Expenses:
+									<fmt:setLocale value="en-US" />
+									<fmt:formatNumber value="${thisWeeksExpenses }" type="currency" />
+								
 							</div>
 						</div>
 					</div>
@@ -438,8 +447,18 @@ tr {
 										<span class="sr-only">Next</span>
 									</a>
 								</div>
-							</div>
 
+							</div>
+							<c:forEach items="${budgetsOverAmount}" var="budget">
+							<c:if test="${budget.getRemainingSum() < 0}">
+							<div class="card-footer">
+							Exceeded Amount: 
+								<fmt:setLocale value="en-US" />
+								<fmt:formatNumber value="${budget.getRemainingSum() }"
+										type="currency" />
+							</div>
+							</c:if>
+							</c:forEach>
 
 							<%-- <table class="table">
 							<thead>
