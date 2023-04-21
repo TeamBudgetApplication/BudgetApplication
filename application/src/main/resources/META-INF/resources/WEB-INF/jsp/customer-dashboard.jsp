@@ -164,7 +164,10 @@ tr {
 								      display: true,
 								      text: "${budget.name}",
 								    fontSize: 18
-								    }
+								    },
+								    legend: {
+								        display: false
+								      }
 								  }
 								});
 							</script>
@@ -301,7 +304,10 @@ tr {
 								      display: true,
 								      text: "${budget.name}",
 								    fontSize: 18
-								    }
+								    },
+								    legend: {
+								        display: false
+								      }
 								  }
 								});
 							</script>
@@ -429,7 +435,10 @@ tr {
 								      display: true,
 								      text: "${budget.name}",
 								    fontSize: 18
-								    }
+								    },
+								    legend: {
+								        display: false
+								      }
 								  }
 								});
 							</script>
