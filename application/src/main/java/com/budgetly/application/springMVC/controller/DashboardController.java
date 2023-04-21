@@ -3,8 +3,8 @@ package com.budgetly.application.springMVC.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.budgetly.application.Service.BudgetService;
 import com.budgetly.application.Service.CustomerService;
@@ -23,7 +23,7 @@ public class DashboardController {
 	@Autowired
 	private ExpenseService expenseService;
 	
-	@GetMapping("/customer/{customerId}")
+	@RequestMapping("/customer/{customerId}")
 	public String dashboard(Model model, @PathVariable("customerId") int customerId) {
 	    Customer customer = customerService.getCustomer(customerId);
 	    model.addAttribute("customer", customer);
