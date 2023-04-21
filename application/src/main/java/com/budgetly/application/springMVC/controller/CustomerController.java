@@ -82,6 +82,9 @@ public class CustomerController {
 	                                   @RequestParam(value = "email", required = false) String email,
 	                                   @RequestParam(value = "password", required = false) String password) {
 	    Customer existingCustomer = customerService.getByEmail(email, password);
+	    if (existingCustomer == null || !passwordEncoder.matches(password, existingCustomer.getPassword())) {
+	    	return "login";
+	    }
 	    if (existingCustomer != null && passwordEncoder.matches(password, existingCustomer.getPassword())) {
 	        HttpSession session = request.getSession(true);
 	        session.setAttribute("customerId", existingCustomer.getId());
