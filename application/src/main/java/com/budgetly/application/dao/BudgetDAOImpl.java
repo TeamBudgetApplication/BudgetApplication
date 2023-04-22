@@ -49,7 +49,7 @@ public class BudgetDAOImpl implements BudgetDAO {
 	public List<Budget> retrieveAllByDate(int customerId) {
 		
 		TypedQuery<Budget> query = entityManager
-				.createQuery("SELECT b FROM Budget b WHERE b.customer.id = :id ORDER BY startDate", Budget.class);
+				.createQuery("SELECT b FROM Budget b WHERE b.customer.id = :id ORDER BY b.startDate", Budget.class);
 		
 		List<Budget> budgets = query.setParameter("id", customerId).getResultList();
 		
@@ -122,7 +122,7 @@ public class BudgetDAOImpl implements BudgetDAO {
 	
 	public List<Budget> getBudgetsByKeyword(int customerId, String keyword) {
 		
-		TypedQuery<Budget> query = entityManager.createQuery("SELECT b FROM Budget b JOIN b.customer c WHERE c.id = :customerId AND b.name like :keyword", Budget.class);
+		TypedQuery<Budget> query = entityManager.createQuery("SELECT b FROM Budget b JOIN b.customer c WHERE c.id = :customerId AND b.name like :keyword ORDER BY b.id", Budget.class);
 		
 		query.setParameter("customerId", customerId);
 		query.setParameter("keyword", "%" + keyword.toUpperCase() + "%");
@@ -131,5 +131,29 @@ public class BudgetDAOImpl implements BudgetDAO {
 		return budgets;
 		
 		}
+	
+	public List<Budget> getBudgetsByKeywordSortByName(int customerId, String keyword) {
+		
+		TypedQuery<Budget> query = entityManager.createQuery("SELECT b FROM Budget b JOIN b.customer c WHERE c.id = :customerId AND b.name like :keyword ORDER BY b.name", Budget.class);
+		
+		query.setParameter("customerId", customerId);
+		query.setParameter("keyword", "%" + keyword.toUpperCase() + "%");
+		List<Budget> budgets = query.getResultList();
+					
+		return budgets;
+		
+		}
+
+	public List<Budget> getBudgetsByKeywordSortByDate(int customerId, String keyword) {
+	
+	TypedQuery<Budget> query = entityManager.createQuery("SELECT b FROM Budget b JOIN b.customer c WHERE c.id = :customerId AND b.name like :keyword ORDER BY b.startDate", Budget.class);
+	
+	query.setParameter("customerId", customerId);
+	query.setParameter("keyword", "%" + keyword.toUpperCase() + "%");
+	List<Budget> budgets = query.getResultList();
+				
+	return budgets;
+	
+	}
 	
 }
