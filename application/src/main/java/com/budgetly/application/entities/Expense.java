@@ -34,7 +34,7 @@ public class Expense {
 	private String name;
 	
 	@Column(name = "expense_date")
-	private LocalDate expenseDate;
+	private Date expenseDate;
 	
 	@ManyToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
 	@JoinColumn(name = "budget_id")
@@ -45,12 +45,7 @@ public class Expense {
 		
 	}
 	
-	public Expense(Budget budget) {
-		super();
-		this.budget = budget;
-	}
-	
-	public Expense(int id, double amount, String name, LocalDate expenseDate, Budget budget) {
+	public Expense(int id, double amount, String name, Date expenseDate, Budget budget) {
 		super();
 		this.id = id;
 		this.amount = amount;
@@ -92,11 +87,11 @@ public class Expense {
 		this.name = name;
 	}
 	
-	public LocalDate getExpenseDate() {
+	public Date getExpenseDate() {
 		return expenseDate;
 	}
 	
-	public void setExpenseDate(LocalDate expenseDate) {
+	public void setExpenseDate(Date expenseDate) {
 		this.expenseDate = expenseDate;
 	}
 
@@ -114,8 +109,10 @@ public class Expense {
 	}
 	
 	public String getFormattedDate() {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
-        String formattedDate = this.expenseDate.format(formatter);	    
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy");
+	    String formattedDate = dateFormat.format(this.expenseDate);
+//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
+//        String formattedDate = this.expenseDate.format(formatter);	    
 		return formattedDate;
 	}
 	

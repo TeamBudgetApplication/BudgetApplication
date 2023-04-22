@@ -40,36 +40,35 @@
 				<div class="row">
 					<div class="col-md-7 col-lg-8">
 					<h4 class="mb-3">Expense Information</h4>
-					<form action ="processExpense" class="needs-validation">
+					<form action ="updateProcessExpense" class="needs-validation">
 					<div class="row g-3">			          
 						  <div class="col-12">
 						    <label for="name" class="form-label">Name</label>
 						    <div>
-						      <input type="text" class="form-control" id="name" placeholder="No special characters" required="required" name="name" />
+						      <input type="text" class="form-control" id="name" placeholder="Name with no special characters" required="required" name="name" value="${name}" />
 						    </div>
 						  </div>
 			            <div class="col-12">
 			              <label for="amount" class="form-label">Amount</label>
 			              <div>
-			              	<input type="number" class="form-control" aria-describedby="amount" id="amount" placeholder="123.00" required="required" name="amount" />		              
+			              	<input type="number" class="form-control" aria-describedby="amount" id="amount" placeholder="123.00" required="required" name="amount" value="${amount}"/>		              
 			              </div>
 			            </div>
 			            
 			            <div class="col-12">
 			              <label for="expenseDate" class="form-label">Date</label>
 			              <div>
-			              	<input type="date" class="form-control" id="expenseDate" value="expenseDate" required="required" name="expenseDate" />
+			              	<input type="date" class="form-control" id="expenseDate" value="expenseDate" required="required" name="expenseDate" value="${expenseDate}"/>
 			              </div>
 			            </div>
 					<hr class="my-4">					
-					<%-- <form action = "addExpense" method="post" > --%>
 						<input type="hidden" name="budgetId" value="${budgetId}" />
+						<input type="hidden" name="expenseId" value="${expense.id}" />
 						<button type = "submit" class="btn btn-success rounded-pill px-3" >Save Expense</button>
 					</form>
 					<a href="${pageContext.request.contextPath}/budgets/user-budgets/${customerId}"
 						class="btn btn-dark rounded-pill px-3">Cancel</a><br>
 				</div>
-				<%-- </form:form> --%>
 				</div>
 				</div>
 			</div>

@@ -24,7 +24,7 @@
    		<span style="font-weight: 400;font-size: 0.8rem;line-height: 1.1;">Budget Tracker</span></span>
    	</div>
    	<div>	
-		<a href="${pageContext.request.contextPath}/budgets/user-budgets/create-budget/${customerId}"
+		<a href="${pageContext.request.contextPath}/budgets/create-budget/${customerId}"
 		class="btn" type="submit" style="background: #3496f9; color: #ffffff">Add New Budget</a>
 		<%--<form action = "addBudget" method="get">							        
 	 			<input type="hidden" name="customerId" value="${customerId}" />
@@ -112,10 +112,10 @@
 												<h5 class="text text-md-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${budget.name}</h5>
 												<ul class="d-md-flex flex-wrap text-capitalize ff-open-sans">
 													<li class="mr-md-4">&nbsp;
-														<i class="zmdi zmdi-money mr-1"></i>${budget.getSpentSumString()} spent
+														<i class="zmdi zmdi-money mr-1"></i>${budget.getFormattedNumber(budget.spentSum)} spent
 													</li>
 													<li class="mr-md-4"><!-- &nbsp; -->
-														<i class="zmdi zmdi-money mr-1"></i>${budget.getRemainingSumString()} remaining
+														<i class="zmdi zmdi-money mr-1"></i>${budget.getFormattedNumber(budget.remainingSum)} remaining
 													</li>
 													<li class="mr-md-4">
 														<i class="zmdi zmdi-time mr-1"></i>
@@ -125,15 +125,17 @@
 											</div>
 										</div>
 										<div class="button-container">
-										    <div class="job-right my-3 flex-shrink-0">
+										    <div class="job-right my-1 flex-shrink-0 my-2">
 										        <a href="${pageContext.request.contextPath}/expenses/budget-expenses/addExpense?budgetId=${budget.id}"
 										        class="btn d-block w-100 d-sm-inline-block btn-light">Add Expense</a>
 										    </div>
-										   <div class="job-right my-3 flex-shrink-0">
-										        <a href="${pageContext.request.contextPath}/budgets/user-budgets/create-budget?customerId=${customerId}&budgetId=${budget.id}"
-										        class="btn d-block w-100 d-sm-inline-block btn-light">Update</a>
+										   <div class="job-right my-1 flex-shrink-0 my-2">
+										        <form action = "${pageContext.request.contextPath}/budgets/user-budgets/updateBudget/${customerId}">
+											        <input type="hidden" name="budgetId" value="${budget.id}" />
+													<button type="submit" class="btn d-block w-100 d-sm-inline-block btn-light">Update</button>
+												</form>
 										    </div>
-										    <div class="job-right my-3 flex-shrink-0">
+										    <div class="job-right my-1 flex-shrink-0 my-2">
 										        <form action = "deleteBudget" method = "post">
 												<input type="hidden" name="budgetId" value="${budget.id}" />
 												<input type="submit" class="btn d-block w-100 d-sm-inline-block btn-light" value="Delete" />

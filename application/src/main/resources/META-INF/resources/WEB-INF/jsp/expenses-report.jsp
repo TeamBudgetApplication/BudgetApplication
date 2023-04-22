@@ -68,24 +68,24 @@
 							 </div><p></p>
 						 </div>
 					 </c:forEach></c:if>
-					 <div >
-					 	<a href="${pageContext.request.contextPath}/expenses/budget-expenses/addExpense?budgetId=${budget.id}"
-						class="btn btn-success rounded-pill px-3">Add Expense</a>
-					</div>
 					 <c:if test="${empty budget.expenses}">
-					   <div style="text-align: center;">
-						    <br><h4>You don't have expenses yet</h4>
+					   <div >
+						    <br><h4>You don't have expenses yet</h4><br>
 						</div>
 					</c:if>
+					 <div>
+					 	<a href="${pageContext.request.contextPath}/budgets/expenses/addExpense?budgetId=${budget.id}"
+						class="btn btn-success rounded-pill px-3">Add Expense</a>
+					</div>
 					</div>		
 					<div class="col-6">
 						<canvas id="myChart_${budget.id}" style="width: 100%; height: 300px;"></canvas><br>	
 						<div style="text-align: center;">
 						  <p style="font-size: 22px; text-align: left;"><b>Summary:</b><br>
-						    In total, <b>${budget.customer.firstName} ${budget.customer.lastName}</b> allocated <b>$${budget.formattedAmount}</b> 
-						    toward the ${budget.name} Budget, a total of <b>$${budget.getSpentSumString()}</b> was spent. 
+						    In total, <b>${budget.customer.firstName} ${budget.customer.lastName}</b> allocated <b>$${budget.getFormattedNumber(budget.amount)}</b> 
+						    toward the ${budget.name} Budget, a total of <b>$${budget.getFormattedNumber(budget.spentSum)}</b> was spent. 
 						    The customer is <b style="color: ${budget.spentSum > budget.amount ? 'red' : 'green'};">${budget.spentSum > budget.amount ? 'over' : 'under'}</b>
-						     the budget amount by <b style="color: ${budget.spentSum > budget.amount ? 'red' : 'green'};">$${budget.getRemainingSumString()}.</b><br><br>
+						     the budget amount by <b style="color: ${budget.spentSum > budget.amount ? 'red' : 'green'};">$${budget.getFormattedNumber(budget.remainingSum)}.</b><br><br>
 						  </p>
 						</div>	
 					</div>
@@ -109,35 +109,32 @@
 			var xValues_${budget.id} = [${xValues}];
 	        var yValues_${budget.id} = [${yValues}];
 	        var barColors_${budget.id} = [             	            
-	        	"#4F96F2",
-	        	"#1F3C61",
-	            "#E8C3B9",
-	            "#8C564B",
-	            "#2CA02C",
-	            "#B91D47",
-	            "#D7A8B8",
-	            "#9467BD",
-	            "#7F7F7F",
-	            "#FF7F0E",
-	            "#FFBB78",
-	            "#98DF8A",
-	            "#FF9896",
-	            "#C5B0D5",
-	            "#DBDB8D",
-	            "#8C6D31",
-	            "#9EDAE5",
-	            "#393B79",
+	        	"#ff9896",
+	            "#66c2a5",
+	        	"#00aba9",
+	        	"#aec7e8",
+	            "#2b5797",
+	            "#e8c3b9",
+	            "#b91d47",
+	            "#d7a8b8",
+	        	"#ffbb78",
+	            "#ff9896",
+	            "#c5b0d5",
+	            "#dbdb8d",
+	            "#8c6d31",
+	            "#9edae5",
+	            "#393b79",
 	            "#637939",
-	            "#A6CEE3",
-	            "#FDAE6B",
-	            "#66C2A5",
-	            "#5076A0",
-	            "#F2B705",
-	            "#7CFFCB",
-	            "#E3A0F2",
-	            "#F2D7C6",
-	            "#87C0FF",
-	            "#F29F05",
+	            "#a6cee3",
+	            "#fdae6b",
+	            "#7f7f7f",
+	            "#ff7f0e",
+	            "#9467bd",
+	            "#8c564b",
+	            "#e377c2",
+	            "#7f7f7f",
+	            "#bcbd22",
+	            "#17becf",
 				];
 	        
 	     	// Set the same color for budget.remainingSum

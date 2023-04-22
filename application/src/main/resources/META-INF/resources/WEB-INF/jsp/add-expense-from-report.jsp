@@ -62,11 +62,10 @@
 			              </div>
 			            </div>
 					<hr class="my-4">					
-					<%-- <form action = "addExpense" method="post" > --%>
 						<input type="hidden" name="budgetId" value="${budgetId}" />
-						<button type = "submit" class="btn btn-success rounded-pill px-3" >Save Expense</button>
+						<button type = "submit" class="btn btn-success rounded-pill px-3">Save Expense</button>
 					</form>
-					<a href="${pageContext.request.contextPath}/budgets/user-budgets/${customerId}"
+					<a href="${pageContext.request.contextPath}/budgets/expenses/${customerId}""
 						class="btn btn-dark rounded-pill px-3">Cancel</a><br>
 				</div>
 				<%-- </form:form> --%>
