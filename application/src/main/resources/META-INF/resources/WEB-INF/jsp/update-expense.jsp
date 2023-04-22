@@ -54,11 +54,10 @@
 			              	<input type="number" class="form-control" aria-describedby="amount" id="amount" placeholder="123.00" required="required" name="amount" value="${amount}"/>		              
 			              </div>
 			            </div>
-			            
 			            <div class="col-12">
 			              <label for="expenseDate" class="form-label">Date</label>
 			              <div>
-			              	<input type="date" class="form-control" id="expenseDate" value="expenseDate" required="required" name="expenseDate" value="${expenseDate}"/>
+			              	<input type="date" class="form-control" id="expenseDate" required="required" name="expenseDate" value="${expenseDate}" path="expenseDate"/>
 			              </div>
 			            </div>
 					<hr class="my-4">					
