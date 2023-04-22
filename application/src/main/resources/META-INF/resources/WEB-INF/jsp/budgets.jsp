@@ -62,11 +62,12 @@
 									<button type = "submit" class="btn btn-lg btn-block btn-light btn-custom">Search</button>
 								</div>						
 								<div class="col-md-6 col-lg-3 my-3">
-							    	<a href="${pageContext.request.contextPath}/budgets/user-budgets/sortBudgetsByName/${customerId}"
+							    	<%-- <a href="${pageContext.request.contextPath}/budgets/user-budgets/sortBudgetsByName/${customerId}" --%>
+							    	<a href="${pageContext.request.contextPath}/budgets/user-budgets/sortBudgetsByName/${customerId}?keyword=${keyword}"
 							    	class="btn btn-lg btn-block btn-light btn-custom">Sort by Name</a>	        
 							    </div>
 								<div class="col-md-6 col-lg-3 my-3">
-									<a href="${pageContext.request.contextPath}/budgets/user-budgets/sortBudgetsByDate/${customerId}"
+									<a href="${pageContext.request.contextPath}/budgets/user-budgets/sortBudgetsByDate/${customerId}?keyword=${keyword}"
 							    	class="btn btn-lg btn-block btn-light btn-custom">Sort by Date</a>
 								</div>
 							</div>			

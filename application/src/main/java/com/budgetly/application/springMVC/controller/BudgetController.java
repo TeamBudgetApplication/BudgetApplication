@@ -4,6 +4,8 @@ package com.budgetly.application.springMVC.controller;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -51,11 +53,19 @@ public class BudgetController {
 	
 	// Sort all budgets by name
 	@GetMapping(path = "/budgets/user-budgets/sortBudgetsByName/{customerId}")
-	public String sortBudgetsByName(@PathVariable int customerId, ModelMap model){
+	public String sortBudgetsByName(@PathVariable int customerId, @RequestParam("keyword") String keyword, ModelMap model){
 
 		Customer customer = customerService.getCustomer(customerId);
-		// Get User Budgets
-		List<Budget> budgets = budgetService.retrieveAllByName(customerId);
+		List<Budget> budgets = new ArrayList<>();
+		
+		if (keyword == null || keyword.trim().isEmpty()) {
+			budgets = budgetService.retrieveAllByName(customerId);
+		} else {
+			budgets = budgetService.getBudgetsByKeywordSortByName(customerId, keyword);
+		}
+		
+		//Collections.sort(budgets, Comparator.comparing(Budget::getName)); <-- easier way
+		customer.setBudgets(budgets);
 		
 		// Add budgets to model for jsp interaction
 		model.addAttribute("customer", customer);
@@ -68,19 +78,47 @@ public class BudgetController {
 	
 	
 	// Sort all budgets by date ASC
-	
 	@GetMapping(path = "/budgets/user-budgets/sortBudgetsByDate/{customerId}")
-	public String sortBudgetsByDate(@PathVariable int customerId, ModelMap model){
+	public String sortBudgetsByDate(@PathVariable int customerId, @RequestParam("keyword") String keyword, ModelMap model){
 
 		Customer customer = customerService.getCustomer(customerId);
-		// Get User Budgets
-		List<Budget> budgets = budgetService.retrieveAllByDate(customerId);
+		List<Budget> budgets = new ArrayList<>();
+		
+		if (keyword == null || keyword.trim().isEmpty()) {
+			budgets = budgetService.retrieveAllByDate(customerId);
+		} else {
+			budgets = budgetService.getBudgetsByKeywordSortByDate(customerId, keyword);
+		}
+		//Collections.sort(budgets, Comparator.comparing(Budget::getStartDate)); <-- easier way
+		customer.setBudgets(budgets);
 		
 		// Add budgets to model for jsp interaction
 		model.addAttribute("customer", customer);
 		model.addAttribute("customerId", customer.getId());
 		model.addAttribute("budgets", budgets);		
 		model.addAttribute("numb", budgets.size());
+		
+		return "budgets";
+	}
+	
+	@GetMapping(path = "/budgets/user-budgets/searchByKeyword/{customerId}")
+	public String searchByKeyword(@PathVariable int customerId, @RequestParam("keyword") String keyword, ModelMap model){
+
+		Customer customer = customerService.getCustomer(customerId);
+		List<Budget> budgets = new ArrayList<>();
+		
+		if (keyword == null || keyword.trim().isEmpty()) {
+			budgets = budgetService.retrieveUserBudgets(customerId);
+		} else {
+			budgets = budgetService.getBudgetsByKeyword(customerId, keyword);
+		}
+		
+		customer.setBudgets(budgets);		
+		model.addAttribute("customer", customer);
+		model.addAttribute("customerId", customerId);
+		model.addAttribute("budgets", budgets);		
+		model.addAttribute("numb", budgets.size());
+		model.addAttribute("keyword", keyword);
 		
 		return "budgets";
 	}
@@ -180,27 +218,6 @@ public class BudgetController {
 		return "redirect:/budgets/user-budgets/{customerId}";
 	}
 	
-	@GetMapping(path = "/budgets/user-budgets/searchByKeyword/{customerId}")
-	public String searchByKeyword(@PathVariable int customerId, @RequestParam(required = false) String keyword, ModelMap model){
-
-		Customer customer = customerService.getCustomer(customerId);
-		List<Budget> budgets = new ArrayList<>();
-		
-		if (keyword == null || keyword.trim().isEmpty()) {
-			budgets = budgetService.retrieveUserBudgets(customerId);
-		} else {
-			budgets = budgetService.getBudgetsByKeyword(customerId, keyword);
-		}
-		
-		customer.setBudgets(budgets);		
-		model.addAttribute("customer", customer);
-		model.addAttribute("customerId", customerId);
-		model.addAttribute("budgets", budgets);		
-		model.addAttribute("numb", budgets.size());
-		model.addAttribute("keyword", keyword);
-		
-		return "budgets";
-	}
 	
 	//delete budget
 	@PostMapping(path = "/budgets/user-budgets/deleteBudget")

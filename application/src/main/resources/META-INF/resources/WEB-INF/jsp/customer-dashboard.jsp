@@ -101,9 +101,13 @@ tr {
 												<c:set var="yValues" value="${yValues}'${expense.name}', " />
 											</c:forEach>
 
-											<c:set var="xValues"
-												value="${xValues}${budget.remainingSum}" />
-											<c:set var="yValues" value="${yValues}'Remaining Sum', " />
+											<c:set var="xValues" value="${xValues}${budget.remainingSum}"/>
+											<c:if test="${budget.remainingSum > 0}">   
+											    <c:set var="yValues" value="${yValues}'Remaining Sum', "/>
+											</c:if>
+											<c:if test="${budget.remainingSum < 0}">
+												<c:set var="yValues" value="${yValues}'Overspend', "/>
+											</c:if>
 										
 
 											<script>
@@ -245,80 +249,84 @@ tr {
 												<c:set var="yValues" value="${yValues}'${expense.name}', " />
 											</c:forEach>
 
-											<c:set var="xValues"
-												value="${xValues}${budget.remainingSum}" />
-											<c:set var="yValues" value="${yValues}'Remaining Sum', " />
+											<c:set var="xValues" value="${xValues}${budget.remainingSum}"/>
+											<c:if test="${budget.remainingSum > 0}">   
+											    <c:set var="yValues" value="${yValues}'Remaining Sum', "/>
+											</c:if>
+											<c:if test="${budget.remainingSum < 0}">
+												<c:set var="yValues" value="${yValues}'Overspend', "/>
+											</c:if>
 										
 
 											<script>
-							var xValues_${budget.id} = [${xValues}];
-					        var yValues_${budget.id} = [${yValues}];
-					        var barColors_${budget.id} = [ 
-					        	"#92A8D1",
-					            "#BFD8D2",
-					            "#E1D5E7",
-					            "#E3DAC9",
-					            "#C7D3C4",
-					            "#E8D7C2",
-					            "#A0A0A0",
-					            "#D1C1B9",
-					        	"#00aba9",
-					        	"#aec7e8",
-					            "#2b5797",
-					            "#e8c3b9",
-					            "#b91d47",
-					            "#d7a8b8",
-					            "#7f7f7f",
-					            "#ff7f0e",
-					            "#9467bd",
-					            "#8c564b",
-					            "#e377c2",
-					            "#7f7f7f",
-					            "#bcbd22",
-					            "#17becf",
-					            "#ffbb78",
-					            "#ff9896",
-					            "#c5b0d5",
-					            "#dbdb8d",
-					            "#8c6d31",
-					            "#9edae5",
-					            "#393b79",
-					            "#637939",
-					            "#a6cee3",
-					            "#fdae6b",
-					            "#ff9896",
-					            "#66c2a5",
-								];
-					        
-					     	// Set the same color for budget.remainingSum
-					     	if (${budget.remainingSum > 0}) {
-					     		barColors_${budget.id}[xValues_${budget.id}.length - 1] = "#1e7145";
-							}
-					     	if (${budget.remainingSum < 0}) {
-					     		barColors_${budget.id}[xValues_${budget.id}.length - 1] = "#ff0000";
-							}
-						
-								new Chart("myChart2_${budget.id}", {
-								  type: "doughnut",
-								  data: {
-								    labels: yValues_${budget.id},
-								    datasets: [{
-								      backgroundColor: barColors_${budget.id},
-						              data: xValues_${budget.id}
-								    }]
-								  },
-								  options: {
-								    title: {
-								      display: true,
-								      text: "${budget.name}",
-								    fontSize: 18
-								    },
-								    legend: {
-								        display: false
-								      }
-								  }
-								});
-							</script>
+											var xValues_${budget.id} = [${xValues}];
+									        var yValues_${budget.id} = [${yValues}];
+									        var barColors_${budget.id} = [ 
+									        	"#92A8D1",
+									            "#BFD8D2",
+									            "#E1D5E7",
+									            "#E3DAC9",
+									            "#C7D3C4",
+									            "#E8D7C2",
+									            "#A0A0A0",
+									            "#D1C1B9",
+									        	"#00aba9",
+									        	"#aec7e8",
+									            "#2b5797",
+									            "#e8c3b9",
+									            "#b91d47",
+									            "#d7a8b8",
+									            "#7f7f7f",
+									            "#ff7f0e",
+									            "#9467bd",
+									            "#8c564b",
+									            "#e377c2",
+									            "#7f7f7f",
+									            "#bcbd22",
+									            "#17becf",
+									            "#ffbb78",
+									            "#ff9896",
+									            "#c5b0d5",
+									            "#dbdb8d",
+									            "#8c6d31",
+									            "#9edae5",
+									            "#393b79",
+									            "#637939",
+									            "#a6cee3",
+									            "#fdae6b",
+									            "#ff9896",
+									            "#66c2a5",
+												];
+									        
+									     	// Set the same color for budget.remainingSum
+									     	if (${budget.remainingSum > 0}) {
+									     		barColors_${budget.id}[xValues_${budget.id}.length - 1] = "#1e7145";
+											}
+									     	if (${budget.remainingSum < 0}) {
+									     		barColors_${budget.id}[xValues_${budget.id}.length - 1] = "#ff0000";
+											}
+										
+												new Chart("myChart2_${budget.id}", {
+												  type: "doughnut",
+												  data: {
+												    labels: yValues_${budget.id},
+												    datasets: [{
+												      backgroundColor: barColors_${budget.id},
+										              data: xValues_${budget.id}
+												    }]
+												  },
+												  options: {
+												    title: {
+												      display: true,
+												      text: "${budget.name}",
+												    fontSize: 18
+												    },
+												    legend: {
+												        display: false
+												      }
+												  }
+												});
+										</script>
 										</c:forEach>
 									</div>
 									<a class="carousel-control-prev"
@@ -387,76 +395,75 @@ tr {
 
 											<c:set var="xValues"
 												value="${xValues}${budget.remainingSum}" />
-											<c:set var="yValues" value="${yValues}'Remaining Sum', " />
+											<c:set var="yValues" value="${yValues}'Overspend', " />
 										
 
 											<script>
-							var xValues_${budget.id} = [${xValues}];
-					        var yValues_${budget.id} = [${yValues}];
-					        var barColors_${budget.id} = [ 
-					        	"#92A8D1",
-					            "#BFD8D2",
-					            "#E1D5E7",
-					            "#E3DAC9",
-					            "#C7D3C4",
-					            "#E8D7C2",
-					            "#A0A0A0",
-					            "#D1C1B9",
-					        	"#00aba9",
-					        	"#aec7e8",
-					            "#2b5797",
-					            "#e8c3b9",
-					            "#b91d47",
-					            "#d7a8b8",
-					            "#7f7f7f",
-					            "#ff7f0e",
-					            "#9467bd",
-					            "#8c564b",
-					            "#e377c2",
-					            "#7f7f7f",
-					            "#bcbd22",
-					            "#17becf",
-					            "#ffbb78",
-					            "#ff9896",
-					            "#c5b0d5",
-					            "#dbdb8d",
-					            "#8c6d31",
-					            "#9edae5",
-					            "#393b79",
-					            "#637939",
-					            "#a6cee3",
-					            "#fdae6b",
-					            "#ff9896",
-					            "#66c2a5",
-								];
-					        
-					     	// Set the same color for budget.remainingSum
-					     	
-					     	if (${budget.remainingSum < 0}) {
-					     		barColors_${budget.id}[xValues_${budget.id}.length - 1] = "#ff0000";
-							}
-						
-								new Chart("myChart3_${budget.id}", {
-								  type: "doughnut",
-								  data: {
-								    labels: yValues_${budget.id},
-								    datasets: [{
-								      backgroundColor: barColors_${budget.id},
-						              data: xValues_${budget.id}
-								    }]
-								  },
-								  options: {
-								    title: {
-								      display: true,
-								      text: "${budget.name}",
-								    fontSize: 18
-								    },
-								    legend: {
-								        display: false
-								      }
-								  }
-								});
-							</script>
+											var xValues_${budget.id} = [${xValues}];
+									        var yValues_${budget.id} = [${yValues}];
+									        var barColors_${budget.id} = [ 
+									        	"#92A8D1",
+									            "#BFD8D2",
+									            "#E1D5E7",
+									            "#E3DAC9",
+									            "#C7D3C4",
+									            "#E8D7C2",
+									            "#A0A0A0",
+									            "#D1C1B9",
+									        	"#00aba9",
+									        	"#aec7e8",
+									            "#2b5797",
+									            "#e8c3b9",
+									            "#b91d47",
+									            "#d7a8b8",
+									            "#7f7f7f",
+									            "#ff7f0e",
+									            "#9467bd",
+									            "#8c564b",
+									            "#e377c2",
+									            "#7f7f7f",
+									            "#bcbd22",
+									            "#17becf",
+									            "#ffbb78",
+									            "#ff9896",
+									            "#c5b0d5",
+									            "#dbdb8d",
+									            "#8c6d31",
+									            "#9edae5",
+									            "#393b79",
+									            "#637939",
+									            "#a6cee3",
+									            "#fdae6b",
+									            "#ff9896",
+									            "#66c2a5",
+												];
+									        
+										     	// Set the color for overspend
+										     	if (${budget.remainingSum < 0}) {
+										     		barColors_${budget.id}[xValues_${budget.id}.length - 1] = "#ff0000";
+												}
+										
+												new Chart("myChart3_${budget.id}", {
+												  type: "doughnut",
+												  data: {
+												    labels: yValues_${budget.id},
+												    datasets: [{
+												      backgroundColor: barColors_${budget.id},
+										              data: xValues_${budget.id}
+												    }]
+												  },
+												  options: {
+												    title: {
+												      display: true,
+												      text: "${budget.name}",
+												    fontSize: 18
+												    },
+												    legend: {
+												        display: false
+												      }
+												  }
+												});
+											</script>
 										</c:forEach>
 									</div>
 									<a class="carousel-control-prev"
@@ -504,13 +511,23 @@ tr {
 											<h2>You don't have any expenses yet</h2>
 										</div>
 									</c:if>
-									<c:forEach var="expense" items="${mostRecentExpenses}"
-										varStatus="status">
+									<c:forEach var="expense" items="${mostRecentExpenses}" varStatus="status">
 										<c:if test="${status.index % 3 == 0}">
 											<tr class="no-border">
 										</c:if>
-										<td><b>${expense.getFormattedDate() }</b>:<br>
-											${expense.name} $${expense.getFormattedAmount() }</td>
+										<td><a href="${pageContext.request.contextPath}/expenses/budget-expenses/${expense.budget.id}"><b>${expense.getFormattedDate() }</b>:<br>
+											${expense.name} $${expense.getFormattedAmount() }</a>
+											<style>
+											a {
+											  color: inherit;
+											  text-decoration: none;
+											}
+											a:hover {
+											  color: inherit; /* use the same color as the surrounding text */
+											  text-decoration: none; /* remove underline */
+											}
+											</style>
+										</td>
 										<c:if test="${status.index % 3 == 2 or status.last}">
 											</tr>
 										</c:if>
