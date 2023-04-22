@@ -44,6 +44,7 @@
 					            class="form-control"
 					            id="name"
 					            aria-describedby="budgetName"
+					            placeholder="Enter a name of budget"
 					            name="name"
 					            value="${name}"
 					            required

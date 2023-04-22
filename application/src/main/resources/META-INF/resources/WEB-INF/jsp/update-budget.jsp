@@ -34,7 +34,7 @@
 				<div class="row">
 					<div class="col-md-7 col-lg-8">
 					<h4 class="mb-3">Budget Information</h4>
-					<form method="post" action="processUpdateBudget" modelAttribute = "budget" class="needs-validation">
+					<form method="post" action="updateProcessBudget" class="needs-validation">
 						<div class="row g-3">			          
 						  <div class="col-12">
 						    <label for="name" class="form-label">Name</label>
@@ -97,7 +97,7 @@
 			            </div>
 					<hr class="my-3">
 						<input type="hidden" name="customerId" value="${customerId}" />
-						<input type="hidden" name="budgetId" value="${budgetId}" />
+						<input type="hidden" name="budgetId" value="${budget.id}" />
 						<button type = "submit" class="btn btn-success rounded-pill px-3" >Submit</button></form>
 						<a href="${pageContext.request.contextPath}/budgets/user-budgets/${customerId}"
 						class="btn btn-dark rounded-pill px-3">Cancel</a>

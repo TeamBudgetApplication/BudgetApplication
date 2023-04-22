@@ -133,7 +133,6 @@ public class Customer {
 		List<Budget> budgets = this.getBudgets();
 		for (Budget budget : budgets) {
 			totalRemainingSum += (budget.getAmount()-budget.getSpentSum());
-		}
-		return df.format(totalRemainingSum);
+		} return df.format(totalRemainingSum);
 	}
 }
