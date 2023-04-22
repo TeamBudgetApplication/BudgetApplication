@@ -1,16 +1,15 @@
 package com.budgetly.application.dao;
 
 
-import java.util.Collections;
 import java.util.List;
 
-import org.hibernate.Session;
-import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import com.budgetly.application.entities.Budget;
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Tuple;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 
@@ -96,6 +95,7 @@ public class BudgetDAOImpl implements BudgetDAO {
 	    return budgets;
 	}
 
+
 	@Override
 	public List<Budget> budgetsActiveThisMonth(int customerId) {
 	    TypedQuery<Budget> query = entityManager.createQuery("SELECT b " +
@@ -104,11 +104,7 @@ public class BudgetDAOImpl implements BudgetDAO {
 	            "WHERE c.id = :customerId " +
 	            "AND FUNCTION('MONTH', b.startDate) = FUNCTION('MONTH', CURRENT_DATE()) " +
 	            "AND FUNCTION('YEAR', b.startDate) = FUNCTION('YEAR', CURRENT_DATE()) ", Budget.class);
-	    List<Budget> budgets = query.setParameter("customerId", customerId).getResultList();
-	    
-	    if (budgets == null) {
-	    	return Collections.emptyList();
-	    }
+	    List<Budget> budgets = query.setParameter("customerId", customerId).getResultList(); 
 	    return budgets;
 	}
 	
@@ -121,9 +117,6 @@ public class BudgetDAOImpl implements BudgetDAO {
 	            "AND FUNCTION('WEEK', b.startDate) = FUNCTION('WEEK', CURRENT_DATE()) " +
 	            "AND FUNCTION('YEAR', b.startDate) = FUNCTION('YEAR', CURRENT_DATE()) ", Budget.class);
 	    List<Budget> budgets = query.setParameter("customerId", customerId).getResultList();
-	    if (budgets == null) {
-	    	return Collections.emptyList();
-	    }
 	    return budgets;
 	}
 	

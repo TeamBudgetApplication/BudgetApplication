@@ -87,18 +87,30 @@ public class BudgetServiceImpl implements BudgetService {
 	@Transactional
 	public List<Budget> queryBudgetsOverAmount(int customerId) {
 		// TODO Auto-generated method stub
+		List<Budget> budgets = budgetDAO.queryBudgetsOverAmount(customerId);
+		if(budgets == null) {
+			return Collections.emptyList();
+		}
 		return budgetDAO.queryBudgetsOverAmount(customerId);
 	}
 	@Transactional
 	@Override
 	public List<Budget> budgetsActiveThisMonth(int customerId) {
 		// TODO Auto-generated method stub
+		List<Budget> budgets = budgetDAO.budgetsActiveThisMonth(customerId);
+		if (budgets == null ) {
+			return Collections.emptyList();
+		}
 		return budgetDAO.budgetsActiveThisMonth(customerId);
 	}
 	@Transactional
 	@Override
 	public List<Budget> budgetsActiveThisWeek(int customerId) {
 		// TODO Auto-generated method stub
+		List<Budget> budgets = budgetDAO.budgetsActiveThisWeek(customerId);
+		if (budgets == null) {
+			return Collections.emptyList();
+		}
 		return budgetDAO.budgetsActiveThisWeek(customerId);
 	}
 	
@@ -115,6 +127,7 @@ public class BudgetServiceImpl implements BudgetService {
 		
 		return budgets;
 	}
+
 	
 	
 }

@@ -27,21 +27,33 @@ public class CustomerController {
 	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
+	
+	public boolean emailExists(String email) {
+		Customer existingCustomer = customerService.getByEmail(email);
+		return existingCustomer != null;
+	}
 
 	@RequestMapping("/customer/register")
 	public String signup(Model model) {
 		Customer customer = new Customer();
 		model.addAttribute("customer", customer);
-		return "add-customer";
+		return "signup";
 	}
-
+	
 	@PostMapping("/customer/processNewCustomer")
-	public String processNewCustomer(@ModelAttribute("customer") Customer customer) {
-		String password = customer.getPassword();
-		String hashedPassword = passwordEncoder.encode(password);
-		customer.setPassword(hashedPassword);
-		customerService.saveCustomer(customer);
-		return "login";
+	public String processNewCustomer(@ModelAttribute("customer") Customer customer, Model model) {
+	    String email = customer.getEmail();
+	    if (emailExists(email)) {
+	    	model.addAttribute("error", true);
+	        return "signup";
+	    } 
+	    else {
+	        String password = customer.getPassword();
+	        String hashedPassword = passwordEncoder.encode(password);
+	        customer.setPassword(hashedPassword);
+	        customerService.saveCustomer(customer);
+	        return "redirect:/customer/" + customer.getId();
+	    }
 	}
 
 	@GetMapping("customer/updateCustomer/{customerId}")
@@ -57,50 +69,27 @@ public class CustomerController {
 //		model.addAttribute("customer", customer);
 //		return "customer-dashboard";
 //	}
-	
-	@PostMapping("/customer/authenticate")
-	public String authenticate(Model model, HttpServletRequest request, HttpServletResponse response,
-	                           @PathVariable("customerId") int customerId, @ModelAttribute("customer") Customer customer) {
-	    Customer existingCustomer = customerService.getCustomer(customerId);
-	    if (existingCustomer != null && passwordEncoder.matches(customer.getPassword(), existingCustomer.getPassword())) {
-	        HttpSession session = request.getSession();
-	        session.setAttribute("customerId", existingCustomer.getId());
-	        Cookie cookie = new Cookie("customerId", Integer.toString(existingCustomer.getId()));
-	        cookie.setMaxAge(60 * 60 * 24); // cookie expires after 24 hours
-	        response.addCookie(cookie);
-	        model.addAttribute("customer", existingCustomer);
-	        return "customer-dashboard";
-	    } else {
-	        model.addAttribute("error", "Invalid email or password");
-	        return "login";
-	    }
-	}
+
 
 	
-	@PostMapping("/customer/authenticate-login") // Use this method when building login page and when posting, route to this method to verify login credentials 
+	@PostMapping("/customer/authenticate-login")
 	public String authenticateByEmail(Model model, HttpServletRequest request, HttpServletResponse response,
-	                                   @RequestParam(value = "email", required = false) String email,
-	                                   @RequestParam(value = "password", required = false) String password) {
+	        @RequestParam(value = "email", required = false) String email,
+	        @RequestParam(value = "password", required = false) String password) {
 	    Customer existingCustomer = customerService.getByEmail(email, password);
-	    if (existingCustomer != null && passwordEncoder.matches(password, existingCustomer.getPassword())) {
-	        HttpSession session = request.getSession(true);
-	        session.setAttribute("customerId", existingCustomer.getId());
-	        
-	        // Create and add customerId cookie to response
-//	        Cookie customerIdCookie = new Cookie("customerId", String.valueOf(existingCustomer.getId()));
-//	        customerIdCookie.setPath("/");
-//	        customerIdCookie.setMaxAge(24 * 60 * 60); // set the cookie to expire in 1 day
-//	        response.addCookie(customerIdCookie);
-
-	        model.addAttribute("firstName", existingCustomer.getFirstName());
-	        return "redirect:/customer/" + existingCustomer.getId();
+	    if (existingCustomer == null || !passwordEncoder.matches(password, existingCustomer.getPassword())) {
+	        model.addAttribute("authError", true); // Set authError attribute to true
+	        return "login";
 	    } 
 	    else {
-	        model.addAttribute("email", existingCustomer.getEmail());
-	        model.addAttribute("error", "Invalid email or password");
-	        return "login";
+	        HttpSession session = request.getSession(true);
+	        session.setAttribute("customerId", existingCustomer.getId());
+	        model.addAttribute("firstName", existingCustomer.getFirstName());
+	        return "redirect:/customer/" + existingCustomer.getId();
 	    }
 	}
+
+
 
 	@GetMapping("/logout")
 	public String logout(HttpSession session, HttpServletResponse response) {

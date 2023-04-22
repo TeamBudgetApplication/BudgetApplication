@@ -23,12 +23,13 @@
    		<span class="d-flex flex-column" style="color: #3496f9;font-weight: 600;font-size: 1.1rem">Budgetly 
    		<span style="font-weight: 400;font-size: 0.8rem;line-height: 1.1;">Budget Tracker</span></span>
    	</div>
-   	<div>
-		<form action = "addBudget" method="get">
-			<!-- <a href="http://localhost:8080/addBudget"> -->
- 			<input type="hidden" name="customerId" value="${customerId}" />
-			<button class="btn" type="submit" style="background: #3496f9; color: #ffffff">Add New Budget</button>
-		</form>
+   	<div>	
+		<a href="${pageContext.request.contextPath}/budgets/create-budget/${customerId}"
+		class="btn" type="submit" style="background: #3496f9; color: #ffffff">Add New Budget</a>
+		<%--<form action = "addBudget" method="get">							        
+	 			<input type="hidden" name="customerId" value="${customerId}" />
+				<button class="btn" type="submit" style="background: #3496f9; color: #ffffff">Add New Budget</button> 
+			</form> --%>
    	</div>
 </header>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css" integrity="sha256-3sPp8BkKUE7QyPSl6VfBByBroQbKxKG7tsusY2mhbVY=" crossorigin="anonymous" />
@@ -111,25 +112,30 @@
 												<h5 class="text text-md-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${budget.name}</h5>
 												<ul class="d-md-flex flex-wrap text-capitalize ff-open-sans">
 													<li class="mr-md-4">&nbsp;
-														<i class="zmdi zmdi-money mr-1"></i>${budget.getSpentSumString()} spent
+														<i class="zmdi zmdi-money mr-1"></i>${budget.getFormattedNumber(budget.spentSum)} spent
 													</li>
 													<li class="mr-md-4"><!-- &nbsp; -->
-														<i class="zmdi zmdi-money mr-1"></i>${budget.getRemainingSumString()} remaining
+														<i class="zmdi zmdi-money mr-1"></i>${budget.getFormattedNumber(budget.remainingSum)} remaining
 													</li>
 													<li class="mr-md-4">
 														<i class="zmdi zmdi-time mr-1"></i>
-													${budget.formattedStartDate}-${budget.formattedEndDate} (${budget.getNumberOfDays()} days)											
+													${budget.getFormattedDate(budget.startDate)}-${budget.getFormattedDate(budget.endDate)} (${budget.getNumberOfDays()} days)											
 													</li>
 												</ul>
 											</div>
 										</div>
 										<div class="button-container">
-										    <div class="job-right my-3 flex-shrink-0">
+										    <div class="job-right my-1 flex-shrink-0 my-2">
 										        <a href="${pageContext.request.contextPath}/expenses/budget-expenses/addExpense?budgetId=${budget.id}"
 										        class="btn d-block w-100 d-sm-inline-block btn-light">Add Expense</a>
 										    </div>
-										    <div class="job-right my-3 flex-shrink-0">
-										        <!-- <a href="#" class="btn d-block w-100 d-sm-inline-block btn-light">Delete</a> -->
+										   <div class="job-right my-1 flex-shrink-0 my-2">
+										        <form action = "${pageContext.request.contextPath}/budgets/user-budgets/updateBudget/${customerId}">
+											        <input type="hidden" name="budgetId" value="${budget.id}" />
+													<button type="submit" class="btn d-block w-100 d-sm-inline-block btn-light">Update</button>
+												</form>
+										    </div>
+										    <div class="job-right my-1 flex-shrink-0 my-2">
 										        <form action = "deleteBudget" method = "post">
 												<input type="hidden" name="budgetId" value="${budget.id}" />
 												<input type="submit" class="btn d-block w-100 d-sm-inline-block btn-light" value="Delete" />
@@ -141,7 +147,30 @@
 							</c:if>
 							<c:if test="${empty budgets and empty keyword}">
 							   <div style="text-align: center;">
-								    <h1>You don't have any budgets yet</h1>
+								    <h1>You don't have any budgets yet</h1><br>
+								    <div class="row">
+										<div class="col-lg-9 mx-auto">
+	 										<a href="${pageContext.request.contextPath}/budgets/user-budgets/create-budget/${customerId}" class="special-button">Add New Budget</a>
+											<style>
+											  a.special-button {
+											    display: block;
+											    width: 100%;
+											    margin: 0 auto;
+											    text-align: center;
+											    background-color: #007bff;
+											    color: #fff;
+											    border-radius: 5px;
+											    padding: 10px;
+											    text-decoration: none;
+											  }
+											  
+											  a.special-button:hover {
+											    background-color: #0056b3;
+											    color: #fff;
+											  }
+											</style>
+										</div>
+									</div>
 								</div>
 							</c:if>
 							<c:if test="${empty budgets and not empty keyword}">
@@ -153,24 +182,6 @@
 					</div>
 				</div>
 			</div>
-					
-			
-			<%-- <div class="row">
-			<div class="col-lg-11 mx-auto">
-				<form action = "addBudget" method="get">
-					<input type="hidden" name="customerId" value="${customerId}" />
-					<button type = "submit" class="special-button">Add New Budget</button>
-				</form>	
-			<style>
-			  button.special-button {
-			    display: block;
-				width: 100%;
-				margin: 0 auto;
-			  }
-			</style>
-			</div>
-			</div> --%>
-			
 		</div>
 	</div>
 </div><br><br>

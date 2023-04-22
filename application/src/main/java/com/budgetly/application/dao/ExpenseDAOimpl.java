@@ -1,6 +1,5 @@
 package com.budgetly.application.dao;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -23,7 +22,7 @@ public class ExpenseDAOimpl implements ExpenseDAO {
 	// Get All budget expenses
 	public List<Expense> retrieveAll(int budgetId) {
 		Budget budget = entityManager.find(Budget.class, budgetId);
-		TypedQuery<Expense> query = entityManager.createQuery("SELECT e FROM Expense e WHERE e.budget = :budget ORDER BY id", Expense.class);
+		TypedQuery<Expense> query = entityManager.createQuery("SELECT e FROM Expense e WHERE e.budget = :budget ORDER BY expenseDate", Expense.class);
 		return query.setParameter("budget", budget).getResultList();
 	}
 	
@@ -46,40 +45,34 @@ public class ExpenseDAOimpl implements ExpenseDAO {
 	}
 
 	@Override
-	public List<Budget> totalExpensesForTheMonth(int customerId) {
-		// TODO Auto-generated method stub
-		TypedQuery<Budget> query = entityManager.createQuery(
-		        "SELECT SUM(e.amount) " +
-		        "FROM Expense e " +
-		        "JOIN e.budget b " +
-		        "JOIN b.customer c " +
-		        "WHERE c.id = :customerId " +
-		        "AND FUNCTION('MONTH', e.expenseDate) = FUNCTION('MONTH', CURRENT_DATE()) " +
-		        "AND FUNCTION('YEAR', e.expenseDate) = FUNCTION('YEAR', CURRENT_DATE()) ", Budget.class);
-		List<Budget> expenses = query.setParameter("customerId", customerId).getResultList();
-		if (expenses == null) {
-			return Collections.emptyList();
-		}
-		return expenses;
+	public Double totalExpensesForTheMonth(int customerId) {
+	    TypedQuery<Double> query = entityManager.createQuery(
+	        "SELECT SUM(e.amount) " +
+	        "FROM Expense e " +
+	        "JOIN e.budget b " +
+	        "JOIN b.customer c " +
+	        "WHERE c.id = :customerId " +
+	        "AND FUNCTION('MONTH', e.expenseDate) = FUNCTION('MONTH', CURRENT_DATE()) " +
+	        "AND FUNCTION('YEAR', e.expenseDate) = FUNCTION('YEAR', CURRENT_DATE()) ", Double.class);
+	    Double totalExpenses = query.setParameter("customerId", customerId).getSingleResult();
+	    return totalExpenses;
 	}
 
+
 	@Override
-	public List<Budget> totalExpensesForTheWeek(int customerId) {
-		// TODO Auto-generated method stub
-		TypedQuery<Budget> query = entityManager.createQuery(
-		        "SELECT SUM(e.amount) " +
-		        "FROM Expense e " +
-		        "JOIN e.budget b " +
-		        "JOIN b.customer c " +
-		        "WHERE c.id = :customerId " +
-		        "AND FUNCTION('WEEK', e.expenseDate) = FUNCTION('WEEK', CURRENT_DATE()) " +
-		        "AND FUNCTION('YEAR', e.expenseDate) = FUNCTION('YEAR', CURRENT_DATE()) ", Budget.class);
-		List<Budget> expenses = query.setParameter("customerId", customerId).getResultList();
-		if (expenses == null) {
-			return Collections.emptyList();
-		}
-		return expenses;
+	public Double totalExpensesForTheWeek(int customerId) {
+	    TypedQuery<Double> query = entityManager.createQuery(
+	        "SELECT SUM(e.amount) " +
+	        "FROM Expense e " +
+	        "JOIN e.budget b " +
+	        "JOIN b.customer c " +
+	        "WHERE c.id = :customerId " +
+	        "AND FUNCTION('WEEK', e.expenseDate) = FUNCTION('WEEK', CURRENT_DATE()) " +
+	        "AND FUNCTION('YEAR', e.expenseDate) = FUNCTION('YEAR', CURRENT_DATE()) ", Double.class);
+	    Double totalExpenses = query.setParameter("customerId", customerId).getSingleResult();
+	    return totalExpenses;
 	}
+
 
 	@Override
 	public List<Expense> mostRecentTransactions(int customerId) {
@@ -95,14 +88,11 @@ public class ExpenseDAOimpl implements ExpenseDAO {
 	        Expense.class
 	    );
 	    List<Expense> expenses = query.setParameter("customerId", customerId).setMaxResults(15).getResultList();
-	    if (expenses == null) {
-	    	return Collections.emptyList();
-	    }
 	    return expenses;
 	}
 
 	@Override
-	public double calculateMostRecentTransactions(int customerId) {
+	public Double calculateMostRecentTransactions(int customerId) {
 	    TypedQuery<Double> query = entityManager.createQuery(
 	        "SELECT SUM(e.amount) " +
 	        "FROM Expense e " +
@@ -114,9 +104,6 @@ public class ExpenseDAOimpl implements ExpenseDAO {
 	        Double.class
 	    );
 	    Double expenses = query.setParameter("customerId", customerId).getSingleResult();
-	    if (expenses == null) {
-	    	return 0.00;
-	    }
 	    return expenses;
 	}
 

@@ -5,33 +5,21 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.hibernate.Session;
-import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import com.budgetly.application.Service.BudgetService;
 import com.budgetly.application.Service.CustomerService;
 import com.budgetly.application.Service.ExpenseService;
 import com.budgetly.application.entities.Budget;
 import com.budgetly.application.entities.Customer;
-
-import com.budgetly.application.entities.Expense;
-
-
-
 
 
 @Controller
@@ -98,7 +86,7 @@ public class BudgetController {
 	}
 		
 		
-	// Route retrieves all of a users budgets WITH EXPENSES passes to jsp
+	//Route retrieves all of a users budgets WITH EXPENSES passes to jsp
 	@GetMapping(path = "/budgets/expenses/{customerId}")
 	public String getAllUserExpensesJsp(@PathVariable int customerId, ModelMap model) {
 		
@@ -106,34 +94,28 @@ public class BudgetController {
 		List<Budget> budgets = budgetService.retrieveUserBudgets(customerId);
 		
 		// Add budgets to model for jsp interaction
-		model.addAttribute("budgets", budgets);		
+		model.addAttribute("budgets", budgets);	
 			
 		return "expenses-report";
 	}
 	
-	// Add Expense Page
-	@PostMapping(path = "/budgets/create-budget")
-	public String addBudgetExpenseJsp(@RequestBody Budget budget) {
-		// Save submitted budget form
-		budgetService.saveBudget(budget);
-		
-		// redirect to budgets jsp
-		return "add-budget";
-	}
-	
-	// Add New Budget
-	@RequestMapping(path = "/budgets/create-budget/{customerId}")
-	public String addBudget(Model model, @PathVariable("customerId") int customerId) {
+	//Add New Budget from BUDGETS VIEW PAGE
+		@RequestMapping(path = "/budgets/create-budget/{customerId}")
+		public String addBudget(Model model, @PathVariable("customerId") int customerId) {
 			
-		// redirect to budgets jsp
-		return "add-budget";
-	}
+			// redirect to budgets jsp
+			return "create-budget";			
+		}
+		
 	
-
 	@RequestMapping("/budgets/create-budget/processBudget")
-	public String processBudget(Model model,String name, String endDate, String startDate, double amount, @RequestParam("customerId") int customerId, RedirectAttributes redirectAttributes) throws ParseException {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	public String processBudget(Model model, String name, String endDate, String startDate, double amount, 
+			@RequestParam("customerId") int customerId, 
+			RedirectAttributes redirectAttributes) throws ParseException {
+		
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");		
 		Budget budget = new Budget();
+	
 		Customer customer = customerService.getCustomer(customerId);
 		budget.setCustomer(customer);
 		System.out.println(customer.getId());
@@ -152,29 +134,52 @@ public class BudgetController {
 		return "redirect:/budgets/user-budgets/{customerId}";
 	}
 	
-//	@RequestMapping("/budgets/user-budgets/{customerId}/searchByKeyword/{keyword}")
-//	public String searchByKeyword(Model model, @RequestParam("customerId") int customerId) {
-//	
-//		SearchRequest searchRequest = new SearchRequest();
-//		
-//		String keyword = searchRequest.getKeyword();
-//		
-//		List<Budget> budgets = new ArrayList<>();
-//		
-//		if (keyword == null) {
-//			budgets = budgetService.retrieveUserBudgets(customerId);
-//		} else {
-//			budgets = budgetService.getBudgetsByKeyword(keyword);
-//		}
-//		
-//		model.addAttribute("budgets", budgets);
-//		model.addAttribute("customerId", customerId);
-//		//redirectAttributes.addAttribute("keyword", keyword);
-//		
-//		return "budgets";
-//		
-//	}
-
+	//UPDATE
+	@RequestMapping(path = "/budgets/user-budgets/updateBudget/{customerId}")
+	public String updateBudget(Model model, @PathVariable("customerId") int customerId, @RequestParam("budgetId") int budgetId) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Budget budget = budgetService.retrieveUserBudgetById(budgetId);
+		String name = budget.getName();
+		String endDate = dateFormat.format(budget.getEndDate());
+		String startDate = dateFormat.format(budget.getStartDate());
+		double amount = budget.getAmount();;
+	
+		model.addAttribute("budget", budget);
+		model.addAttribute("budgetId", budgetId);
+		model.addAttribute("name", name);
+		model.addAttribute("endDate", endDate);
+		model.addAttribute("startDate", startDate);
+		model.addAttribute("amount", amount);
+//				
+		// redirect to budgets jsp
+		return "update-budget";			
+		}
+	
+	@RequestMapping("/budgets/user-budgets/updateBudget/updateProcessBudget")
+	public String updateProcessBudget(Model model, String name, String endDate, String startDate, double amount,
+		@RequestParam("customerId") int customerId, @RequestParam("budgetId") int budgetId,
+		RedirectAttributes redirectAttributes) throws ParseException {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");		
+			
+		Budget budget = budgetService.retrieveUserBudgetById(budgetId);
+		Customer customer = customerService.getCustomer(customerId);
+		budget.setCustomer(customer);
+		
+		budget.setName(name);
+		System.out.println(name);
+		budget.setAmount(amount);
+		System.out.println(amount);
+		budget.setEndDate(dateFormat.parse(endDate));
+		System.out.println(budget.getEndDate());
+		budget.setStartDate(dateFormat.parse(startDate));
+		System.out.println(budget.getStartDate());
+		budgetService.saveBudget(budget);
+		
+		redirectAttributes.addAttribute("customerId", customerId);
+		
+		return "redirect:/budgets/user-budgets/{customerId}";
+	}
+	
 	@GetMapping(path = "/budgets/user-budgets/searchByKeyword/{customerId}")
 	public String searchByKeyword(@PathVariable int customerId, @RequestParam(required = false) String keyword, ModelMap model){
 
@@ -207,11 +212,11 @@ public class BudgetController {
 	}
 	
 	//delete expense from the page "expenses-report"
-		@PostMapping(path = "/budgets/expenses/deleteExpense")
-		public String deleteExpense(@RequestParam("expenseId") int id, RedirectAttributes redirectAttributes) {
-			int customerId = expenseService.getExpenseById(id).getBudget().getCustomer().getId();
-			expenseService.deleteExpense(id);
-			redirectAttributes.addAttribute("customerId", customerId);
-			return "redirect:/budgets/expenses/{customerId}";
-		}
+	@PostMapping(path = "/budgets/expenses/deleteExpense")
+	public String deleteExpense(@RequestParam("expenseId") int id, RedirectAttributes redirectAttributes) {
+		int customerId = expenseService.getExpenseById(id).getBudget().getCustomer().getId();
+		expenseService.deleteExpense(id);
+		redirectAttributes.addAttribute("customerId", customerId);
+		return "redirect:/budgets/expenses/{customerId}";
+	}
 }

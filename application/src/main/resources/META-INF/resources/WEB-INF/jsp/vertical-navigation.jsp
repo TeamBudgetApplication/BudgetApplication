@@ -21,7 +21,7 @@
 		<a class="nav-link" href="${pageContext.request.contextPath}/customer/${customerId}">Home</a> 
 		<a class="nav-link" href="${pageContext.request.contextPath}/budgets/user-budgets/${customerId}">View Budgets</a> 
 		<a class="nav-link" href="${pageContext.request.contextPath}/budgets/create-budget/${customerId}">Create Budget</a> 
-		<a class="nav-link" href="${pageContext.request.contextPath}/budgets/expenses/${customerId}">Expense Reports</a>
+		<a class="nav-link" href="${pageContext.request.contextPath}/budgets/expenses/${customerId}">Expenses Report</a>
 		<a class="nav-link" href="${pageContext.request.contextPath}/logout">Logout</a> 
 	</nav>
 </body>

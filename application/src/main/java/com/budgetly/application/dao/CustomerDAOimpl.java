@@ -39,19 +39,28 @@ public class CustomerDAOimpl implements CustomerDAO {
         return entityManager.find(Customer.class, id);
     }
 
+	@Override
 	public Customer getByEmail(String email, String password) {
-				// Find user
-				String select = "SELECT c FROM Customer c WHERE c.email = :email";
-				Query query = entityManager.createQuery(select);
-				query.setParameter("email", email);
-				
-				// User with user name
-				Customer customer = (Customer) query.getSingleResult();
-			
-				// Check if entered login user password matches user in the database hashed password
-//				Boolean passwordMatches = encoder.matches(password, customer.getPassword());
-			
-				return customer;
+	    String select = "SELECT c FROM Customer c WHERE c.email = :email";
+	    TypedQuery<Customer> query = entityManager.createQuery(select, Customer.class);
+	    query.setParameter("email", email);
+	    List<Customer> customers = query.getResultList();
+	    if (customers.isEmpty()) {
+	        return null;
+	    }
+	    return customers.get(0);
+	}
+	
+	@Override
+	public Customer getByEmail(String email) {
+	    String select = "SELECT c FROM Customer c WHERE c.email = :email";
+	    TypedQuery<Customer> query = entityManager.createQuery(select, Customer.class);
+	    query.setParameter("email", email);
+	    List<Customer> customers = query.getResultList();
+	    if (customers.isEmpty()) {
+	        return null;
+	    }
+	    return customers.get(0);
 	}
 	
 }

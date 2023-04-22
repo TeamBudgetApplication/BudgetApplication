@@ -16,12 +16,12 @@ public interface ExpenseDAO {
 	
 	public Expense saveExpense(Expense expense);
 	
-	public List<Budget> totalExpensesForTheMonth(int customerId);
+	public Double totalExpensesForTheMonth(int customerId);
 	
-	public List<Budget> totalExpensesForTheWeek(int customerId);
+	public Double totalExpensesForTheWeek(int customerId);
 	
 	public List<Expense> mostRecentTransactions(int customerId);
 	
-	public double calculateMostRecentTransactions(int cutomerId);
+	public Double calculateMostRecentTransactions(int cutomerId);
 	
 }

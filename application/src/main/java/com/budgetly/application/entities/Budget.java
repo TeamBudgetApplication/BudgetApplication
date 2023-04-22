@@ -143,24 +143,13 @@ public class Budget {
 		return letter;
 	}
 	
-	public String getFormattedStartDate() {
-	SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM");
-    String formattedStartDate = dateFormat.format(startDate);
-//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM");
-//        String formattedStartDate = this.startDate.format(formatter);
-		return formattedStartDate;
-	}
-
-	public String getFormattedEndDate() {
+	public String getFormattedDate(Date date) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM");
-	    String formattedEndDate = dateFormat.format(endDate);
-//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM");
-//        String formattedEndDate = this.endDate.format(formatter);
-		return formattedEndDate;
-	}
-	
-	private static DecimalFormat df = new DecimalFormat("0.00");
+	    String formattedDate = dateFormat.format(date);
 
+			return formattedDate;
+		}
+	
 	public double getSpentSum() {
 		double spentSum = 0;	
 		List<Expense> expenses = this.getExpenses();
@@ -169,29 +158,20 @@ public class Budget {
 		} return spentSum;
 	}
 	
-	public String getSpentSumString() {
-		return df.format(this.getSpentSum());
-	}
-
-
 	public double getRemainingSum() {
 		double remainingSum = this.getAmount() - this.getSpentSum();
 		return remainingSum;
 	}
-	
-	public String getRemainingSumString() {
-		return df.format(this.getRemainingSum());
-	}
-	
-	public String getFormattedAmount() {
-		String formattedAmount = df.format(this.amount);;
-		return formattedAmount;
+
+	private static DecimalFormat df = new DecimalFormat("0.00");
+		public String getFormattedNumber(double number) {
+		String formattedNumber = df.format(number);;
+		return formattedNumber;
 	}
 	
 	public long getNumberOfDays() {
-//		long NumberOfDays = ChronoUnit.DAYS.between(startDate, endDate);
-	long diffInMillies = Math.abs(endDate.getTime() - startDate.getTime());
-    long NumberOfDays = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+		long diffInMillies = Math.abs(endDate.getTime() - startDate.getTime());
+	    long NumberOfDays = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
 		return NumberOfDays;
 	}
 	
