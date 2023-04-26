@@ -198,8 +198,8 @@
     					<div class="col text-white">
     						<h3 class="mb-4" style="font-size: 1.4rem; font-weight: 600">Features</h3>
     						<h4 class="mb-5" style="font-size: 1.7rem; max-width: 550px">Your single source of truth with a multitude of features.</h4>
-    						<p style="max-width: 550px; ">Go beyond traditional budgeting using Budgtely's sophisticated features that exceed your complex needs.</p>
-    						<p style="max-width: 550px;">Budgetly offers a simple way for me to create and manage my personal budgets. The data 
+    						<p style="max-width: 550px; ">Go beyond traditional budgeting using Budgetly's sophisticated features that exceed your complex needs.</p>
+    						<p style="max-width: 550px;">Budgetly offers a simple way to create and manage your personal budgets. The data 
     						visualization takes it over the top. Budgetly is secure and safe to use</p>
     					</div>
     				</div>
@@ -232,7 +232,7 @@
     					<div class="col-md-3 text-white">
     						<h3 class="mb-4" style="font-size: 0.9rem; font-weight: 600">About</h3>
     						<p href="#" style="font-size: 0.85rem; text-decoration:none; color: inherit">We created budgetly because there was 
-    						no good secrue place to create, manage and track user budgets. Budgetly offers a secure place to handle 
+    						no good secure place to create, manage and track user budgets. Budgetly offers a secure place to handle 
     						all of your complex budget needs.</p>
     					</div>
     					<p style="font-size: 0.8rem;">2023 &copy; Budgetly. All Rights Reserved.</p>

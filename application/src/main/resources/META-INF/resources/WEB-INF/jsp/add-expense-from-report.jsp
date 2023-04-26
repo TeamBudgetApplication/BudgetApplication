@@ -23,10 +23,9 @@
    		<span style="font-weight: 400;font-size: 0.8rem;line-height: 1.1;">Budget Tracker</span></span>
    	</div>
    	<div>
-		<form action = "returnToBudgetButton" method="get">
-			<input type="hidden" name="budgetId" value="${budgetId}" />
-			<button class="btn" type = "submit" style="background: #3496f9; color: #ffffff">Go to ${budgetName} Budget</button>
-		</form>
+   	<a href="${pageContext.request.contextPath}/expenses/budget-expenses/${budgetId}"
+	class="btn" type = "submit" style="background: #3496f9; color: #ffffff">Go to ${budgetName} Budget</a><br>
+   	</div>
    	</div>
 </header>
 <body>
@@ -68,11 +67,9 @@
 					<a href="${pageContext.request.contextPath}/budgets/expenses/${customerId}""
 						class="btn btn-dark rounded-pill px-3">Cancel</a><br>
 				</div>
-				<%-- </form:form> --%>
 				</div>
 				</div>
 			</div>
 		</div>
-	<!-- </div> -->
 </body>
 </html>

@@ -54,24 +54,24 @@ tr {
 				<div class="row">
 					<h1 class="text-center mt-3">Welcome Home, ${firstName}</h1>
 				</div>
-				<br>
 				<div class="row">
 					<div class="col-md-4">
 						<div class="card h-100">
 							<h5 class="card-header" style="text-align:center">This Month's Budgets</h5>
 							<div class="card-body">
+							<c:if test="${empty thisMonthsBudgets}">
+								<div style="text-align: center;">
+									<br>
+									<h3>You don't have any budgets yet</h3>
+									<br>
+									<a href="${pageContext.request.contextPath}/budgets/create-budget/${customerId}"
+									class="btn" type="submit" style="background: #3496f9; color: #ffffff">Add New Budget</a>
+								</div>
+							</c:if>
+							<c:if test="${not empty thisMonthsBudgets}">
 								<div id="carouselExampleControls1" class="carousel slide"
 									data-ride="carousel">
 									<div class="carousel-inner">
-										<c:if test="${empty thisMonthsBudgets}">
-											<div style="text-align: center;">
-												<br>
-												<h3>You don't have any budgets yet</h3>
-												<br>
-												<a href="${pageContext.request.contextPath}/budgets/create-budget/${customerId}"
-												class="btn" type="submit" style="background: #3496f9; color: #ffffff">Add New Budget</a>
-											</div>
-										</c:if>
 										<c:forEach items="${thisMonthsBudgets}" var="budget"
 											varStatus="budgetStatus">
 											<c:if test="${budgetStatus.index == 0}">
@@ -192,11 +192,11 @@ tr {
 										class="carousel-control-next-icon" aria-hidden="true"></span>
 										<span class="sr-only">Next</span>
 									</a>
-								</div>
+								</div></c:if>
 							</div>
 							<div class="card-footer">
 								
-									Total Expenses:
+									This Month's Expenses:
 									<fmt:setLocale value="en-US" />
 									<fmt:formatNumber value="${thisMonthsExpenses }"
 										type="currency" />
@@ -208,18 +208,19 @@ tr {
 						<div class="card h-100">
 							<h5 class="card-header" style="text-align:center">This Week's Budgets</h5>
 							<div class="card-body">
+							<c:if test="${empty thisWeeksBudgets}">
+								<div style="text-align: center;">
+									<br>
+									<h3>You don't have any budgets yet</h3>
+									<br>
+									<a href="${pageContext.request.contextPath}/budgets/create-budget/${customerId}"
+									class="btn" type="submit" style="background: #3496f9; color: #ffffff">Add New Budget</a>
+								</div>
+							</c:if>
+							<c:if test="${not empty thisWeeksBudgets}">
 								<div id="carouselExampleControls2" class="carousel slide"
 									data-ride="carousel">
 									<div class="carousel-inner">
-										<c:if test="${empty thisWeeksBudgets}">
-											<div style="text-align: center;">
-												<br>
-												<h3>You don't have any budgets yet</h3>
-												<br>
-												<a href="${pageContext.request.contextPath}/budgets/create-budget/${customerId}"
-												class="btn" type="submit" style="background: #3496f9; color: #ffffff">Add New Budget</a>
-											</div>
-										</c:if>
 										<c:forEach items="${thisWeeksBudgets}" var="budget"
 											varStatus="budgetStatus">
 											<c:if test="${budgetStatus.index == 0}">
@@ -255,9 +256,7 @@ tr {
 											</c:if>
 											<c:if test="${budget.remainingSum < 0}">
 												<c:set var="yValues" value="${yValues}'Overspend', "/>
-											</c:if>
-										
-
+											</c:if>									
 											<script>
 											var xValues_${budget.id} = [${xValues}];
 									        var yValues_${budget.id} = [${yValues}];
@@ -340,11 +339,11 @@ tr {
 										class="carousel-control-next-icon" aria-hidden="true"></span>
 										<span class="sr-only">Next</span>
 									</a>
-								</div>
+								</div></c:if>
 							</div>
 							<div class="card-footer">
 								
-									Total Expenses:
+									This Week's Expenses:
 									<fmt:setLocale value="en-US" />
 									<fmt:formatNumber value="${thisWeeksExpenses }" type="currency" />
 								
@@ -355,15 +354,16 @@ tr {
 						<div class="card h-100">
 							<h5 class="card-header" style="text-align:center">Budgets Over Amount</h5>
 							<div class="card-body">
+								<c:if test="${empty budgetsOverAmount}">
+									<div style="text-align: center;">
+										<br>
+										<h3>No budgets currently over amount</h3>
+									</div>
+								</c:if>
+								<c:if test="${not empty budgetsOverAmount}">
 								<div id="carouselExampleControls3" class="carousel slide"
 									data-ride="carousel">
 									<div class="carousel-inner">
-										<c:if test="${empty budgetsOverAmount}">
-											<div style="text-align: center;">
-												<br>
-												<h3>No budgets currently over amount</h3>
-											</div>
-										</c:if>
 										<c:forEach items="${budgetsOverAmount}" var="budget"
 											varStatus="budgetStatus">
 											<c:if test="${budgetStatus.index == 0}">
@@ -477,19 +477,17 @@ tr {
 										class="carousel-control-next-icon" aria-hidden="true"></span>
 										<span class="sr-only">Next</span>
 									</a>
-								</div>
+								</div></c:if>
 
 							</div>
-							<c:forEach items="${budgetsOverAmount}" var="budget">
-							<c:if test="${budget.getRemainingSum() < 0}">
+							
 							<div class="card-footer">
 							Exceeded Amount: 
 								<fmt:setLocale value="en-US" />
-								<fmt:formatNumber value="${budget.getRemainingSum() }"
+								<fmt:formatNumber value="${totalOverspentSum}"
 										type="currency" />
 							</div>
-							</c:if>
-							</c:forEach>
+							
 						</div>
 					</div>
 				</div>
@@ -515,7 +513,8 @@ tr {
 										<c:if test="${status.index % 3 == 0}">
 											<tr class="no-border">
 										</c:if>
-										<td><a href="${pageContext.request.contextPath}/expenses/budget-expenses/${expense.budget.id}"><b>${expense.getFormattedDate() }</b>:<br>
+										<td><a href="${pageContext.request.contextPath}/expenses/budget-expenses/${expense.budget.id}"><b>${expense.getFormattedDate() }
+										</b>:<br>
 											${expense.name} $${expense.getFormattedAmount() }</a>
 											<style>
 											a {
@@ -529,7 +528,6 @@ tr {
 											</style>
 										</td>
 										<c:if test="${status.index % 3 == 2 or status.last}">
-											</tr>
 										</c:if>
 									</c:forEach>
 								</table>

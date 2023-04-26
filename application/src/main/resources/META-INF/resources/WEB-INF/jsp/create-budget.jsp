@@ -12,7 +12,7 @@
       delete budgets and expenses." />
 <title>Add a New Budget</title>
 </head>
-<body style="font-family: 'Montserrat', sans-serif;">
+<body> <!-- style="font-family: 'Montserrat', sans-serif;" -->
 <body>
 <header class="d-flex justify-content-between align-items-center p-2" style="border-bottom: 3px solid #3496f9;max-width: 1500px; margin: 0 auto;">
    	<!-- Logo -->
@@ -110,6 +110,5 @@
 				</div>
 			</div>
 		</div>
-	
 </body>
 </html>

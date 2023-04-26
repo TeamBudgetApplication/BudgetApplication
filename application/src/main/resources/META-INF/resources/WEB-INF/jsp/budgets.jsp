@@ -57,7 +57,7 @@
 										<input type="text" class="form-control" placeholder="Enter Your Keyword" name="keyword" value="${keyword}" >
 									</div>
 								</div>
-								
+						
 								<div class="col-md-6 col-lg-3 my-3">
 									<button type = "submit" class="btn btn-lg btn-block btn-light btn-custom">Search</button>
 								</div>						
@@ -73,21 +73,6 @@
 							</div>			
 						</form>
 						<p class="ff-montserrat">Total Budgets : ${numb}</p>
-						
-						<%-- <div class="row">
-							<form action = "addBudget" method="get">
-								<input type="hidden" name="customerId" value="${customerId}" />
-								<button type = "submit" class="form-control btn btn-lg btn-block btn-light special-button">Add New Budget</button>
-							</form>	
-						<style>
-						  button.special-button {
-						    display: block;
-							width: 100%;
-							margin: 0 auto;
-						  }
-						</style>
-						</div> --%>
-						
 							<p class="mb-20"></p>
 							<c:if test="${not empty budgets}">
 								<c:forEach items="${budgets}" var="budget">
@@ -151,7 +136,7 @@
 								    <h1>You don't have any budgets yet</h1><br>
 								    <div class="row">
 										<div class="col-lg-9 mx-auto">
-	 										<a href="${pageContext.request.contextPath}/budgets/user-budgets/create-budget/${customerId}" class="special-button">Add New Budget</a>
+	 										<a href="${pageContext.request.contextPath}/budgets/create-budget/${customerId}" class="special-button">Add New Budget</a>
 											<style>
 											  a.special-button {
 											    display: block;
