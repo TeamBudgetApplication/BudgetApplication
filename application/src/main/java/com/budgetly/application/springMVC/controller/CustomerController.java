@@ -63,15 +63,7 @@ public class CustomerController {
 		return "add-customer";
 	}
 	
-//	@GetMapping("customer/{customerId}")
-//	public String displayHomePage(Model model, @PathVariable("customerId") int customerId) {
-//		Customer customer = customerService.getCustomer(customerId);
-//		model.addAttribute("customer", customer);
-//		return "customer-dashboard";
-//	}
 
-
-	
 	@PostMapping("/customer/authenticate-login")
 	public String authenticateByEmail(Model model, HttpServletRequest request, HttpServletResponse response,
 	        @RequestParam(value = "email", required = false) String email,
@@ -88,8 +80,6 @@ public class CustomerController {
 	        return "redirect:/customer/" + existingCustomer.getId();
 	    }
 	}
-
-
 
 	@GetMapping("/logout")
 	public String logout(HttpSession session, HttpServletResponse response) {

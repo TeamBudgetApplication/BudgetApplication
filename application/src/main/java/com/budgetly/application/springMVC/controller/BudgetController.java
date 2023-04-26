@@ -4,8 +4,6 @@ package com.budgetly.application.springMVC.controller;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -138,12 +136,12 @@ public class BudgetController {
 	}
 	
 	//Add New Budget from BUDGETS VIEW PAGE
-		@RequestMapping(path = "/budgets/create-budget/{customerId}")
-		public String addBudget(Model model, @PathVariable("customerId") int customerId) {
-			
-			// redirect to budgets jsp
-			return "create-budget";			
-		}
+	@RequestMapping(path = "/budgets/create-budget/{customerId}")
+	public String addBudget(Model model, @PathVariable("customerId") int customerId) {
+		
+		// redirect to budgets jsp
+		return "create-budget";			
+	}
 		
 	
 	@RequestMapping("/budgets/create-budget/processBudget")
@@ -188,7 +186,7 @@ public class BudgetController {
 		model.addAttribute("endDate", endDate);
 		model.addAttribute("startDate", startDate);
 		model.addAttribute("amount", amount);
-//				
+				
 		// redirect to budgets jsp
 		return "update-budget";			
 		}

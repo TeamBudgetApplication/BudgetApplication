@@ -128,7 +128,6 @@ public class Customer {
 	}
 
 	public String getTotalRemainingSum() {
-		//double totalBudgetsAmount = 0;
 		double totalRemainingSum = 0;	
 		List<Budget> budgets = this.getBudgets();
 		for (Budget budget : budgets) {

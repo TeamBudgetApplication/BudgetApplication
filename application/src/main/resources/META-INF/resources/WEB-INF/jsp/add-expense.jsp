@@ -12,8 +12,7 @@
       delete budgets and expenses." />
 <title>Add a New Expense</title>
 </head>
-<body style="font-family: 'Montserrat', sans-serif;">
-<body>
+<body> <!-- style="font-family: 'Montserrat', sans-serif;" -->
 <header class="d-flex justify-content-between align-items-center p-2" style="border-bottom: 3px solid #3496f9;max-width: 1500px; margin: 0 auto;">
    	<!-- Logo -->
    	<div class="d-flex align-items-center">
@@ -23,10 +22,8 @@
    		<span style="font-weight: 400;font-size: 0.8rem;line-height: 1.1;">Budget Tracker</span></span>
    	</div>
    	<div>
-		<form action = "returnToBudgetButton" method="get">
-			<input type="hidden" name="budgetId" value="${budgetId}" />
-			<button class="btn" type = "submit" style="background: #3496f9; color: #ffffff">Go to ${budgetName} Budget</button>
-		</form>
+   	<a href="${pageContext.request.contextPath}/budgets/user-budgets/${customerId}"
+   	class="btn" type = "submit" style="background: #3496f9; color: #ffffff">Go to Budgets List</a>
    	</div>
 </header>
 <body>
@@ -62,18 +59,15 @@
 			              </div>
 			            </div>
 					<hr class="my-4">					
-					<%-- <form action = "addExpense" method="post" > --%>
 						<input type="hidden" name="budgetId" value="${budgetId}" />
 						<button type = "submit" class="btn btn-success rounded-pill px-3" >Save Expense</button>
 					</form>
-					<a href="${pageContext.request.contextPath}/budgets/user-budgets/${customerId}"
+					<a href="${pageContext.request.contextPath}/expenses/budget-expenses/${budgetId}"
 						class="btn btn-dark rounded-pill px-3">Cancel</a><br>
 				</div>
-				<%-- </form:form> --%>
 				</div>
 				</div>
 			</div>
 		</div>
-	<!-- </div> -->
 </body>
 </html>
