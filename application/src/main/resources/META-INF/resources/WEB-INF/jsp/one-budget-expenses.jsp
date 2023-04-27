@@ -2,9 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
-    
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>   
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -69,9 +67,6 @@
 												<input type="hidden" name="expenseId" value="${expense.id}" />
 												<button type="submit" class="btn d-block w-20 d-sm-inline-block btn-light"
 													>Update</button>
-												<!-- <button type="submit" class="btn d-block w-100 d-sm-inline-block badge text-bg-light rounded-pill"
- 													style="font-size: 15px; padding: 10px 10px;">Update</button> -->
-												
 											</form>
 											</td>
 											<td>
@@ -79,33 +74,18 @@
 											    <input type="hidden" name="expenseId" value="${expense.id}" />
 											    <button type="submit" class="btn d-block w-20 d-sm-inline-block btn-light"
 													>Delete</button>
-											    <!-- <button type="submit" class="btn d-block w-100 d-sm-inline-block badge text-bg-dark rounded-pill"
-											    style="font-size: 15px; padding: 10px 10px;">Delete</button> -->
 											</form>
 										</div>
 										</td>
 									</tr>
 								</table>
-								
-								<%-- <div class="job-right">
-								  <form action="deleteExpense" method="post">
-								    <input type="hidden" name="expenseId" value="${expense.id}" />
-								    <button type="submit" class="btn d-block w-20 d-sm-inline-block btn-light">Delete</button>
-								  </form>
-								</div> --%>
-								  
 							    </label>
 							 </div><p></p>
 						 </div>
 					 </c:forEach>
-						<%--  <div class="d-grid gap-2">
-							<form action = "addExpense" method="get">
-								<input type="hidden" name="budgetId" value="${budgetId}" />
-								<button type = "submit" class="btn btn-success rounded-pill px-3">Add a New Expense </button>
-							</form> --%>
 							<div>
 							 	<a href="${pageContext.request.contextPath}/expenses/budget-expenses/addExpense?budgetId=${budget.id}"
-								class="btn btn-success rounded-pill px-3" >Add Expense</a><p></p>
+								class="btn btn-success rounded-pill px-3 margin-bottom: 5px;">Add Expense</a><p></p>
 							<form action = "returnBackButton" method="get">
 								<input type="hidden" name="customerId" value="${customerId}" />
 								<button type = "submit" class="btn btn-dark rounded-pill px-3">Back to Budgets List</button>
@@ -133,87 +113,81 @@
 						</div>	
 					</div>
 					
-	<c:set var="xValues" value=""/>
-	<c:set var="yValues" value=""/>
-	<c:forEach items="${expenses}" var="expense">
-		<c:set var="xValues" value="${xValues}${expense.amount}, "/>
-		<c:set var="yValues" value="${yValues}'${expense.name}', "/>
- 	</c:forEach>
- 	
- 	<c:set var="xValues" value="${xValues}${budget.remainingSum}"/>
-	<c:if test="${budget.remainingSum > 0}">   
-	    <c:set var="yValues" value="${yValues}'Remaining Sum', "/>
-	</c:if>
-	<c:if test="${budget.remainingSum < 0}">
-		<c:set var="yValues" value="${yValues}'Overspend', "/>
-	</c:if>
-
-	<script>
-		var xValues = [${xValues}];
-		var yValues = [${yValues}];
-		var barColors = [
-			"#ff9896",
-            "#66c2a5",
-        	"#00aba9",
-        	"#aec7e8",
-            "#2b5797",
-            "#e8c3b9",
-            "#b91d47",
-            "#d7a8b8",
-        	"#ffbb78",
-            "#ff9896",
-            "#c5b0d5",
-            "#dbdb8d",
-            "#8c6d31",
-            "#9edae5",
-            "#393b79",
-            "#637939",
-            "#a6cee3",
-            "#fdae6b",
-            "#7f7f7f",
-            "#ff7f0e",
-            "#9467bd",
-            "#8c564b",
-            "#e377c2",
-            "#7f7f7f",
-            "#bcbd22",
-            "#17becf",
-		];
+			<c:set var="xValues" value=""/>
+			<c:set var="yValues" value=""/>
+			<c:forEach items="${expenses}" var="expense">
+				<c:set var="xValues" value="${xValues}${expense.amount}, "/>
+				<c:set var="yValues" value="${yValues}'${expense.name}', "/>
+		 	</c:forEach>
+		 	
+		 	<c:set var="xValues" value="${xValues}${budget.remainingSum}"/>
+			<c:if test="${budget.remainingSum > 0}">   
+			    <c:set var="yValues" value="${yValues}'Remaining Sum', "/>
+			</c:if>
+			<c:if test="${budget.remainingSum < 0}">
+				<c:set var="yValues" value="${yValues}'Overspend', "/>
+			</c:if>
 		
-		if (${budget.remainingSum > 0}) {
-			barColors[xValues.length - 1] = "#1e7145";
-		}
-		if (${budget.remainingSum < 0}) {
-			barColors[xValues.length - 1] = "#ff0000";
-		}
-		
-		new Chart("myChart", {
-		  type: "doughnut",
-		  data: {
-		    labels: yValues,
-		    datasets: [{
-		      backgroundColor: barColors,
-		      data: xValues
-		    }]
-		  },
-		  /* options: {
-		    title: {
-		      display: true,
-		      text: "Budget"
-		    }
-		  } */
-		});
-	</script>
+			<script>
+				var xValues = [${xValues}];
+				var yValues = [${yValues}];
+				var barColors = [
+					"#ff9896",
+		            "#66c2a5",
+		        	"#00aba9",
+		        	"#aec7e8",
+		            "#2b5797",
+		            "#e8c3b9",
+		            "#b91d47",
+		            "#d7a8b8",
+		        	"#ffbb78",
+		            "#ff9896",
+		            "#c5b0d5",
+		            "#dbdb8d",
+		            "#8c6d31",
+		            "#9edae5",
+		            "#393b79",
+		            "#637939",
+		            "#a6cee3",
+		            "#fdae6b",
+		            "#7f7f7f",
+		            "#ff7f0e",
+		            "#9467bd",
+		            "#8c564b",
+		            "#e377c2",
+		            "#7f7f7f",
+		            "#bcbd22",
+		            "#17becf",
+				];
+				
+				if (${budget.remainingSum > 0}) {
+					barColors[xValues.length - 1] = "#1e7145";
+				}
+				if (${budget.remainingSum < 0}) {
+					barColors[xValues.length - 1] = "#ff0000";
+				}
+				
+				new Chart("myChart", {
+				  type: "doughnut",
+				  data: {
+				    labels: yValues,
+				    datasets: [{
+				      backgroundColor: barColors,
+				      data: xValues
+				    }]
+				  },
+				  /* options: {
+				    title: {
+				      display: true,
+				      text: "Budget"
+				    }
+				  } */
+				});
+			</script>
+				</div>
+			</div>
 		</div>
 	</div>
-</div>
-</div>
 </body>
 </html>
-
-<!-- <a href="add-todo">
-	<button class="btn btn-success">Add Expense</button>
-</a> -->
-
-
 

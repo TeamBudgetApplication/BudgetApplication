@@ -51,11 +51,19 @@ public class BudgetController {
 	
 	// Sort all budgets by name
 	@GetMapping(path = "/budgets/user-budgets/sortBudgetsByName/{customerId}")
-	public String sortBudgetsByName(@PathVariable int customerId, ModelMap model){
+	public String sortBudgetsByName(@PathVariable int customerId, @RequestParam("keyword") String keyword, ModelMap model){
 
 		Customer customer = customerService.getCustomer(customerId);
-		// Get User Budgets
-		List<Budget> budgets = budgetService.retrieveAllByName(customerId);
+		List<Budget> budgets = new ArrayList<>();
+		
+		if (keyword == null || keyword.trim().isEmpty()) {
+			budgets = budgetService.retrieveAllByName(customerId);
+		} else {
+			budgets = budgetService.getBudgetsByKeywordSortByName(customerId, keyword);
+		}
+		
+		//Collections.sort(budgets, Comparator.comparing(Budget::getName)); <-- easier way
+		customer.setBudgets(budgets);
 		
 		// Add budgets to model for jsp interaction
 		model.addAttribute("customer", customer);
@@ -68,19 +76,47 @@ public class BudgetController {
 	
 	
 	// Sort all budgets by date ASC
-	
 	@GetMapping(path = "/budgets/user-budgets/sortBudgetsByDate/{customerId}")
-	public String sortBudgetsByDate(@PathVariable int customerId, ModelMap model){
+	public String sortBudgetsByDate(@PathVariable int customerId, @RequestParam("keyword") String keyword, ModelMap model){
 
 		Customer customer = customerService.getCustomer(customerId);
-		// Get User Budgets
-		List<Budget> budgets = budgetService.retrieveAllByDate(customerId);
+		List<Budget> budgets = new ArrayList<>();
+		
+		if (keyword == null || keyword.trim().isEmpty()) {
+			budgets = budgetService.retrieveAllByDate(customerId);
+		} else {
+			budgets = budgetService.getBudgetsByKeywordSortByDate(customerId, keyword);
+		}
+		//Collections.sort(budgets, Comparator.comparing(Budget::getStartDate)); <-- easier way
+		customer.setBudgets(budgets);
 		
 		// Add budgets to model for jsp interaction
 		model.addAttribute("customer", customer);
 		model.addAttribute("customerId", customer.getId());
 		model.addAttribute("budgets", budgets);		
 		model.addAttribute("numb", budgets.size());
+		
+		return "budgets";
+	}
+	
+	@GetMapping(path = "/budgets/user-budgets/searchByKeyword/{customerId}")
+	public String searchByKeyword(@PathVariable int customerId, @RequestParam("keyword") String keyword, ModelMap model){
+
+		Customer customer = customerService.getCustomer(customerId);
+		List<Budget> budgets = new ArrayList<>();
+		
+		if (keyword == null || keyword.trim().isEmpty()) {
+			budgets = budgetService.retrieveUserBudgets(customerId);
+		} else {
+			budgets = budgetService.getBudgetsByKeyword(customerId, keyword);
+		}
+		
+		customer.setBudgets(budgets);		
+		model.addAttribute("customer", customer);
+		model.addAttribute("customerId", customerId);
+		model.addAttribute("budgets", budgets);		
+		model.addAttribute("numb", budgets.size());
+		model.addAttribute("keyword", keyword);
 		
 		return "budgets";
 	}
@@ -100,12 +136,12 @@ public class BudgetController {
 	}
 	
 	//Add New Budget from BUDGETS VIEW PAGE
-		@RequestMapping(path = "/budgets/create-budget/{customerId}")
-		public String addBudget(Model model, @PathVariable("customerId") int customerId) {
-			
-			// redirect to budgets jsp
-			return "create-budget";			
-		}
+	@RequestMapping(path = "/budgets/create-budget/{customerId}")
+	public String addBudget(Model model, @PathVariable("customerId") int customerId) {
+		
+		// redirect to budgets jsp
+		return "create-budget";			
+	}
 		
 	
 	@RequestMapping("/budgets/create-budget/processBudget")
@@ -150,7 +186,7 @@ public class BudgetController {
 		model.addAttribute("endDate", endDate);
 		model.addAttribute("startDate", startDate);
 		model.addAttribute("amount", amount);
-//				
+				
 		// redirect to budgets jsp
 		return "update-budget";			
 		}
@@ -180,27 +216,6 @@ public class BudgetController {
 		return "redirect:/budgets/user-budgets/{customerId}";
 	}
 	
-	@GetMapping(path = "/budgets/user-budgets/searchByKeyword/{customerId}")
-	public String searchByKeyword(@PathVariable int customerId, @RequestParam(required = false) String keyword, ModelMap model){
-
-		Customer customer = customerService.getCustomer(customerId);
-		List<Budget> budgets = new ArrayList<>();
-		
-		if (keyword == null || keyword.trim().isEmpty()) {
-			budgets = budgetService.retrieveUserBudgets(customerId);
-		} else {
-			budgets = budgetService.getBudgetsByKeyword(customerId, keyword);
-		}
-		
-		customer.setBudgets(budgets);		
-		model.addAttribute("customer", customer);
-		model.addAttribute("customerId", customerId);
-		model.addAttribute("budgets", budgets);		
-		model.addAttribute("numb", budgets.size());
-		model.addAttribute("keyword", keyword);
-		
-		return "budgets";
-	}
 	
 	//delete budget
 	@PostMapping(path = "/budgets/user-budgets/deleteBudget")

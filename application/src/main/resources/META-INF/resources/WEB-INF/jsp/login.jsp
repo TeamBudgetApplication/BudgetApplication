@@ -124,7 +124,6 @@
 					alt="organization icon" width="90%" height="65px" />
 			</div>
 		</section>
-
 		<!-- Benefits -->
 		<section style="background: #ffffff; height: 520px">
 			<h2 class="text-center pt-4"
@@ -147,7 +146,6 @@
 							flows and free up you time to perform other essential activities
 						</p>
 					</div>
-
 					<!-- Col -->
 					<div
 						class="col d-flex flex-column justify-content-center align-items-center p-3">
@@ -192,10 +190,9 @@
 						<h4 class="mb-5" style="font-size: 1.7rem; max-width: 550px">Your
 							single source of truth with a multitude of features.</h4>
 						<p style="max-width: 550px;">Go beyond traditional budgeting
-							using Budgtely's sophisticated features that exceed your complex
+							using Budgetly's sophisticated features that exceed your complex
 							needs.</p>
-						<p style="max-width: 550px;">Budgetly offers a simple way for
-							me to create and manage my personal budgets. The data
+						<p style="max-width: 550px;">Budgetly offers a simple way to create and manage your personal budgets. The data
 							visualization takes it over the top. Budgetly is secure and safe
 							to use</p>
 					</div>
@@ -235,7 +232,7 @@
 						<h3 class="mb-4" style="font-size: 0.9rem; font-weight: 600">About</h3>
 						<p href="#"
 							style="font-size: 0.85rem; text-decoration: none; color: inherit">We
-							created budgetly because there was no good secrue place to
+							created budgetly because there was no good secure place to
 							create, manage and track user budgets. Budgetly offers a secure
 							place to handle all of your complex budget needs.</p>
 					</div>

@@ -46,12 +46,6 @@ public class CustomerServiceImpl implements CustomerService {
 	@Transactional
 	public Customer getByEmail(String email, String password) {
 		Customer result = customerDAO.getByEmail(email, password);
-		
-		/*
-		 * if (result == null) { throw new
-		 * NotFoundException("Invalid email or password: " + email); }
-		 */
-		
 		return result;
 	}
 	
