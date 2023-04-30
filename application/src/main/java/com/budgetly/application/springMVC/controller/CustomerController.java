@@ -52,7 +52,7 @@ public class CustomerController {
 	        String hashedPassword = passwordEncoder.encode(password);
 	        customer.setPassword(hashedPassword);
 	        customerService.saveCustomer(customer);
-	        return "redirect:/customer/" + customer.getId();
+	        return "login";
 	    }
 	}
 
