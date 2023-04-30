@@ -12,7 +12,8 @@
       delete budgets and expenses." />
 <title>Add a New Expense</title>
 </head>
-<body> <!-- style="font-family: 'Montserrat', sans-serif;" -->
+<body style="font-family: 'Montserrat', sans-serif;">
+<body>
 <header class="d-flex justify-content-between align-items-center p-2" style="border-bottom: 3px solid #3496f9;max-width: 1500px; margin: 0 auto;">
    	<!-- Logo -->
    	<div class="d-flex align-items-center">
@@ -22,8 +23,10 @@
    		<span style="font-weight: 400;font-size: 0.8rem;line-height: 1.1;">Budget Tracker</span></span>
    	</div>
    	<div>
-   	<a href="${pageContext.request.contextPath}/budgets/user-budgets/${customerId}"
-   	class="btn" type = "submit" style="background: #3496f9; color: #ffffff">Go to Budgets List</a>
+		<form action = "returnToBudgetButton" method="get">
+			<input type="hidden" name="budgetId" value="${budgetId}" />
+			<button class="btn" type = "submit" style="background: #3496f9; color: #ffffff">Go to ${budgetName} Budget</button>
+		</form>
    	</div>
 </header>
 <body>
@@ -37,37 +40,38 @@
 				<div class="row">
 					<div class="col-md-7 col-lg-8">
 					<h4 class="mb-3">Expense Information</h4>
-					<form action ="processExpense" class="needs-validation">
+					<form action ="updateProcessExpense" class="needs-validation">
 					<div class="row g-3">			          
 						  <div class="col-12">
 						    <label for="name" class="form-label">Name</label>
 						    <div>
-						      <input type="text" class="form-control" id="name" placeholder="No special characters" required="required" name="name" />
+						      <input type="text" class="form-control" id="name" placeholder="Name with no special characters" required="required" name="name" value="${name}" />
 						    </div>
 						  </div>
 			            <div class="col-12">
 			              <label for="amount" class="form-label">Amount</label>
 			              <div>
-			              	<input type="number" class="form-control" aria-describedby="amount" id="amount" placeholder="123.00" required="required" name="amount" />		              
+			              	<input type="number" class="form-control" aria-describedby="amount" id="amount" placeholder="123.00" required="required" name="amount" value="${amount}"/>		              
 			              </div>
 			            </div>
-			            
 			            <div class="col-12">
 			              <label for="expenseDate" class="form-label">Date</label>
 			              <div>
-			              	<input type="date" class="form-control" id="expenseDate" value="expenseDate" required="required" name="expenseDate" />
+			              	<input type="date" class="form-control" id="expenseDate" required="required" name="expenseDate" value="${expenseDate}" path="expenseDate"/>
 			              </div>
 			            </div>
 					<hr class="my-4">					
 						<input type="hidden" name="budgetId" value="${budgetId}" />
+						<input type="hidden" name="expenseId" value="${expense.id}" />
 						<button type = "submit" class="btn btn-success rounded-pill px-3" >Save Expense</button>
 					</form>
-					<a href="${pageContext.request.contextPath}/expenses/budget-expenses/${budgetId}"
+					<a href="${pageContext.request.contextPath}/budgets/user-budgets/${customerId}"
 						class="btn btn-dark rounded-pill px-3">Cancel</a><br>
 				</div>
 				</div>
 				</div>
 			</div>
 		</div>
+	<!-- </div> -->
 </body>
 </html>

@@ -128,6 +128,32 @@ public class BudgetServiceImpl implements BudgetService {
 		return budgets;
 	}
 
+	@Transactional
+	@Override
+	public List<Budget> getBudgetsByKeywordSortByName(int customerId, String keyword) {
+		
+		List<Budget> budgets = budgetDAO.getBudgetsByKeywordSortByName(customerId, keyword);
+		
+		if (budgets.isEmpty()) {
+			budgets = budgetDAO.retrieveAllByName(customerId);;
+		}
+		
+		return budgets;
+	}
+
+	@Transactional
+	@Override
+	public List<Budget> getBudgetsByKeywordSortByDate(int customerId, String keyword) {
+		
+		List<Budget> budgets = budgetDAO.getBudgetsByKeywordSortByDate(customerId, keyword);
+		
+		if (budgets.isEmpty()) {
+			budgets = budgetDAO.retrieveAllByDate(customerId);
+		}
+		
+		return budgets;
+	}
+
 	
 	
 }

@@ -25,6 +25,9 @@ public interface BudgetService {
 	public List<Budget> budgetsActiveThisWeek(int customerId);
 
 	public List<Budget> getBudgetsByKeyword(int customerId, String keyword);
-
+	
+	public List<Budget> getBudgetsByKeywordSortByName(int customerId, String keyword);
+	
+	public List<Budget> getBudgetsByKeywordSortByDate(int customerId, String keyword);
 
 }

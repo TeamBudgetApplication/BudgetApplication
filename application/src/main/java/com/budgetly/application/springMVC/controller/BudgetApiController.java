@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.budgetly.application.Service.BudgetService;
 import com.budgetly.application.entities.Budget;
 
-
-
 @RestController
 public class BudgetApiController {
 	

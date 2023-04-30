@@ -27,4 +27,8 @@ public interface BudgetDAO {
 	
 	public List<Budget> getBudgetsByKeyword(int customerId, String keyword);
 	
+	public List<Budget> getBudgetsByKeywordSortByName(int customerId, String keyword);
+	
+	public List<Budget> getBudgetsByKeywordSortByDate(int customerId, String keyword);
+	
 }
